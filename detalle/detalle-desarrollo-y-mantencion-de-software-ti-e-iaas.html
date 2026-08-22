@@ -115,12 +115,18 @@
     <div class="f"><label>Mes</label><select id="fMes"><option value="">Todos</option></select></div>
     <div class="f"><label>Región comprador</label><select id="fRegion"><option value="">Todas</option></select></div>
     <div class="f"><label>Moneda</label><select id="fMoneda"><option value="">Todas</option></select></div>
-    <div class="f"><label>Proveedor</label><input id="fProv" list="dlProv" placeholder="Escribe o elige..." autocomplete="off" /><datalist id="dlProv"></datalist></div>
-    <div class="f"><label>Organismo</label><input id="fOrg" list="dlOrg" placeholder="Escribe o elige..." autocomplete="off" /><datalist id="dlOrg"></datalist></div>
     <div class="f multi-f">
-      <label>RUT comprador <span style="font-weight:normal;text-transform:none;">(elige varios)</span></label>
+      <label>Proveedor <span style="font-weight:normal;text-transform:none;">(busca por nombre, elige varios)</span></label>
+      <div class="multi-select" id="msProv">
+        <input type="text" id="msProvInput" placeholder="Buscar proveedor..." autocomplete="off" />
+        <div class="multi-dropdown" id="msProvDropdown"></div>
+      </div>
+      <div class="multi-chips" id="msProvChips"></div>
+    </div>
+    <div class="f multi-f">
+      <label>Organismo comprador <span style="font-weight:normal;text-transform:none;">(busca por nombre o RUT, elige varios)</span></label>
       <div class="multi-select" id="msRutOrg">
-        <input type="text" id="msRutOrgInput" placeholder="Buscar RUT o nombre..." autocomplete="off" />
+        <input type="text" id="msRutOrgInput" placeholder="Buscar organismo o RUT..." autocomplete="off" />
         <div class="multi-dropdown" id="msRutOrgDropdown"></div>
       </div>
       <div class="multi-chips" id="msRutOrgChips"></div>
@@ -420,9 +426,56 @@ try {
   populateSelect('fMes', [...new Set(ROWS.map(r=>r[2]))]);
   populateSelect('fRegion', [...new Set(ROWS.map(r=>r[7]))].filter(Boolean).sort());
   populateSelect('fMoneda', [...new Set(ROWS.map(r=>r[11]))]);
-  populateDatalist('dlProv', [...new Set(ROWS.map(r=>r[8]))].filter(Boolean).sort());
-  populateDatalist('dlOrg', [...new Set(ROWS.map(r=>r[6]))].filter(Boolean).sort());
 } catch(e) { console.error('Error poblando filtros', e); }
+
+// Proveedor — multi-selección (busca por nombre)
+const selectedProv = new Set();
+let provOptions = [];
+try {
+  const map = new Map();
+  ROWS.forEach(r => { if (r[9] && !map.has(r[9])) map.set(r[9], r[8]); });
+  provOptions = [...map.entries()].map(([rut,nombre]) => ({rut, nombre})).sort((a,b)=>a.nombre.localeCompare(b.nombre));
+} catch(e) { console.error('Error preparando Proveedor', e); }
+function renderProvDropdown(filterText){
+  const dd = document.getElementById('msProvDropdown');
+  const ft = (filterText||'').toLowerCase();
+  const matches = provOptions.filter(o => !ft || o.nombre.toLowerCase().includes(ft) || o.rut.toLowerCase().includes(ft)).slice(0,60);
+  dd.innerHTML = matches.length ? matches.map(o =>
+    '<div class="opt'+(selectedProv.has(o.rut)?' selected':'')+'" data-rut="'+esc(o.rut)+'">'+esc(o.nombre)+' — '+esc(o.rut)+'</div>'
+  ).join('') : '<div class="opt" style="color:#7A8B8E;font-style:italic;cursor:default;">Sin coincidencias</div>';
+}
+function renderProvChips(){
+  const chipsEl = document.getElementById('msProvChips');
+  chipsEl.innerHTML = [...selectedProv].map(rut => {
+    const o = provOptions.find(x=>x.rut===rut);
+    const label = o ? (o.nombre.length>26?o.nombre.slice(0,24)+'…':o.nombre) : rut;
+    return '<span class="chip">'+esc(label)+'<button type="button" data-rut="'+esc(rut)+'">&times;</button></span>';
+  }).join('');
+}
+try {
+  const msProvInputEl = document.getElementById('msProvInput');
+  const msProvDropdownEl = document.getElementById('msProvDropdown');
+  msProvInputEl.addEventListener('focus', () => { renderProvDropdown(msProvInputEl.value); msProvDropdownEl.classList.add('open'); });
+  msProvInputEl.addEventListener('input', () => { renderProvDropdown(msProvInputEl.value); msProvDropdownEl.classList.add('open'); });
+  document.addEventListener('click', (e) => { if (!document.getElementById('msProv').contains(e.target)) msProvDropdownEl.classList.remove('open'); });
+  msProvDropdownEl.addEventListener('click', (e) => {
+    const opt = e.target.closest('.opt[data-rut]');
+    if (!opt) return;
+    const rut = opt.getAttribute('data-rut');
+    if (selectedProv.has(rut)) selectedProv.delete(rut); else selectedProv.add(rut);
+    renderProvDropdown(msProvInputEl.value);
+    renderProvChips();
+    applyFilters();
+  });
+  document.getElementById('msProvChips').addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-rut]');
+    if (!btn) return;
+    selectedProv.delete(btn.getAttribute('data-rut'));
+    renderProvChips();
+    renderProvDropdown(msProvInputEl.value);
+    applyFilters();
+  });
+} catch(e) { console.error('Error inicializando Proveedor', e); }
 
 // RUT comprador — multi-selección
 const selectedRutOrg = new Set();
@@ -479,16 +532,13 @@ function applyFilters(){
   const mes = document.getElementById('fMes').value;
   const region = document.getElementById('fRegion').value;
   const moneda = document.getElementById('fMoneda').value;
-  const prov = document.getElementById('fProv').value.trim().toLowerCase();
-  const org = document.getElementById('fOrg').value.trim().toLowerCase();
   filtered = ROWS.filter(r => {
     if (anio && anioDe(r[2]) !== anio) return false;
     if (mes && r[2] !== mes) return false;
     if (selectedRutOrg.size && !selectedRutOrg.has(r[5])) return false;
+    if (selectedProv.size && !selectedProv.has(r[9])) return false;
     if (region && r[7] !== region) return false;
     if (moneda && r[11] !== moneda) return false;
-    if (prov && !String(r[8]).toLowerCase().includes(prov)) return false;
-    if (org && !String(r[6]).toLowerCase().includes(org)) return false;
     for (let i=0;i<COL_FILTERS.length;i++){
       const cf = COL_FILTERS[i];
       if (cf && !String(r[i]==null?'':r[i]).toLowerCase().includes(cf)) return false;
@@ -510,14 +560,16 @@ function resetFilters(){
   document.getElementById('fMes').value='';
   document.getElementById('fRegion').value='';
   document.getElementById('fMoneda').value='';
-  document.getElementById('fProv').value='';
-  document.getElementById('fOrg').value='';
   document.querySelectorAll('input.col-filter').forEach(inp => { inp.value=''; });
   COL_FILTERS.fill('');
   selectedRutOrg.clear();
   document.getElementById('msRutOrgInput').value='';
   renderRutOrgChips();
   renderRutOrgDropdown('');
+  selectedProv.clear();
+  document.getElementById('msProvInput').value='';
+  renderProvChips();
+  renderProvDropdown('');
   filtered = ROWS.slice();
   page = 1;
   renderTable();
