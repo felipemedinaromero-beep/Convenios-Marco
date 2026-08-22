@@ -131,6 +131,7 @@
   .badge-vig-warn { background: #FCEEDA; color: #8A5A00; }
   .badge-vig-bad { background: var(--cc-rose); color: var(--cc-wine); }
   .badge-oc-count { align-self: flex-start; font-size: 10.5px; font-weight: 600; padding: 3px 9px; border-radius: 6px; background: var(--surface-page); color: var(--text-secondary); border: 1px solid var(--border); letter-spacing: 0.02em; }
+  .badge-monto-count { background: #E7F0F5; color: var(--cc-navy); border-color: #CFE1E9; }
   .tile-badges { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 2px; }
   .sparkline { display: flex; align-items: flex-end; gap: 2px; height: 18px; margin-top: 6px; }
   .spark-bar { flex: 1; background: rgba(0,70,119,0.18); border-radius: 1px 1px 0 0; min-width: 2px; }
@@ -1089,6 +1090,22 @@ function fmtMonto(n){
   return Number(n).toLocaleString('es-CL', {maximumFractionDigits: 0});
 }
 
+function fmtShortUsd(n){
+  var v = Number(n);
+  if (!isFinite(v)) return '';
+  var abs = Math.abs(v);
+  if (abs >= 1e9) return (v/1e9).toFixed(1).replace('.', ',') + 'B';
+  if (abs >= 1e6) return (v/1e6).toFixed(1).replace('.', ',') + 'M';
+  if (abs >= 1e3) return (v/1e3).toFixed(0) + 'k';
+  return String(Math.round(v));
+}
+
+function montoUsdDe(tx){
+  if (!tx || !tx.montos || !tx.montos.length) return null;
+  var usd = tx.montos.find(function(m){ return m.moneda === 'USD'; });
+  return usd ? usd.monto : tx.montos[0].monto;
+}
+
 function txPanel(d, idx){
   if (!d.tx){
     return '<div class="tx-section"><p>' + icon('info-circle') + 'Sin datos transaccionales para este convenio</p></div>';
@@ -1178,6 +1195,8 @@ function render(list, words){
 
     var vi = vigInfo(d.vig);
     var ocBadge = (d.tx && d.tx.nOc) ? '<span class="badge-oc-count">' + d.tx.nOc.toLocaleString('es-CL') + ' OC</span>' : '';
+    var montoUsd = d.tx ? montoUsdDe(d.tx) : null;
+    var montoBadge = montoUsd ? '<span class="badge-oc-count badge-monto-count" title="Monto total transado (USD)">$' + fmtShortUsd(montoUsd) + ' USD</span>' : '';
     var vigBadge = vi.label ? '<span class="badge-vig ' + vi.cls + '">' + vi.label + '</span>' : '';
 
     return '<div class="card' + (d.featured ? ' featured' : '') + '">' +
@@ -1186,7 +1205,7 @@ function render(list, words){
         '<div class="tile-head-text">' +
           '<div class="card-title"><p>' + highlight(d.n, words) + '</p></div>' +
           '<a class="badge badge-link" href="' + fichaLicUrl(d.id) + '" target="_blank" rel="noopener" title="Ver ficha electrónica en Mercado Público">ID ' + highlight(d.id, words) + ' ' + icon('external-link') + '</a>' +
-          '<div class="tile-badges">' + vigBadge + ocBadge + '</div>' +
+          '<div class="tile-badges">' + vigBadge + ocBadge + montoBadge + '</div>' +
           sparkline(d.tx) +
         '</div>' +
       '</div>' +
