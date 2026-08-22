@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Seguro colectivo de vida con adicional de salud · Detalle transaccional</title>
+<style>
+  .icon { width:1em; height:1em; display:inline-block; vertical-align:-0.15em; flex-shrink:0; }
+  :root {
+    --cc-dark: #07272C; --cc-blue: #007096; --cc-lightblue: #6BCCD6; --cc-navy: #004677;
+    --cc-red: #E73438; --cc-pink: #E94860; --cc-wine: #51283C; --cc-purple: #613B75;
+    --cc-rose: #FAD8E1; --surface-page: #F2F7F8; --surface-card: #FFFFFF;
+    --text-secondary: #3C5459; --border: #D7E4E6; --pbi-yellow: #F2C811; --cc-green: #1F7A4D;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0 0 3rem; background:var(--surface-page); color:var(--cc-dark); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+  header.cc-header { background:var(--cc-navy); color:#fff; padding:1.25rem 1.5rem 1rem; border-bottom:3px solid var(--pbi-yellow); }
+  header.cc-header .header-row { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
+  header.cc-header .header-text { flex:1 1 auto; min-width:0; }
+  header.cc-header .header-logo-chip { flex:0 0 auto; background:#fff; border-radius:6px; padding:7px 12px; box-shadow:0 1px 4px rgba(0,0,0,0.18); display:flex; align-items:center; }
+  header.cc-header .header-logo { height:28px; width:auto; display:block; }
+  header.cc-header .eyebrow { font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--cc-lightblue); margin:0 0 5px; font-weight:bold; }
+  header.cc-header h1 { font-size:19px; font-weight:bold; margin:0 0 4px; }
+  header.cc-header .meta { font-size:12px; color:#CFE3E6; margin:0; }
+  header.cc-header a.back { color:#CFE3E6; font-size:11.5px; text-decoration:none; }
+  header.cc-header a.back:hover { text-decoration:underline; }
+  .wrap { max-width: 1240px; margin:0 auto; padding:0 1.5rem; }
+  .warn-box { background:var(--cc-rose); border-left:4px solid var(--cc-red); color:var(--cc-wine); font-size:12px; padding:10px 14px; margin:1rem 0; border-radius:0; }
+  .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin:1.25rem 0; }
+  .kpi { background:var(--surface-card); border:none; box-shadow:0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04); border-radius:10px; padding:12px 14px; }
+  .kpi .lbl { font-size:10.5px; text-transform:uppercase; letter-spacing:0.03em; color:var(--text-secondary); margin:0 0 4px; display:flex; align-items:center; gap:5px; }
+  .kpi .val { font-size:19px; font-weight:bold; color:var(--cc-dark); margin:0; }
+  .kpi-icon { width:13px; height:13px; flex-shrink:0; }
+  .kpi-oc .kpi-icon, .kpi-oc .val { color: var(--cc-blue); }
+  .kpi-prov .kpi-icon, .kpi-prov .val { color: var(--cc-purple); }
+  .kpi-org .kpi-icon, .kpi-org .val { color: var(--cc-navy); }
+  .kpi-monto .kpi-icon, .kpi-monto .val { color: var(--cc-green); }
+  .pill { display:inline-block; padding:2px 8px; border-radius:10px; font-size:10.5px; font-weight:bold; white-space:nowrap; }
+  .pill-ok { background:#E4F3E0; color:#2A6B1E; }
+  .pill-warn { background:#FDF0D5; color:#8A5A00; }
+  .pill-bad { background:var(--cc-rose); color:var(--cc-wine); }
+  .pill-neutral { background:var(--surface-page); color:var(--text-secondary); }
+  .charts { display:grid; grid-template-columns:repeat(auto-fit,minmax(420px,1fr)); gap:14px; margin:1.5rem 0; }
+  .chart-card { background:var(--surface-card); border:none; box-shadow:0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04); border-radius:10px; padding:14px; }
+  .chart-card h3 { font-size:12.5px; margin:0 0 10px; color:var(--cc-dark); text-transform:uppercase; letter-spacing:0.02em; }
+  .chart-svg-container { width:100%; }
+  .chart-svg-container svg { width:100%; height:auto; display:block; }
+  .chart-svg-container a:hover rect { opacity:0.78; }
+  .chart-svg-container a:hover text { text-decoration:underline; }
+  .filters { background:var(--surface-card); border:none; box-shadow:0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04); border-radius:10px; padding:14px; margin:1.5rem 0 0; display:flex; flex-wrap:wrap; gap:10px; align-items:flex-end; }
+  .filters .f { display:flex; flex-direction:column; gap:3px; }
+  .filters label { font-size:10.5px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.02em; }
+  .filters select, .filters input { height:34px; padding:0 10px; border:1px solid var(--border); border-radius:4px; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; font-size:12.5px; background:#fff; color:var(--cc-dark); min-width:150px; }
+  .filters button { height:34px; padding:0 14px; border:1px solid var(--cc-navy); background:var(--cc-navy); color:#fff; border-radius:4px; font-size:12px; font-weight:bold; cursor:pointer; }
+  .filters button.secondary { background:#fff; color:var(--cc-navy); }
+  .multi-select { position:relative; }
+  .multi-select input { width:220px; }
+  .multi-dropdown { position:absolute; top:36px; left:0; z-index:20; background:#fff; border:1px solid var(--border); border-radius:4px; max-height:220px; overflow-y:auto; width:320px; box-shadow:0 2px 8px rgba(0,0,0,0.12); display:none; }
+  .multi-dropdown.open { display:block; }
+  .multi-dropdown .opt { padding:6px 10px; font-size:11.5px; cursor:pointer; white-space:normal; }
+  .multi-dropdown .opt:hover { background:var(--surface-page); }
+  .multi-dropdown .opt.selected { background:#E6F2F5; font-weight:bold; }
+  .multi-chips { display:flex; flex-wrap:wrap; gap:5px; margin-top:6px; max-width:340px; }
+  .multi-chips .chip { display:flex; align-items:center; gap:4px; background:var(--cc-navy); color:#fff; border-radius:12px; padding:2px 8px 2px 10px; font-size:10.5px; }
+  .multi-chips .chip button { background:none; border:none; color:#fff; cursor:pointer; font-size:12px; line-height:1; padding:0; }
+  #resultInfo { font-size:11.5px; color:var(--text-secondary); margin:10px 0; }
+  table.dt { width:100%; border-collapse:collapse; font-size:11.5px; background:var(--surface-card); border:1px solid var(--border); }
+  table.dt th, table.dt td { padding:6px 8px; border-bottom:1px solid var(--border); text-align:left; white-space:nowrap; }
+  table.dt th { background:var(--cc-navy); color:#fff; font-weight:bold; position:sticky; top:0; cursor:pointer; }
+  table.dt td.num { text-align:right; }
+  table.dt tbody tr:nth-child(even) { background:#F7FAFB; }
+  table.dt tr.dt-filter-row th { background:var(--surface-page); padding:4px 6px; cursor:default; position:sticky; top:28px; }
+  table.dt tr.dt-filter-row input.col-filter { width:100%; box-sizing:border-box; height:24px; padding:0 6px; font-size:10.5px; border:1px solid var(--border); border-radius:3px; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; color:var(--cc-dark); background:#fff; }
+  .table-wrap { overflow-x:auto; margin-top:0.5rem; }
+  .pager { display:flex; align-items:center; gap:10px; margin:10px 0; font-size:12px; }
+  .pager button { height:30px; padding:0 12px; border:1px solid var(--border); background:#fff; border-radius:4px; cursor:pointer; }
+  .pager button:disabled { opacity:0.4; cursor:default; }
+  footer.cc-footer { margin-top:2rem; font-size:11px; color:var(--text-secondary); border-top:1px solid var(--border); padding-top:12px; }
+  @media (max-width:600px){
+    .charts { grid-template-columns:1fr; }
+    .kpis { grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); }
+  }
+  .cc-nav { font-size:11px; margin:4px 0 0; }
+  .cc-nav a { color:#CFE3E6; text-decoration:none; }
+  .cc-nav a:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+<header class="cc-header">
+  <div class="header-row">
+    <div class="header-text">
+      <p class="eyebrow"><a class="back" href="../fichas_convenios_marco_chilecompra.html">&larr; Volver a fichas de convenios marco</a></p>
+      <h1>Seguro colectivo de vida con adicional de salud</h1>
+      <p class="meta">ID vigente: <a href="https://www.mercadopublico.cl/fichaLicitacion.html?idLicitacion=2239-12-LR23" target="_blank" rel="noopener" style="color:#CFE3E6;">2239-12-LR23 &#8599;</a> · ID(s) con datos: 2239-12-LR23 · Período: nov-2025 a jul-2026</p>
+      <p class="cc-nav"><a href="detalle-productos-y-servicios-de-ferreteria.html">&larr; Productos y servicios de ferretería</a> · <a href="../todas-las-transacciones.html" target="_blank" rel="noopener">Ver todas las transacciones</a> · <a href="detalle-suministro-de-combustibles.html">Suministro de combustibles &rarr;</a></p>
+    </div>
+    <div class="header-logo-chip">
+      <img class="header-logo" src="https://www.chilecompra.cl/wp-content/themes/chcptemp/images/logo-chilecompra-52.png" alt="ChileCompra" onerror="this.parentElement.style.display='none'" />
+    </div>
+  </div>
+</header>
+<div class="wrap">
+  
+  <div class="kpis" id="kpis"></div>
+  <div class="charts">
+    <div class="chart-card"><h3>Evolución mensual — N° de OC</h3><div class="chart-svg-container" id="chartMesOC"></div></div>
+    <div class="chart-card"><h3>Evolución mensual — Monto</h3><div class="chart-svg-container" id="chartMesMonto"></div></div>
+    <div class="chart-card"><h3>Top 10 proveedores por monto</h3><div class="chart-svg-container" id="chartProv"></div></div>
+    <div class="chart-card"><h3>Top 10 organismos compradores por monto</h3><div class="chart-svg-container" id="chartOrg"></div></div>
+    <div class="chart-card"><h3>Distribución por región (N° de OC)</h3><div class="chart-svg-container" id="chartRegion"></div></div>
+    <div class="chart-card"><h3>Procesos de Gran Compra — monto por proceso</h3><div class="chart-svg-container" id="chartGranCompra"></div></div>
+  </div>
+
+  <div class="filters">
+    <div class="f"><label>Año</label><select id="fAnio"><option value="">Todos</option></select></div>
+    <div class="f"><label>Mes</label><select id="fMes"><option value="">Todos</option></select></div>
+    <div class="f"><label>Región comprador</label><select id="fRegion"><option value="">Todas</option></select></div>
+    <div class="f"><label>Moneda</label><select id="fMoneda"><option value="">Todas</option></select></div>
+    <div class="f"><label>Proveedor</label><input id="fProv" list="dlProv" placeholder="Escribe o elige..." autocomplete="off" /><datalist id="dlProv"></datalist></div>
+    <div class="f"><label>Organismo</label><input id="fOrg" list="dlOrg" placeholder="Escribe o elige..." autocomplete="off" /><datalist id="dlOrg"></datalist></div>
+    <div class="f multi-f">
+      <label>RUT comprador <span style="font-weight:normal;text-transform:none;">(elige varios)</span></label>
+      <div class="multi-select" id="msRutOrg">
+        <input type="text" id="msRutOrgInput" placeholder="Buscar RUT o nombre..." autocomplete="off" />
+        <div class="multi-dropdown" id="msRutOrgDropdown"></div>
+      </div>
+      <div class="multi-chips" id="msRutOrgChips"></div>
+    </div>
+    <div class="f"><button onclick="applyFilters()">Filtrar</button></div>
+    <div class="f"><button class="secondary" onclick="resetFilters()">Limpiar</button></div>
+    <div class="f"><button class="secondary" onclick="exportCsv()"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v13"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></svg> Exportar CSV</button></div>
+  </div>
+  <p class="explorer-note">También puedes filtrar directamente escribiendo bajo cada columna de la tabla.</p>
+  <div id="resultInfo"></div>
+  <div class="table-wrap">
+    <table class="dt" id="tbl">
+      <thead>
+        <tr>
+        <th data-k="oc">Código OC</th><th data-k="lic">ID Licitación</th><th data-k="mes">Mes</th><th data-k="fecha">Fecha envío</th>
+        <th data-k="estado">Estado</th><th data-k="rutOrg">RUT comprador</th><th data-k="organismo">Organismo comprador</th><th data-k="regionOrg">Región comprador</th>
+        <th data-k="proveedor">Proveedor</th><th data-k="rutProv">RUT proveedor</th><th data-k="regionProv">Región proveedor</th>
+        <th data-k="moneda">Moneda</th><th data-k="monto" class="num">Monto</th>
+        </tr>
+        <tr class="dt-filter-row">
+        <th><input class="col-filter" data-idx="0" /></th><th><input class="col-filter" data-idx="1" /></th><th><input class="col-filter" data-idx="2" /></th><th><input class="col-filter" data-idx="3" /></th>
+        <th><input class="col-filter" data-idx="4" /></th><th><input class="col-filter" data-idx="5" /></th><th><input class="col-filter" data-idx="6" /></th>
+        <th><input class="col-filter" data-idx="7" /></th><th><input class="col-filter" data-idx="8" /></th><th><input class="col-filter" data-idx="9" /></th>
+        <th><input class="col-filter" data-idx="10" /></th><th><input class="col-filter" data-idx="11" /></th><th><input class="col-filter" data-idx="12" /></th>
+        </tr>
+      </thead>
+      <tbody id="tblBody"></tbody>
+    </table>
+  </div>
+  <div class="pager">
+    <button id="btnPrev" onclick="prevPage()">&laquo; Anterior</button>
+    <span id="pageInfo"></span>
+    <button id="btnNext" onclick="nextPage()">Siguiente &raquo;</button>
+  </div>
+
+
+  <div class="chart-card" style="margin-top:1.5rem;">
+    <h3>Procesos de Gran Compra (3)</h3>
+    <p class="explorer-note" style="font-style:italic;">Procesos de compra consolidada (Gran Compra) gestionados aparte del catálogo estándar de este convenio. Se listan solo como referencia informativa: sus montos no forman parte de las cifras transaccionales de esta vista y no se suman a ellas. El N° de OC enlaza a su ficha pública en Mercado Público; el N° de Gran Compra corresponde al proceso que la originó.</p>
+    <details>
+      <summary>Ver los 3 procesos</summary>
+      <div class="table-wrap">
+        <table class="dt">
+          <thead><tr><th>N° OC</th><th>Licitación</th><th>Nombre proceso</th><th>Fecha envío</th><th>Estado</th><th>Organismo</th><th>N° Gran Compra</th></tr></thead>
+          <tbody><tr><td><a href="https://www.mercadopublico.cl/PurchaseOrder/Modules/PO/DetailsPurchaseOrder.aspx?codigooc=554476-4-CM24" target="_blank" rel="noopener">554476-4-CM24</a></td><td>2239-12-LR23</td><td>Contratación seguro complementario salud vida y catastrófico PLAN ÚNICO y seguro de salud dental</td><td>2025-01-03</td><td>Recepción Conforme</td><td>DIRECCION NACIONAL DEL SERVICIO CIVIL</td><td><a href="https://www.mercadopublico.cl/Portal/Modules/Site/Busquedas/BuscadorAvanzado.aspx?qs=9" target="_blank" rel="noopener">73686</a></td></tr><tr><td><a href="https://www.mercadopublico.cl/PurchaseOrder/Modules/PO/DetailsPurchaseOrder.aspx?codigooc=1111089-352-CM25" target="_blank" rel="noopener">1111089-352-CM25</a></td><td>2239-12-LR23</td><td>Seguro de Salud colectivo Servicio de Bienestar 2025</td><td>2025-07-15</td><td>Aceptada</td><td>Comisión Nacional de Investigación Científica y Tecnológicas - CONICYT</td><td><a href="https://www.mercadopublico.cl/Portal/Modules/Site/Busquedas/BuscadorAvanzado.aspx?qs=9" target="_blank" rel="noopener">75270</a></td></tr><tr><td><a href="https://www.mercadopublico.cl/PurchaseOrder/Modules/PO/DetailsPurchaseOrder.aspx?codigooc=558338-4-CM25" target="_blank" rel="noopener">558338-4-CM25</a></td><td>2239-12-LR23</td><td>SEGURO DE VIDA, ADICIONAL DESALUD Y CATASTRÓFICO PARA AFILIADOS/AS A BIENESTAR</td><td>2025-08-22</td><td>Aceptada</td><td>SERVICIO NACIONAL DE GEOLOGIA Y MINERIA</td><td><a href="https://www.mercadopublico.cl/Portal/Modules/Site/Busquedas/BuscadorAvanzado.aspx?qs=9" target="_blank" rel="noopener">77943</a></td></tr></tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+  <footer class="cc-footer">
+    Fuente: Datos Abiertos ChileCompra — Transacciones mensuales, Convenio Marco. Datos procesados a nivel de orden de compra (deduplicado por CodigoOC).
+  </footer>
+</div>
+<script>
+const META = {"slug": "seguro-colectivo-de-vida-con-adicional-de-salud", "nombre": "Seguro colectivo de vida con adicional de salud"};
+const GRANCOMPRA = [{"id": "73686", "licitacion": "2239-12-LR23", "nombre": "Contratación seguro complementario salud vida y catastrófico PLAN ÚNICO y seguro de salud dental", "fechaEnvio": "2025-01-03", "estado": "Recepción Conforme", "organismo": "DIRECCION NACIONAL DEL SERVICIO CIVIL", "codigoOC": "554476-4-CM24", "monto": 3608.0}, {"id": "75270", "licitacion": "2239-12-LR23", "nombre": "Seguro de Salud colectivo Servicio de Bienestar 2025", "fechaEnvio": "2025-07-15", "estado": "Aceptada", "organismo": "Comisión Nacional de Investigación Científica y Tecnológicas - CONICYT", "codigoOC": "1111089-352-CM25", "monto": 3599.0}, {"id": "77943", "licitacion": "2239-12-LR23", "nombre": "SEGURO DE VIDA, ADICIONAL DESALUD Y CATASTRÓFICO PARA AFILIADOS/AS A BIENESTAR", "fechaEnvio": "2025-08-22", "estado": "Aceptada", "organismo": "SERVICIO NACIONAL DE GEOLOGIA Y MINERIA", "codigoOC": "558338-4-CM25", "monto": 6583.0}];
+const AGG = {"nOc": 168, "nProveedores": 1, "nOrganismos": 65, "montos": [{"moneda": "CLF", "monto": 555449.33}], "porMes": [{"mes": "nov-2025", "moneda": "CLF", "nOc": 12, "monto": 16550.75}, {"mes": "dic-2025", "moneda": "CLF", "nOc": 20, "monto": 155629.49}, {"mes": "ene-2026", "moneda": "CLF", "nOc": 32, "monto": 25545.5}, {"mes": "feb-2026", "moneda": "CLF", "nOc": 18, "monto": 11249.63}, {"mes": "mar-2026", "moneda": "CLF", "nOc": 20, "monto": 199558.71}, {"mes": "abr-2026", "moneda": "CLF", "nOc": 16, "monto": 7304.23}, {"mes": "may-2026", "moneda": "CLF", "nOc": 15, "monto": 15013.45}, {"mes": "jun-2026", "moneda": "CLF", "nOc": 20, "monto": 71793.53}, {"mes": "jul-2026", "moneda": "CLF", "nOc": 15, "monto": 52804.05}], "topProv": [{"nombre": "BCI SEGUROS VIDA S A", "monto": 555449.33, "nOc": 168}], "topOrg": [{"nombre": "CORP ADMINISTRATIVA DEL PODER JUDICIAL", "monto": 130917.36, "nOc": 1}, {"nombre": "FUNDACION EDUCACIONAL PARA EL DESAROLLO INTEGRAL DE LA NIÑEZ", "monto": 123028.15, "nOc": 1}, {"nombre": "CORP MUNIC EDUC SALUD Y ATENCION", "monto": 32049.94, "nOc": 1}, {"nombre": "UNIVERSIDAD DE VALPARAISO", "monto": 24281.0, "nOc": 1}, {"nombre": "Bienestar", "monto": 23652.47, "nOc": 1}, {"nombre": "Fondo de Bienestar de la Corporación de Fomento ", "monto": 17716.55, "nOc": 1}, {"nombre": "Subsecretaria de Relaciones Exteriores", "monto": 17364.41, "nOc": 2}, {"nombre": "CONTRALORIA GENERAL DE LA REPUBLICA", "monto": 16626.13, "nOc": 1}, {"nombre": "SUBSECRETARIA DE TRANSPORTES", "monto": 13164.0, "nOc": 1}, {"nombre": "SERVICIO NACIONAL DE LA MUJER Y LA EQUIDAD DE GENERO", "monto": 11436.14, "nOc": 1}], "porRegion": [{"region": "Metropolitana", "nOc": 141, "monto": 507860.75}, {"region": "Valparaíso", "nOc": 10, "monto": 31673.36}, {"region": "Aysén", "nOc": 3, "monto": 3368.48}, {"region": "Lib. Gral. Bdo. O'Higgins", "nOc": 3, "monto": 3273.5}, {"region": "Los Lagos", "nOc": 2, "monto": 1869.29}, {"region": "Atacama", "nOc": 1, "monto": 1619.17}, {"region": "Antofagasta", "nOc": 1, "monto": 1369.06}, {"region": "Bío-Bío", "nOc": 1, "monto": 1329.56}, {"region": "Coquimbo", "nOc": 1, "monto": 1137.86}, {"region": "Maule", "nOc": 2, "monto": 860.05}, {"region": "Arica y Parinacota", "nOc": 1, "monto": 693.3}, {"region": "Ñuble", "nOc": 1, "monto": 289.63}, {"region": "Los Ríos", "nOc": 1, "monto": 105.31}]};
+const ROWS = [["559222-1-CM25", "2239-12-LR23", "nov-2025", "2025-11-04", "Aceptada", "60.107.000-6", "SERVICIO NACIONAL DE LA MUJER Y LA EQUIDAD DE GENERO", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 11436.14], ["1373053-12-CM25", "2239-12-LR23", "nov-2025", "2025-11-05", "Aceptada", "82.174.900-k", "SERVICIO DE COOPERACION TECNICA", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 192.02], ["3881-909-CM25", "2239-12-LR23", "nov-2025", "2025-11-07", "Aceptada", "69.141.000-5", "I MUNICIPALIDAD DE PINTO", "Ñuble", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 289.63], ["2702-543-CM25", "2239-12-LR23", "nov-2025", "2025-11-10", "Aceptada", "69.071.800-6", "I MUNICIPALIDAD DE TALAGANTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 225.55], ["1211992-213-CM25", "2239-12-LR23", "nov-2025", "2025-11-11", "Recepcion Conforme", "65.192.585-1", "CORPORACIÓN YUNUS", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 40.64], ["2701-829-CM25", "2239-12-LR23", "nov-2025", "2025-11-20", "Aceptada", "69.071.800-6", "I MUNICIPALIDAD DE TALAGANTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 165.61], ["670784-13-CM25", "2239-12-LR23", "nov-2025", "2025-11-21", "Aceptada", "60.818.000-1", "Superintendencia de Pensiones", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 211.33], ["1169411-2-SE25", "2239-12-LR23", "nov-2025", "2025-11-21", "Aceptada", "61.501.000-6", "SUBSECRETARIA DEL TRABAJO", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 2633.47], ["550716-15-CM25", "2239-12-LR23", "nov-2025", "2025-11-26", "Recepcion Conforme", "65.961.370-0", "Servicio de Bienestar del Personal del Gobierno Re", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 148.34], ["1477-369-CM25", "2239-12-LR23", "nov-2025", "2025-11-26", "Aceptada", "70.786.200-9", "Corporación de Asistencia Judicial RM", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 756.92], ["2702-582-CM25", "2239-12-LR23", "nov-2025", "2025-11-27", "Aceptada", "69.071.800-6", "I MUNICIPALIDAD DE TALAGANTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 225.55], ["2702-583-CM25", "2239-12-LR23", "nov-2025", "2025-11-27", "Aceptada", "69.071.800-6", "I MUNICIPALIDAD DE TALAGANTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 225.55], ["1186801-14-CM25", "2239-12-LR23", "dic-2025", "2025-12-01", "Aceptada", "60.930.000-0", "CONSEJO NACIONAL DE EDUCACION", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 26.72], ["1186801-15-CM25", "2239-12-LR23", "dic-2025", "2025-12-01", "Aceptada", "60.930.000-0", "CONSEJO NACIONAL DE EDUCACION", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 25.86], ["3378-11858-CM25", "2239-12-LR23", "dic-2025", "2025-12-02", "Aceptada", "61.101.030-3", "EJERCITO DE CHILE HOSPITAL MILITAR DE SANTIAGO", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 348.49], ["307-102-CM25", "2239-12-LR23", "dic-2025", "2025-12-03", "Aceptada", "60.919.000-0", "Consejo de Rectores de las Universidades Chilenas", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 14.56], ["307-103-CM25", "2239-12-LR23", "dic-2025", "2025-12-03", "Recepcion Conforme", "60.919.000-0", "Consejo de Rectores de las Universidades Chilenas", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 13.1], ["1373053-13-CM25", "2239-12-LR23", "dic-2025", "2025-12-03", "Aceptada", "82.174.900-k", "SERVICIO DE COOPERACION TECNICA", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 197.1], ["3378-12106-CM25", "2239-12-LR23", "dic-2025", "2025-12-09", "Aceptada", "61.101.030-3", "EJERCITO DE CHILE HOSPITAL MILITAR DE SANTIAGO", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 350.52], ["1211992-229-CM25", "2239-12-LR23", "dic-2025", "2025-12-10", "Recepcion Conforme", "65.192.585-1", "CORPORACIÓN YUNUS", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 41.66], ["544143-14-CM25", "2239-12-LR23", "dic-2025", "2025-12-11", "Aceptada", "60.701.002-1", "SERV NACIONAL DE PESCA", "Valparaíso", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 773.93], ["550716-16-CM25", "2239-12-LR23", "dic-2025", "2025-12-15", "Recepcion Conforme", "65.961.370-0", "Servicio de Bienestar del Personal del Gobierno Re", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 149.35], ["670784-16-CM25", "2239-12-LR23", "dic-2025", "2025-12-18", "Aceptada", "60.818.000-1", "Superintendencia de Pensiones", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 215.39], ["1373053-14-CM25", "2239-12-LR23", "dic-2025", "2025-12-18", "Aceptada", "82.174.900-k", "SERVICIO DE COOPERACION TECNICA", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 192.02], ["1477-416-CM25", "2239-12-LR23", "dic-2025", "2025-12-19", "Aceptada", "70.786.200-9", "Corporación de Asistencia Judicial RM", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 754.89], ["2341-693-CM25", "2239-12-LR23", "dic-2025", "2025-12-22", "Aceptada", "69.072.700-5", "I MUNICIPALIDAD DE SAN BERNARDO", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 6949.56], ["598002-22-SE25", "2239-12-LR23", "dic-2025", "2025-12-26", "Recepcion Conforme", "60.810.001-6", "Servicio de Bienestar del Personal de la SVS", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 11418.24], ["544143-15-CM25", "2239-12-LR23", "dic-2025", "2025-12-26", "Aceptada", "60.701.002-1", "SERV NACIONAL DE PESCA", "Valparaíso", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 774.89], ["1217436-21-CM25", "2239-12-LR23", "dic-2025", "2025-12-30", "Aceptada", "61.221.000-4", "SERVICIO DE BIENESTAR", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1200.91], ["1217436-22-CM25", "2239-12-LR23", "dic-2025", "2025-12-30", "Aceptada", "61.221.000-4", "SERVICIO DE BIENESTAR", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1200.91], ["4700-23-CM25", "2239-12-LR23", "dic-2025", "2025-12-31", "Aceptada", "73.362.800-6", "BIENESTAR DEL CONSEJO DE DEFENSA DEL ESTADO", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 64.01], ["425-1046-SE25", "2239-12-LR23", "dic-2025", "2025-12-31", "Aceptada", "60.301.001-9", "CORP ADMINISTRATIVA DEL PODER JUDICIAL", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 130917.36], ["1076575-1-CM26", "2239-12-LR23", "ene-2026", "2026-01-02", "Aceptada", "60.110.000-2", "INSTITUTO NACIONAL DE LA JUVENTUD", "Lib. Gral. Bdo. O'Higgins", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1632.34], ["2701-5-CM26", "2239-12-LR23", "ene-2026", "2026-01-06", "Aceptada", "69.071.800-6", "I MUNICIPALIDAD DE TALAGANTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 165.65], ["574800-1-CM26", "2239-12-LR23", "ene-2026", "2026-01-06", "Aceptada", "60.601.000-1", "Subsecretaria de Relaciones Exteriores", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1448.04], ["5780-1-CM26", "2239-12-LR23", "ene-2026", "2026-01-08", "Aceptada", "60.819.000-7", "Superintendencia de Salud", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 329.1], ["566513-1-CM26", "2239-12-LR23", "ene-2026", "2026-01-08", "Recepcion Conforme", "72.222.000-5", "GOBIERNO REGIONAL DE AYSEN", "Aysén", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1566.52], ["1186801-1-CM26", "2239-12-LR23", "ene-2026", "2026-01-12", "Aceptada", "60.930.000-0", "CONSEJO NACIONAL DE EDUCACION", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 27.93], ["886182-9-SE26", "2239-12-LR23", "ene-2026", "2026-01-12", "Aceptada", "61.980.520-8", "Universidad de Aysen", "Aysén", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 244.41], ["1211992-9-CM26", "2239-12-LR23", "ene-2026", "2026-01-13", "Recepcion Conforme", "65.192.585-1", "CORPORACIÓN YUNUS", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 38.4], ["606-25-CM26", "2239-12-LR23", "ene-2026", "2026-01-14", "Aceptada", "60.513.000-3", "SUBSECRETARIA DE TELECOMUNICACIONES", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 131.64], ["886182-13-CM26", "2239-12-LR23", "ene-2026", "2026-01-14", "Recepcion Conforme", "61.980.520-8", "Universidad de Aysen", "Aysén", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1557.55], ["1221275-1-CM26", "2239-12-LR23", "ene-2026", "2026-01-15", "Recepcion Conforme", "60.108.000-1", "AGENCIA CHILENA DE COOPERACION INTERNACIONAL PARA EL DESARROLLO", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1039.96], ["2701-18-CM26", "2239-12-LR23", "ene-2026", "2026-01-15", "Aceptada", "69.071.800-6", "I MUNICIPALIDAD DE TALAGANTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 176.62], ["786370-1-CM26", "2239-12-LR23", "ene-2026", "2026-01-21", "Recepcion Conforme", "61.980.170-9", "SERVICIO NACIONAL PARA LA PREVENCION Y REHABILITACION DEL CONSUMO DE D", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1480.95], ["1157285-1-SE26", "2239-12-LR23", "ene-2026", "2026-01-21", "Aceptada", "62.000.860-5", "Bienestar SSFFAA", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 1138.69], ["1111089-31-CM26", "2239-12-LR23", "ene-2026", "2026-01-21", "Aceptada", "60.915.000-9", "Agencia Nacional de Investigación y Desarrollo (ANID)", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 988.72], ["1113381-1-CM26", "2239-12-LR23", "ene-2026", "2026-01-21", "Aceptada", "72.232.200-2", "GOBIERNO REGIONAL DE ATACAMA", "Atacama", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1619.17], ["544515-1-CM26", "2239-12-LR23", "ene-2026", "2026-01-21", "Aceptada", "72.240.400-9", "GOBIERNO REGIONAL VI REGION DEL LI BERTADOR B O\"HIGGINS", "Lib. Gral. Bdo. O'Higgins", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1145.27], ["544515-2-CM26", "2239-12-LR23", "ene-2026", "2026-01-21", "Aceptada", "72.240.400-9", "GOBIERNO REGIONAL VI REGION DEL LI BERTADOR B O\"HIGGINS", "Lib. Gral. Bdo. O'Higgins", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 495.9], ["1153625-3-CM26", "2239-12-LR23", "ene-2026", "2026-01-21", "Aceptada", "62.000.670-K", "SUBSECRETARIA DE RELACIONES ECONOMICAS INTERNACIONALES", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1487.53], ["785515-1-CM26", "2239-12-LR23", "ene-2026", "2026-01-22", "Aceptada", "65.074.471-3", "Servicio de Bienestar de los T.T.A.", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1606.01], ["2702-32-CM26", "2239-12-LR23", "ene-2026", "2026-01-22", "Aceptada", "69.071.800-6", "I MUNICIPALIDAD DE TALAGANTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 242.44], ["1273563-1-CM26", "2239-12-LR23", "ene-2026", "2026-01-23", "Aceptada", "62.000.740-4", "Servicio de Bienestar", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 895.15], ["670784-1-CM26", "2239-12-LR23", "ene-2026", "2026-01-26", "Aceptada", "60.818.000-1", "Superintendencia de Pensiones", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 231.47], ["5144-1-CM26", "2239-12-LR23", "ene-2026", "2026-01-26", "Aceptada", "75.943.840-K", "Servicio del Bienestar Gobierno Regional Coquimbo", "Coquimbo", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1137.86], ["1373053-1-CM26", "2239-12-LR23", "ene-2026", "2026-01-26", "Aceptada", "82.174.900-k", "SERVICIO DE COOPERACION TECNICA", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 209.53], ["543511-1-CM26", "2239-12-LR23", "ene-2026", "2026-01-27", "Recepcion Conforme", "61.706.000-0", "COMISIÓN CHILENA DEL COBRE - COCHILCO", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 208.43], ["626802-3-CM26", "2239-12-LR23", "ene-2026", "2026-01-27", "Aceptada", "65.034.169-4", "Consejo Resolutivo de Asignaciones Parlamentaria", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 102.02], ["5134-2-CM26", "2239-12-LR23", "ene-2026", "2026-01-30", "Aceptada", "61.005.000-k", "Superintendencia de Insolvencia y Reemprendimiento", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1724.48], ["1477-24-CM26", "2239-12-LR23", "ene-2026", "2026-01-30", "Aceptada", "70.786.200-9", "Corporación de Asistencia Judicial RM", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 819.46], ["550716-1-CM26", "2239-12-LR23", "ene-2026", "2026-01-30", "Recepcion Conforme", "65.961.370-0", "Servicio de Bienestar del Personal del Gobierno Re", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 156.87], ["772003-2-CM26", "2239-12-LR23", "ene-2026", "2026-01-30", "Aceptada", "61.979.930-5", "SUBSECRETARIA DEL MEDIO AMBIENTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1341.63], ["1078191-1-CM26", "2239-12-LR23", "ene-2026", "2026-01-30", "Aceptada", "72.221.800-0", "GOBIERNO REGIONAL DECIMA REGION LOS LAGOS", "Los Lagos", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 155.77], ["553883-1-CM26", "2239-12-LR23", "feb-2026", "2026-02-03", "Aceptada", "72.224.100-2", "GOBIERNO REGIONAL DE ANTOFAGASTA", "Antofagasta", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1369.06], ["307-11-CM26", "2239-12-LR23", "feb-2026", "2026-02-03", "Aceptada", "60.919.000-0", "Consejo de Rectores de las Universidades Chilenas", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 14.15], ["606591-4-CM26", "2239-12-LR23", "feb-2026", "2026-02-05", "Recepcion Conforme", "60.718.000-8", "COMISION NACIONAL DE RIEGO", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 769.5], ["606591-5-CM26", "2239-12-LR23", "feb-2026", "2026-02-05", "Recepcion Conforme", "60.718.000-8", "COMISION NACIONAL DE RIEGO", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 710.86], ["931071-1-CM26", "2239-12-LR23", "feb-2026", "2026-02-06", "Aceptada", "61.980.750-2", "Servicio de bienestar UAF", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 645.04], ["1114502-2-CM26", "2239-12-LR23", "feb-2026", "2026-02-10", "Aceptada", "65.081.366-9", "Servicio de bienestar del personal del CNTV", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1026.79], ["543511-2-CM26", "2239-12-LR23", "feb-2026", "2026-02-12", "Recepcion Conforme", "61.706.000-0", "COMISIÓN CHILENA DEL COBRE - COCHILCO", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1042.15], ["609685-1-CM26", "2239-12-LR23", "feb-2026", "2026-02-13", "Aceptada", "53.314.782-8", "Servicio de Bienestar Dirección de Compras y Contratación Pública", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1474.37], ["554892-1-CM26", "2239-12-LR23", "feb-2026", "2026-02-13", "Aceptada", "72.232.500-1", "GOBIERNO REGIONAL DE LA REGION DEL BIO BIO", "Bío-Bío", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1329.56], ["1211992-22-CM26", "2239-12-LR23", "feb-2026", "2026-02-17", "Recepcion Conforme", "65.192.585-1", "CORPORACIÓN YUNUS", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 34.01], ["544143-1-CM26", "2239-12-LR23", "feb-2026", "2026-02-17", "Aceptada", "60.701.002-1", "SERV NACIONAL DE PESCA", "Valparaíso", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 829.43], ["2701-85-CM26", "2239-12-LR23", "feb-2026", "2026-02-17", "Aceptada", "69.071.800-6", "I MUNICIPALIDAD DE TALAGANTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 177.71], ["550716-2-CM26", "2239-12-LR23", "feb-2026", "2026-02-19", "Recepcion Conforme", "65.961.370-0", "Servicio de Bienestar del Personal del Gobierno Re", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 156.87], ["3378-1718-CM26", "2239-12-LR23", "feb-2026", "2026-02-25", "Recepcion Conforme", "61.101.030-3", "EJERCITO DE CHILE HOSPITAL MILITAR DE SANTIAGO", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 378.46], ["670784-2-CM26", "2239-12-LR23", "feb-2026", "2026-02-25", "Recepcion Conforme", "60.818.000-1", "Superintendencia de Pensiones", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 232.56], ["1477-47-CM26", "2239-12-LR23", "feb-2026", "2026-02-25", "Aceptada", "70.786.200-9", "Corporación de Asistencia Judicial RM", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 820.56], ["1186801-2-CM26", "2239-12-LR23", "feb-2026", "2026-02-26", "Aceptada", "60.930.000-0", "CONSEJO NACIONAL DE EDUCACION", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 27.93], ["1373053-2-CM26", "2239-12-LR23", "feb-2026", "2026-02-27", "Aceptada", "82.174.900-k", "SERVICIO DE COOPERACION TECNICA", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 210.62], ["3378-1719-CM26", "2239-12-LR23", "mar-2026", "2026-03-02", "Recepcion Conforme", "61.101.030-3", "EJERCITO DE CHILE HOSPITAL MILITAR DE SANTIAGO", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 372.98], ["307-14-CM26", "2239-12-LR23", "mar-2026", "2026-03-02", "Aceptada", "60.919.000-0", "Consejo de Rectores de las Universidades Chilenas", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 14.15], ["2702-83-CM26", "2239-12-LR23", "mar-2026", "2026-03-02", "Aceptada", "69.071.800-6", "I MUNICIPALIDAD DE TALAGANTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 243.53], ["544143-2-CM26", "2239-12-LR23", "mar-2026", "2026-03-02", "Aceptada", "60.701.002-1", "SERV NACIONAL DE PESCA", "Valparaíso", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 829.43], ["575437-3-CM26", "2239-12-LR23", "mar-2026", "2026-03-03", "Aceptada", "60.805.312-3", "Bienestar", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 23652.47], ["574800-3-SE26", "2239-12-LR23", "mar-2026", "2026-03-03", "Aceptada", "60.601.000-1", "Subsecretaria de Relaciones Exteriores", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 15916.37], ["593951-78-SE26", "2239-12-LR23", "mar-2026", "2026-03-05", "Aceptada", "70.574.900-0", "FUNDACION EDUCACIONAL PARA EL DESAROLLO INTEGRAL DE LA NIÑEZ", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 123028.15], ["2413-18-SE26", "2239-12-LR23", "mar-2026", "2026-03-06", "Recepcion Conforme", "69.254.100-6", "I MUNICIPALIDAD DE LO PRADO", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 7240.2], ["1211992-29-CM26", "2239-12-LR23", "mar-2026", "2026-03-10", "Recepcion Conforme", "65.192.585-1", "CORPORACIÓN YUNUS", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 28.52], ["2403-118-CM26", "2239-12-LR23", "mar-2026", "2026-03-13", "Recepcion Conforme", "69.254.000-k", "I MUNICIPALIDAD DE PENALOLEN", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 6766.3], ["2595-115-CM26", "2239-12-LR23", "mar-2026", "2026-03-17", "Aceptada", "69.130.700-K", "I MUNICIPALIDAD DE PARRAL", "Maule", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 272.06], ["2701-151-CM26", "2239-12-LR23", "mar-2026", "2026-03-24", "Aceptada", "69.071.800-6", "I MUNICIPALIDAD DE TALAGANTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 178.81], ["1078191-2-CM26", "2239-12-LR23", "mar-2026", "2026-03-24", "Aceptada", "72.221.800-0", "GOBIERNO REGIONAL DECIMA REGION LOS LAGOS", "Los Lagos", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1713.51], ["2702-134-CM26", "2239-12-LR23", "mar-2026", "2026-03-25", "Aceptada", "69.071.800-6", "I MUNICIPALIDAD DE TALAGANTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 244.63], ["670784-3-CM26", "2239-12-LR23", "mar-2026", "2026-03-26", "Aceptada", "60.818.000-1", "Superintendencia de Pensiones", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 232.56], ["1149280-4-SE26", "2239-12-LR23", "mar-2026", "2026-03-27", "Aceptada", "60.400.000-9", "CONTRALORIA GENERAL DE LA REPUBLICA", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 16626.13], ["1211992-40-CM26", "2239-12-LR23", "mar-2026", "2026-03-27", "Recepcion Conforme", "65.192.585-1", "CORPORACIÓN YUNUS", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 4.39], ["1186801-3-CM26", "2239-12-LR23", "mar-2026", "2026-03-27", "Aceptada", "60.930.000-0", "CONSEJO NACIONAL DE EDUCACION", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 27.93], ["772003-3-CM26", "2239-12-LR23", "mar-2026", "2026-03-30", "Aceptada", "61.979.930-5", "SUBSECRETARIA DEL MEDIO AMBIENTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1341.63], ["1477-81-CM26", "2239-12-LR23", "mar-2026", "2026-03-31", "Aceptada", "70.786.200-9", "Corporación de Asistencia Judicial RM", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 824.94], ["544143-4-CM26", "2239-12-LR23", "abr-2026", "2026-04-01", "Aceptada", "60.701.002-1", "SERV NACIONAL DE PESCA", "Valparaíso", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 834.64], ["1373053-3-CM26", "2239-12-LR23", "abr-2026", "2026-04-02", "Aceptada", "82.174.900-k", "SERVICIO DE COOPERACION TECNICA", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 212.82], ["307-30-CM26", "2239-12-LR23", "abr-2026", "2026-04-02", "Aceptada", "60.919.000-0", "Consejo de Rectores de las Universidades Chilenas", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 15.72], ["603663-54-CM26", "2239-12-LR23", "abr-2026", "2026-04-02", "Aceptada", "65.028.707-K", "INSTITUTO NACIONAL DE DERECHOS HUMANOS", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1750.81], ["550716-3-CM26", "2239-12-LR23", "abr-2026", "2026-04-06", "Recepcion Conforme", "65.961.370-0", "Servicio de Bienestar del Personal del Gobierno Re", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 156.87], ["1211992-43-CM26", "2239-12-LR23", "abr-2026", "2026-04-07", "Recepcion Conforme", "65.192.585-1", "CORPORACIÓN YUNUS", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 28.52], ["2490-79-CM26", "2239-12-LR23", "abr-2026", "2026-04-09", "Aceptada", "69.070.300-9", "I MUNICIPALIDAD DE PROVIDENCIA", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 1009.19], ["5482-80-CM26", "2239-12-LR23", "abr-2026", "2026-04-14", "Aceptada", "69.070.500-1", "I MUNICIPALIDAD DE NUNOA", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 497.45], ["5482-81-CM26", "2239-12-LR23", "abr-2026", "2026-04-14", "Aceptada", "69.070.500-1", "I MUNICIPALIDAD DE NUNOA", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 497.45], ["2701-207-CM26", "2239-12-LR23", "abr-2026", "2026-04-20", "Aceptada", "69.071.800-6", "I MUNICIPALIDAD DE TALAGANTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 177.71], ["2702-184-CM26", "2239-12-LR23", "abr-2026", "2026-04-22", "Aceptada", "69.071.800-6", "I MUNICIPALIDAD DE TALAGANTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 244.63], ["550716-4-CM26", "2239-12-LR23", "abr-2026", "2026-04-23", "Recepcion Conforme", "65.961.370-0", "Servicio de Bienestar del Personal del Gobierno Re", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 159.06], ["1495206-1-CM26", "2239-12-LR23", "abr-2026", "2026-04-24", "Aceptada", "61.981.340-5", "Servicio de Biodiversidad y Áreas Protegidas", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 71.91], ["1477-108-CM26", "2239-12-LR23", "abr-2026", "2026-04-24", "Aceptada", "70.786.200-9", "Corporación de Asistencia Judicial RM", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 823.85], ["1186801-4-CM26", "2239-12-LR23", "abr-2026", "2026-04-28", "Aceptada", "60.930.000-0", "CONSEJO NACIONAL DE EDUCACION", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 26.07], ["772003-4-CM26", "2239-12-LR23", "abr-2026", "2026-04-29", "Aceptada", "61.979.930-5", "SUBSECRETARIA DEL MEDIO AMBIENTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 797.52], ["307-44-CM26", "2239-12-LR23", "may-2026", "2026-05-05", "Aceptada", "60.919.000-0", "Consejo de Rectores de las Universidades Chilenas", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 15.72], ["1373053-5-CM26", "2239-12-LR23", "may-2026", "2026-05-06", "Aceptada", "82.174.900-k", "SERVICIO DE COOPERACION TECNICA", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 216.11], ["1211992-69-CM26", "2239-12-LR23", "may-2026", "2026-05-06", "Recepcion Conforme", "65.192.585-1", "CORPORACIÓN YUNUS", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 28.52], ["544143-5-CM26", "2239-12-LR23", "may-2026", "2026-05-08", "Aceptada", "60.701.002-1", "SERV NACIONAL DE PESCA", "Valparaíso", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 830.47], ["606591-6-CM26", "2239-12-LR23", "may-2026", "2026-05-12", "Recepcion Conforme", "60.718.000-8", "COMISION NACIONAL DE RIEGO", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 702.08], ["670784-6-CM26", "2239-12-LR23", "may-2026", "2026-05-13", "Aceptada", "60.818.000-1", "Superintendencia de Pensiones", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 229.27], ["2667-214-CM26", "2239-12-LR23", "may-2026", "2026-05-15", "Aceptada", "69.255.600-3", "I MUNICIPALIDAD DE VITACURA", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 7990.55], ["2595-203-CM26", "2239-12-LR23", "may-2026", "2026-05-15", "Aceptada", "69.130.700-K", "I MUNICIPALIDAD DE PARRAL", "Maule", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 587.99], ["2701-300-CM26", "2239-12-LR23", "may-2026", "2026-05-19", "Aceptada", "69.071.800-6", "I MUNICIPALIDAD DE TALAGANTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 178.81], ["1186801-5-CM26", "2239-12-LR23", "may-2026", "2026-05-20", "Aceptada", "60.930.000-0", "CONSEJO NACIONAL DE EDUCACION", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 26.07], ["670784-7-CM26", "2239-12-LR23", "may-2026", "2026-05-25", "Aceptada", "60.818.000-1", "Superintendencia de Pensiones", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 229.27], ["1111089-91-CM26", "2239-12-LR23", "may-2026", "2026-05-26", "Aceptada", "60.915.000-9", "Agencia Nacional de Investigación y Desarrollo (ANID)", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 3529.74], ["1373053-6-CM26", "2239-12-LR23", "may-2026", "2026-05-27", "Aceptada", "82.174.900-k", "SERVICIO DE COOPERACION TECNICA", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 209.53], ["550716-6-CM26", "2239-12-LR23", "may-2026", "2026-05-29", "Recepcion Conforme", "65.961.370-0", "Servicio de Bienestar del Personal del Gobierno Re", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 161.26], ["1495206-3-CM26", "2239-12-LR23", "may-2026", "2026-05-29", "Aceptada", "61.981.340-5", "Servicio de Biodiversidad y Áreas Protegidas", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 78.05], ["307-48-CM26", "2239-12-LR23", "jun-2026", "2026-06-01", "Aceptada", "60.919.000-0", "Consejo de Rectores de las Universidades Chilenas", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 15.72], ["2702-247-CM26", "2239-12-LR23", "jun-2026", "2026-06-01", "Aceptada", "69.071.800-6", "I MUNICIPALIDAD DE TALAGANTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 240.24], ["1477-163-CM26", "2239-12-LR23", "jun-2026", "2026-06-02", "Aceptada", "70.786.200-9", "Corporación de Asistencia Judicial RM", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 828.24], ["544143-6-CM26", "2239-12-LR23", "jun-2026", "2026-06-03", "Aceptada", "60.701.002-1", "SERV NACIONAL DE PESCA", "Valparaíso", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 836.73], ["1211992-116-CM26", "2239-12-LR23", "jun-2026", "2026-06-03", "Recepcion Conforme", "65.192.585-1", "CORPORACIÓN YUNUS", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 30.72], ["692264-2-SE26", "2239-12-LR23", "jun-2026", "2026-06-03", "Aceptada", "60.910.047-8", "UNIVERSIDAD METROPOLITANA DE CIENCIAS DE LA EDUCACION", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 9828.14], ["577258-1-CM26", "2239-12-LR23", "jun-2026", "2026-06-04", "Aceptada", "65.017.665-0", "Gobierno Regional de Arica y Parinacota", "Arica y Parinacota", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 693.3], ["1422032-52-CM26", "2239-12-LR23", "jun-2026", "2026-06-05", "Aceptada", "65.035.343-9", "CORPORACION REGIONAL DE DESARROLLO PRODUCTIVO DE LA REGION DE LOS RIOS", "Los Ríos", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 105.31], ["1515286-3-SE26", "2239-12-LR23", "jun-2026", "2026-06-05", "Aceptada", "53.337.014-4", "Fondo de Bienestar de la Corporación de Fomento ", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 17716.55], ["5212-57-CM26", "2239-12-LR23", "jun-2026", "2026-06-08", "Aceptada", "60.921.000-1", "UNIVERSIDAD DE VALPARAISO", "Valparaíso", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 24281.0], ["2701-376-CM26", "2239-12-LR23", "jun-2026", "2026-06-15", "Aceptada", "69.071.800-6", "I MUNICIPALIDAD DE TALAGANTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 177.71], ["550716-8-CM26", "2239-12-LR23", "jun-2026", "2026-06-16", "Aceptada", "65.961.370-0", "Servicio de Bienestar del Personal del Gobierno Re", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 160.16], ["1342-4-SE26", "2239-12-LR23", "jun-2026", "2026-06-17", "Aceptada", "60.109.000-7", "FONDO DE SOLIDARIDAD E INVERSION SOCIAL", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 6230.96], ["1157285-8-CM26", "2239-12-LR23", "jun-2026", "2026-06-19", "Aceptada", "62.000.860-5", "Bienestar SSFFAA", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1132.1], ["670784-8-CM26", "2239-12-LR23", "jun-2026", "2026-06-23", "Aceptada", "60.818.000-1", "Superintendencia de Pensiones", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 230.37], ["4700-10-CM26", "2239-12-LR23", "jun-2026", "2026-06-24", "Aceptada", "73.362.800-6", "BIENESTAR DEL CONSEJO DE DEFENSA DEL ESTADO", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 6976.92], ["1495206-5-CM26", "2239-12-LR23", "jun-2026", "2026-06-26", "Aceptada", "61.981.340-5", "Servicio de Biodiversidad y Áreas Protegidas", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 89.45], ["1186801-6-CM26", "2239-12-LR23", "jun-2026", "2026-06-26", "Aceptada", "60.930.000-0", "CONSEJO NACIONAL DE EDUCACION", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 27.0], ["1477-194-CM26", "2239-12-LR23", "jun-2026", "2026-06-26", "Aceptada", "70.786.200-9", "Corporación de Asistencia Judicial RM", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 830.43], ["1216062-700-CM26", "2239-12-LR23", "jun-2026", "2026-06-30", "Aceptada", "71.265.200-4", "Corporación Municipal de Lo Prado", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 1362.47], ["307-54-CM26", "2239-12-LR23", "jul-2026", "2026-07-01", "Aceptada", "60.919.000-0", "Consejo de Rectores de las Universidades Chilenas", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 15.72], ["544143-7-CM26", "2239-12-LR23", "jul-2026", "2026-07-02", "Aceptada", "60.701.002-1", "SERV NACIONAL DE PESCA", "Valparaíso", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 841.94], ["2702-311-CM26", "2239-12-LR23", "jul-2026", "2026-07-02", "Aceptada", "69.071.800-6", "I MUNICIPALIDAD DE TALAGANTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 241.34], ["1373053-8-CM26", "2239-12-LR23", "jul-2026", "2026-07-08", "Aceptada", "82.174.900-k", "SERVICIO DE COOPERACION TECNICA", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 211.72], ["545927-3-SE26", "2239-12-LR23", "jul-2026", "2026-07-15", "Aceptada", "61.212.000-5", "SUBSECRETARIA DE TRANSPORTES", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 13164.0], ["1211992-149-CM26", "2239-12-LR23", "jul-2026", "2026-07-15", "Aceptada", "65.192.585-1", "CORPORACIÓN YUNUS", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 37.3], ["550716-9-CM26", "2239-12-LR23", "jul-2026", "2026-07-15", "Aceptada", "65.961.370-0", "Servicio de Bienestar del Personal del Gobierno Re", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 160.16], ["772003-6-SE26", "2239-12-LR23", "jul-2026", "2026-07-22", "Aceptada", "61.979.930-5", "SUBSECRETARIA DEL MEDIO AMBIENTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 3527.95], ["772003-7-SE26", "2239-12-LR23", "jul-2026", "2026-07-22", "Aceptada", "61.979.930-5", "SUBSECRETARIA DEL MEDIO AMBIENTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 440.99], ["1186801-7-CM26", "2239-12-LR23", "jul-2026", "2026-07-29", "Aceptada", "60.930.000-0", "CONSEJO NACIONAL DE EDUCACION", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 27.0], ["2702-361-CM26", "2239-12-LR23", "jul-2026", "2026-07-29", "Aceptada", "69.071.800-6", "I MUNICIPALIDAD DE TALAGANTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 239.15], ["1211839-502-SE26", "2239-12-LR23", "jul-2026", "2026-07-30", "Aceptada", "70.856.400-1", "CORP MUNIC EDUC SALUD Y ATENCION", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", "Región de Tarapacá  ", "CLF", 32049.94], ["2701-496-CM26", "2239-12-LR23", "jul-2026", "2026-07-31", "Aceptada", "69.071.800-6", "I MUNICIPALIDAD DE TALAGANTE", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 177.71], ["1477-242-CM26", "2239-12-LR23", "jul-2026", "2026-07-31", "Aceptada", "70.786.200-9", "Corporación de Asistencia Judicial RM", "Metropolitana", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 828.24], ["544143-8-CM26", "2239-12-LR23", "jul-2026", "2026-07-31", "Aceptada", "60.701.002-1", "SERV NACIONAL DE PESCA", "Valparaíso", "BCI SEGUROS VIDA S A", "96.573.600-K", null, "CLF", 840.89]]; // [oc,lic,mes,fecha,estado,rutOrg,organismo,regionOrg,proveedor,rutProv,regionProv,moneda,monto]
+
+function fmtMonto(n){ return n==null ? '' : Number(n).toLocaleString('es-CL',{maximumFractionDigits:0}); }
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function estadoPill(estado){
+  const e = String(estado==null?'':estado);
+  if (!e) return '';
+  let cls = 'pill-neutral';
+  if (/Recepcion Conforme|Recepción Conforme|^Aceptada$/i.test(e)) cls = 'pill-ok';
+  else if (/Cancelada|No aceptada/i.test(e)) cls = 'pill-bad';
+  else if (/En Proceso|Enviada a Proveedor|Solicitud de Cancelacion/i.test(e)) cls = 'pill-warn';
+  return '<span class="pill '+cls+'">'+esc(e)+'</span>';
+}
+
+const KPI_ICONS = {
+  oc: '<path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><line x1="9" y1="17" x2="15" y2="17"/><line x1="9" y1="13" x2="11" y2="13"/>',
+  prov: '<rect x="1" y="7" width="15" height="10" rx="1"/><path d="M16 10h4l3 3v4h-7z"/><circle cx="6" cy="20" r="2"/><circle cx="18.5" cy="20" r="2"/>',
+  org: '<line x1="3" y1="21" x2="21" y2="21"/><line x1="5" y1="21" x2="5" y2="10"/><line x1="19" y1="21" x2="19" y2="10"/><polygon points="12 3 3 9 21 9"/><line x1="9" y1="21" x2="9" y2="10"/><line x1="15" y1="21" x2="15" y2="10"/>',
+  monto: '<line x1="12" y1="2" x2="12" y2="22"/><path d="M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>'
+};
+function kpiIcon(type){
+  return '<svg class="icon kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(KPI_ICONS[type]||'')+'</svg>';
+}
+// KPIs
+try {
+  const el = document.getElementById('kpis');
+  let montosTxt = AGG.montos.map(m => '$' + fmtMonto(m.monto) + ' ' + m.moneda).join(' + ');
+  const kpis = [
+    ['N° de órdenes de compra', AGG.nOc, 'oc'],
+    ['Proveedores distintos', AGG.nProveedores, 'prov'],
+    ['Organismos compradores', AGG.nOrganismos, 'org'],
+    ['Monto total', montosTxt, 'monto'],
+  ];
+  el.innerHTML = kpis.map(k => '<div class="kpi kpi-'+k[2]+'"><p class="lbl">'+kpiIcon(k[2])+k[0]+'</p><p class="val">'+k[1]+'</p></div>').join('');
+} catch(e) { console.error('Error en KPIs', e); }
+
+const CC_COLORS = ['#004677','#007096','#6BCCD6','#613B75','#E94860','#51283C','#E73438','#3C5459'];
+const SVG_NS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs){
+  const el = document.createElementNS(SVG_NS, tag);
+  for (const k in attrs) el.setAttribute(k, attrs[k]);
+  return el;
+}
+function clearEl(el){ while (el.firstChild) el.removeChild(el.firstChild); }
+function fmtShort(n){
+  if (Math.abs(n) >= 1e9) return (n/1e9).toFixed(1)+'B';
+  if (Math.abs(n) >= 1e6) return (n/1e6).toFixed(1)+'M';
+  if (Math.abs(n) >= 1e3) return (n/1e3).toFixed(0)+'k';
+  return String(Math.round(n));
+}
+function addLegend(container, series){
+  if (series.length <= 1) return;
+  const legend = document.createElement('div');
+  legend.style.cssText = 'display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;font-size:10.5px;color:#3C5459;';
+  series.forEach(s => {
+    const item = document.createElement('span');
+    item.innerHTML = '<span style="display:inline-block;width:9px;height:9px;background:'+(s.color||'#007096')+';border-radius:2px;margin-right:4px;"></span>'+s.label;
+    legend.appendChild(item);
+  });
+  container.appendChild(legend);
+}
+function renderBarChart(containerId, opts){
+  try {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    clearEl(container);
+    const labels = opts.labels, series = opts.series, horizontal = !!opts.horizontal, stacked = !!opts.stacked;
+    if (!labels.length){ container.innerHTML = '<p style="font-size:11.5px;color:#7A8B8E;font-style:italic;">Sin datos para este gráfico.</p>'; return; }
+    const W = 640, H = 300;
+    const marginLeft = horizontal ? 168 : 44;
+    const marginBottom = horizontal ? 20 : 68;
+    const marginTop = 10, marginRight = horizontal ? 40 : 12;
+    const plotW = W - marginLeft - marginRight, plotH = H - marginTop - marginBottom;
+    const svg = svgEl('svg', {viewBox:'0 0 '+W+' '+H, width:'100%', height:H});
+    let maxVal = 0;
+    labels.forEach((_, i) => {
+      if (stacked) { let sum=0; series.forEach(s=>sum+=(s.data[i]||0)); maxVal=Math.max(maxVal,sum); }
+      else { series.forEach(s=>maxVal=Math.max(maxVal, s.data[i]||0)); }
+    });
+    if (maxVal <= 0) maxVal = 1;
+    const niceMax = maxVal * 1.15;
+    svg.appendChild(svgEl('line',{x1:marginLeft,y1:marginTop,x2:marginLeft,y2:marginTop+plotH,stroke:'#D7E4E6'}));
+    svg.appendChild(svgEl('line',{x1:marginLeft,y1:marginTop+plotH,x2:marginLeft+plotW,y2:marginTop+plotH,stroke:'#D7E4E6'}));
+    const n = labels.length;
+    const bandSize = (horizontal ? plotH : plotW) / n;
+    const groupPad = bandSize * 0.22;
+    const groupSize = bandSize - groupPad;
+    const barW = stacked ? groupSize : groupSize / Math.max(series.length,1);
+    labels.forEach((lab, i) => {
+      const target = (opts.links && opts.links[i]) ? svgEl('a', {href:opts.links[i], target:'_blank', rel:'noopener'}) : null;
+      if (target) target.style.cursor = 'pointer';
+      let offset = 0;
+      series.forEach((s, si) => {
+        const val = s.data[i] || 0;
+        const color = s.color || CC_COLORS[si % CC_COLORS.length];
+        if (horizontal) {
+          const y = marginTop + i*bandSize + groupPad/2 + (stacked?0:si*barW);
+          const w = (val/niceMax) * plotW;
+          const x = marginLeft + (stacked ? (offset/niceMax)*plotW : 0);
+          const rectH = svgEl('rect',{x, y, width:Math.max(w,0), height:Math.max(barW*0.82,1), fill:color, rx:2});
+          const titleH = svgEl('title',{}); titleH.textContent = lab + (series.length>1?' · '+s.label:'') + ': ' + (opts.valueFormatter||fmtShort)(val);
+          rectH.appendChild(titleH);
+          (target||svg).appendChild(rectH);
+          if (series.length===1) {
+            const t = svgEl('text',{x:x+w+5, y:y+barW*0.82*0.72, 'font-size':'9.5', fill:'#3C5459'});
+            t.textContent = fmtShort(val); (target||svg).appendChild(t);
+          }
+        } else {
+          const barH = (val/niceMax) * plotH;
+          const x = marginLeft + i*bandSize + groupPad/2 + (stacked?0:si*barW);
+          const y = marginTop + plotH - barH - (stacked ? (offset/niceMax)*plotH : 0);
+          const rectV = svgEl('rect',{x, y, width:Math.max(barW*0.82,1), height:Math.max(barH,0), fill:color, rx:2});
+          const titleV = svgEl('title',{}); titleV.textContent = lab + (series.length>1?' · '+s.label:'') + ': ' + (opts.valueFormatter||fmtShort)(val);
+          rectV.appendChild(titleV);
+          (target||svg).appendChild(rectV);
+        }
+        offset += val;
+      });
+      if (!horizontal && opts.showValues) {
+        const topY = marginTop + plotH - (offset/niceMax)*plotH;
+        const xVal = marginLeft + i*bandSize + bandSize/2;
+        const tv = svgEl('text',{x:xVal, y:Math.max(topY-4, marginTop+9), 'text-anchor':'middle', 'font-size':'9', fill:'#3C5459', 'font-weight':'600'});
+        tv.textContent = (opts.valueFormatter || fmtShort)(offset);
+        (target||svg).appendChild(tv);
+      }
+      if (horizontal) {
+        const y = marginTop + i*bandSize + bandSize/2;
+        const t = svgEl('text',{x:marginLeft-6, y:y+3, 'text-anchor':'end', 'font-size':'9.5', fill:'#3C5459'});
+        t.textContent = lab; (target||svg).appendChild(t);
+      } else {
+        const x = marginLeft + i*bandSize + bandSize/2;
+        const t = svgEl('text',{x, y:marginTop+plotH+14, 'text-anchor':'end', 'font-size':'9', fill:'#3C5459', transform:'rotate(-35 '+x+' '+(marginTop+plotH+14)+')'});
+        t.textContent = lab; (target||svg).appendChild(t);
+      }
+      if (target) svg.appendChild(target);
+    });
+    container.appendChild(svg);
+    addLegend(container, series);
+  } catch(e){
+    console.error('Error renderBarChart', containerId, e);
+    const el = document.getElementById(containerId);
+    if (el) el.innerHTML = '<p style="font-size:11.5px;color:#7A8B8E;font-style:italic;">No se pudo dibujar este gráfico.</p>';
+  }
+}
+function renderLineChart(containerId, opts){
+  try {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    clearEl(container);
+    const labels = opts.labels, series = opts.series;
+    if (!labels.length){ container.innerHTML = '<p style="font-size:11.5px;color:#7A8B8E;font-style:italic;">Sin datos para este gráfico.</p>'; return; }
+    const W=640, H=300, marginLeft=56, marginBottom=68, marginTop=10, marginRight=12;
+    const plotW=W-marginLeft-marginRight, plotH=H-marginTop-marginBottom;
+    const svg = svgEl('svg', {viewBox:'0 0 '+W+' '+H, width:'100%', height:H});
+    let maxVal=0; series.forEach(s=>s.data.forEach(v=>{maxVal=Math.max(maxVal,v||0);}));
+    if (maxVal<=0) maxVal=1;
+    const niceMax = maxVal*1.15;
+    svg.appendChild(svgEl('line',{x1:marginLeft,y1:marginTop,x2:marginLeft,y2:marginTop+plotH,stroke:'#D7E4E6'}));
+    svg.appendChild(svgEl('line',{x1:marginLeft,y1:marginTop+plotH,x2:marginLeft+plotW,y2:marginTop+plotH,stroke:'#D7E4E6'}));
+    const n = labels.length;
+    const stepX = plotW / Math.max(n-1,1);
+    series.forEach((s, si) => {
+      const color = s.color || CC_COLORS[si % CC_COLORS.length];
+      const pts = labels.map((_,i) => (marginLeft+i*stepX)+','+(marginTop+plotH-((s.data[i]||0)/niceMax)*plotH));
+      svg.appendChild(svgEl('polyline',{points:pts.join(' '), fill:'none', stroke:color, 'stroke-width':'2'}));
+      labels.forEach((_,i) => {
+        const cx = marginLeft+i*stepX, cy = marginTop+plotH-((s.data[i]||0)/niceMax)*plotH;
+        const circ = svgEl('circle',{cx, cy, r:2.6, fill:color});
+        const titleC = svgEl('title',{}); titleC.textContent = labels[i] + (series.length>1?' · '+s.label:'') + ': ' + (opts.valueFormatter||fmtShort)(s.data[i]||0);
+        circ.appendChild(titleC);
+        svg.appendChild(circ);
+        if (opts.showValues) {
+          const tv = svgEl('text',{x:cx, y:Math.max(cy-6, marginTop+9), 'text-anchor':'middle', 'font-size':'8.5', fill:color, 'font-weight':'600'});
+          tv.textContent = (opts.valueFormatter || fmtShort)(s.data[i]||0);
+          svg.appendChild(tv);
+        }
+      });
+    });
+    labels.forEach((lab,i) => {
+      const x = marginLeft+i*stepX;
+      const t = svgEl('text',{x, y:marginTop+plotH+14, 'text-anchor':'end', 'font-size':'9', fill:'#3C5459', transform:'rotate(-35 '+x+' '+(marginTop+plotH+14)+')'});
+      t.textContent = lab; svg.appendChild(t);
+    });
+    container.appendChild(svg);
+    addLegend(container, series);
+  } catch(e){
+    console.error('Error renderLineChart', containerId, e);
+    const el = document.getElementById(containerId);
+    if (el) el.innerHTML = '<p style="font-size:11.5px;color:#7A8B8E;font-style:italic;">No se pudo dibujar este gráfico.</p>';
+  }
+}
+
+function buildCharts(){
+  const meses = [...new Set(AGG.porMes.map(m => m.mes))];
+  const monedas = [...new Set(AGG.porMes.map(m => m.moneda))];
+  const provRutByName = {}; ROWS.forEach(r => { if (r[8] && !provRutByName[r[8]]) provRutByName[r[8]] = r[9]; });
+  const orgRutByName = {}; ROWS.forEach(r => { if (r[6] && !orgRutByName[r[6]]) orgRutByName[r[6]] = r[5]; });
+
+  renderBarChart('chartMesOC', {
+    labels: meses, stacked: monedas.length>1, showValues: true, valueFormatter: v => Math.round(v).toLocaleString('es-CL'),
+    links: meses.map(me => {
+      const total = monedas.reduce((s,mo) => { const r = AGG.porMes.find(x => x.mes===me && x.moneda===mo); return s + (r ? r.nOc : 0); }, 0);
+      return total > 0 ? '../docs/oc-mensuales/' + META.slug + '/' + me + '.xlsx' : null;
+    }),
+    series: monedas.map((mo,i) => ({
+      label: mo, color: CC_COLORS[i % CC_COLORS.length],
+      data: meses.map(me => { const r = AGG.porMes.find(x => x.mes===me && x.moneda===mo); return r ? r.nOc : 0; })
+    }))
+  });
+
+  renderLineChart('chartMesMonto', {
+    labels: meses, showValues: true, valueFormatter: fmtShort,
+    series: monedas.map((mo,i) => ({
+      label: mo, color: CC_COLORS[i % CC_COLORS.length],
+      data: meses.map(me => { const r = AGG.porMes.find(x => x.mes===me && x.moneda===mo); return r ? r.monto : 0; })
+    }))
+  });
+
+  renderBarChart('chartProv', {
+    labels: AGG.topProv.map(p=>p.nombre.length>28?p.nombre.slice(0,26)+'…':p.nombre),
+    horizontal: true,
+    links: AGG.topProv.map(p => provRutByName[p.nombre] ? 'https://proveedor.mercadopublico.cl/ficha/'+encodeURIComponent(provRutByName[p.nombre]) : null),
+    series: [{ label:'Monto', color:'#007096', data: AGG.topProv.map(p=>p.monto) }]
+  });
+
+  renderBarChart('chartOrg', {
+    labels: AGG.topOrg.map(o=>o.nombre.length>28?o.nombre.slice(0,26)+'…':o.nombre),
+    horizontal: true,
+    links: AGG.topOrg.map(o => orgRutByName[o.nombre] ? 'https://comprador.mercadopublico.cl/ficha/informacion-general/'+encodeURIComponent(orgRutByName[o.nombre]) : null),
+    series: [{ label:'Monto', color:'#613B75', data: AGG.topOrg.map(o=>o.monto) }]
+  });
+
+  renderBarChart('chartRegion', {
+    labels: AGG.porRegion.map(r=>r.region), showValues: true, valueFormatter: v => Math.round(v).toLocaleString('es-CL'),
+    series: [{ label:'N° OC', color:'#6BCCD6', data: AGG.porRegion.map(r=>r.nOc) }]
+  });
+
+  const OC_URL_GC = 'https://www.mercadopublico.cl/PurchaseOrder/Modules/PO/DetailsPurchaseOrder.aspx?codigooc=';
+  const GC_CHART_MAX = 20;
+  const gcChartItems = GRANCOMPRA.slice(0, GC_CHART_MAX);
+  var gcSvgEl = document.getElementById('chartGranCompra');
+  var gcCardEl = gcSvgEl && gcSvgEl.closest('.chart-card');
+  var gcTitleEl = gcCardEl && gcCardEl.querySelector('h3');
+  if (gcTitleEl && GRANCOMPRA.length > GC_CHART_MAX) {
+    gcTitleEl.textContent += ' (primeros ' + GC_CHART_MAX + ' de ' + GRANCOMPRA.length + ')';
+  }
+  renderBarChart('chartGranCompra', {
+    labels: gcChartItems.map(it => 'GC ' + it.id + ' · ' + (it.organismo.length>22?it.organismo.slice(0,20)+'…':it.organismo)),
+    horizontal: true,
+    showValues: true,
+    valueFormatter: v => fmtShort(v),
+    links: gcChartItems.map(it => OC_URL_GC + encodeURIComponent(it.codigoOC)),
+    series: [{ label:'Monto', color:'#E94860', data: gcChartItems.map(it => it.monto || 0) }]
+  });
+}
+
+// Filters + table (populated first so they work even if charts fail)
+let filtered = ROWS.slice();
+let page = 1;
+const PAGE_SIZE = 50;
+
+function populateSelect(id, values){
+  const sel = document.getElementById(id);
+  values.forEach(v => { const o = document.createElement('option'); o.value=v; o.textContent=v; sel.appendChild(o); });
+}
+function populateDatalist(id, values){
+  const dl = document.getElementById(id);
+  values.forEach(v => { const o = document.createElement('option'); o.value=v; dl.appendChild(o); });
+}
+function anioDe(mesStr){ return mesStr ? String(mesStr).slice(-4) : ''; }
+try {
+  populateSelect('fAnio', [...new Set(ROWS.map(r=>anioDe(r[2])))].filter(Boolean).sort());
+  populateSelect('fMes', [...new Set(ROWS.map(r=>r[2]))]);
+  populateSelect('fRegion', [...new Set(ROWS.map(r=>r[7]))].filter(Boolean).sort());
+  populateSelect('fMoneda', [...new Set(ROWS.map(r=>r[11]))]);
+  populateDatalist('dlProv', [...new Set(ROWS.map(r=>r[8]))].filter(Boolean).sort());
+  populateDatalist('dlOrg', [...new Set(ROWS.map(r=>r[6]))].filter(Boolean).sort());
+} catch(e) { console.error('Error poblando filtros', e); }
+
+// RUT comprador — multi-selección
+const selectedRutOrg = new Set();
+let rutOrgOptions = [];
+try {
+  const map = new Map();
+  ROWS.forEach(r => { if (r[5]) map.set(r[5], r[6]); });
+  rutOrgOptions = [...map.entries()].map(([rut,nombre]) => ({rut, nombre})).sort((a,b)=>a.nombre.localeCompare(b.nombre));
+} catch(e) { console.error('Error preparando RUT comprador', e); }
+function renderRutOrgDropdown(filterText){
+  const dd = document.getElementById('msRutOrgDropdown');
+  const ft = (filterText||'').toLowerCase();
+  const matches = rutOrgOptions.filter(o => !ft || o.rut.toLowerCase().includes(ft) || o.nombre.toLowerCase().includes(ft)).slice(0,60);
+  dd.innerHTML = matches.length ? matches.map(o =>
+    '<div class="opt'+(selectedRutOrg.has(o.rut)?' selected':'')+'" data-rut="'+esc(o.rut)+'">'+esc(o.rut)+' — '+esc(o.nombre)+'</div>'
+  ).join('') : '<div class="opt" style="color:#7A8B8E;font-style:italic;cursor:default;">Sin coincidencias</div>';
+}
+function renderRutOrgChips(){
+  const chipsEl = document.getElementById('msRutOrgChips');
+  chipsEl.innerHTML = [...selectedRutOrg].map(rut => {
+    const o = rutOrgOptions.find(x=>x.rut===rut);
+    const label = o ? (o.rut+' — '+(o.nombre.length>26?o.nombre.slice(0,24)+'…':o.nombre)) : rut;
+    return '<span class="chip">'+esc(label)+'<button type="button" data-rut="'+esc(rut)+'">&times;</button></span>';
+  }).join('');
+}
+try {
+  const msInput = document.getElementById('msRutOrgInput');
+  const msDropdown = document.getElementById('msRutOrgDropdown');
+  msInput.addEventListener('focus', () => { renderRutOrgDropdown(msInput.value); msDropdown.classList.add('open'); });
+  msInput.addEventListener('input', () => { renderRutOrgDropdown(msInput.value); msDropdown.classList.add('open'); });
+  document.addEventListener('click', (e) => { if (!document.getElementById('msRutOrg').contains(e.target)) msDropdown.classList.remove('open'); });
+  msDropdown.addEventListener('click', (e) => {
+    const opt = e.target.closest('.opt[data-rut]');
+    if (!opt) return;
+    const rut = opt.getAttribute('data-rut');
+    if (selectedRutOrg.has(rut)) selectedRutOrg.delete(rut); else selectedRutOrg.add(rut);
+    renderRutOrgDropdown(msInput.value);
+    renderRutOrgChips();
+    applyFilters();
+  });
+  document.getElementById('msRutOrgChips').addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-rut]');
+    if (!btn) return;
+    selectedRutOrg.delete(btn.getAttribute('data-rut'));
+    renderRutOrgChips();
+    renderRutOrgDropdown(msInput.value);
+    applyFilters();
+  });
+} catch(e) { console.error('Error inicializando RUT comprador', e); }
+
+const COL_FILTERS = new Array(13).fill('');
+function applyFilters(){
+  const anio = document.getElementById('fAnio').value;
+  const mes = document.getElementById('fMes').value;
+  const region = document.getElementById('fRegion').value;
+  const moneda = document.getElementById('fMoneda').value;
+  const prov = document.getElementById('fProv').value.trim().toLowerCase();
+  const org = document.getElementById('fOrg').value.trim().toLowerCase();
+  filtered = ROWS.filter(r => {
+    if (anio && anioDe(r[2]) !== anio) return false;
+    if (mes && r[2] !== mes) return false;
+    if (selectedRutOrg.size && !selectedRutOrg.has(r[5])) return false;
+    if (region && r[7] !== region) return false;
+    if (moneda && r[11] !== moneda) return false;
+    if (prov && !String(r[8]).toLowerCase().includes(prov)) return false;
+    if (org && !String(r[6]).toLowerCase().includes(org)) return false;
+    for (let i=0;i<COL_FILTERS.length;i++){
+      const cf = COL_FILTERS[i];
+      if (cf && !String(r[i]==null?'':r[i]).toLowerCase().includes(cf)) return false;
+    }
+    return true;
+  });
+  page = 1;
+  renderTable();
+}
+document.querySelectorAll('input.col-filter').forEach(inp => {
+  inp.addEventListener('input', () => {
+    const idx = parseInt(inp.getAttribute('data-idx'), 10);
+    COL_FILTERS[idx] = inp.value.trim().toLowerCase();
+    applyFilters();
+  });
+});
+function resetFilters(){
+  document.getElementById('fAnio').value='';
+  document.getElementById('fMes').value='';
+  document.getElementById('fRegion').value='';
+  document.getElementById('fMoneda').value='';
+  document.getElementById('fProv').value='';
+  document.getElementById('fOrg').value='';
+  document.querySelectorAll('input.col-filter').forEach(inp => { inp.value=''; });
+  COL_FILTERS.fill('');
+  selectedRutOrg.clear();
+  document.getElementById('msRutOrgInput').value='';
+  renderRutOrgChips();
+  renderRutOrgDropdown('');
+  filtered = ROWS.slice();
+  page = 1;
+  renderTable();
+}
+function renderTable(){
+  const total = filtered.length;
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  if (page > totalPages) page = totalPages;
+  const start = (page-1)*PAGE_SIZE;
+  const pageRows = filtered.slice(start, start+PAGE_SIZE);
+  document.getElementById('tblBody').innerHTML = pageRows.map(r =>
+    '<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td>'+esc(r[2])+'</td><td>'+esc(r[3])+'</td><td>'+estadoPill(r[4])+'</td>'+
+    '<td>'+esc(r[5])+'</td><td>'+esc(r[6])+'</td><td>'+esc(r[7])+'</td><td>'+esc(r[8])+'</td><td>'+esc(r[9])+'</td>'+
+    '<td>'+esc(r[10])+'</td><td>'+esc(r[11])+'</td><td class="num">$'+fmtMonto(r[12])+'</td></tr>'
+  ).join('');
+  document.getElementById('resultInfo').textContent = total.toLocaleString('es-CL') + ' órdenes de compra encontradas (de ' + ROWS.length.toLocaleString('es-CL') + ' totales)';
+  document.getElementById('pageInfo').textContent = 'Página ' + page + ' de ' + totalPages;
+  document.getElementById('btnPrev').disabled = page<=1;
+  document.getElementById('btnNext').disabled = page>=totalPages;
+}
+function prevPage(){ if(page>1){ page--; renderTable(); } }
+function nextPage(){ page++; renderTable(); }
+
+renderTable();
+try { buildCharts(); } catch(e) { console.error('Error en buildCharts', e); }
+
+function exportCsv(){
+  const headers = ['CodigoOC','ID Licitacion','Mes','Fecha envio OC','Estado','RUT comprador','Organismo comprador','Region comprador','Proveedor','RUT proveedor','Region proveedor','Moneda','Monto'];
+  let csv = headers.join(';') + '\n';
+  filtered.forEach(r => { csv += r.map(v => '"'+String(v==null?'':v).replace(/"/g,'""')+'"').join(';') + '\n'; });
+  const blob = new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = META.slug + '_filtrado.csv';
+  a.click();
+}
+
+// column sort
+let sortState = {k:null, dir:1};
+document.querySelectorAll('table.dt thead tr:first-child th[data-k]').forEach((th,i) => {
+  th.addEventListener('click', () => {
+    const k = th.getAttribute('data-k');
+    const idxMap = ['oc','lic','mes','fecha','estado','rutOrg','organismo','regionOrg','proveedor','rutProv','regionProv','moneda','monto'];
+    const idx = idxMap.indexOf(k);
+    if (sortState.k===k) sortState.dir *= -1; else { sortState.k=k; sortState.dir=1; }
+    filtered.sort((a,b) => {
+      let va=a[idx], vb=b[idx];
+      if (typeof va === 'number' && typeof vb === 'number') return (va-vb)*sortState.dir;
+      va = String(va==null?'':va); vb = String(vb==null?'':vb);
+      return va.localeCompare(vb) * sortState.dir;
+    });
+    page = 1;
+    renderTable();
+  });
+});
+</script>
+</body>
+</html>

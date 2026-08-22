@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fichas de convenios marco vigentes - ChileCompra</title>
+<style>
+  :root {
+    --cc-dark: #07272C;
+    --cc-blue: #007096;
+    --cc-lightblue: #6BCCD6;
+    --cc-navy: #004677;
+    --cc-red: #E73438;
+    --cc-pink: #E94860;
+    --cc-wine: #51283C;
+    --cc-purple: #613B75;
+    --cc-green: #1F7A4D;
+    --cc-amber: #B5750B;
+    --cc-rose: #FAD8E1;
+    --surface-page: #F3F2F1;
+    --surface-card: #FFFFFF;
+    --text-secondary: #605E5C;
+    --border: #E1E1E1;
+    --tint-resumen: #EAF2F8;
+    --tint-ord: #E9F5F7;
+    --tint-extra: #F1EAF5;
+    --tint-dcto: #FCE9EE;
+    --tint-caract: #F7EEF1;
+    --pbi-yellow: #F2C811;
+    --pbi-shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+    --pbi-radius: 12px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 0 0 3rem;
+    background: var(--surface-page);
+    color: var(--cc-dark);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  header.cc-header {
+    background: var(--cc-navy);
+    color: #FFFFFF;
+    padding: 1.5rem 1.5rem 1.25rem;
+    border-bottom: 3px solid var(--pbi-yellow);
+  }
+  header.cc-header .header-row { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; max-width:1200px; margin:0 auto; }
+  header.cc-header .header-text { flex: 1 1 auto; min-width:0; }
+  header.cc-header .header-logo-chip { flex:0 0 auto; background:#fff; border-radius:6px; padding:8px 14px; box-shadow:0 1px 4px rgba(0,0,0,0.18); display:flex; align-items:center; }
+  header.cc-header .header-logo { height:32px; width:auto; display:block; }
+  header.cc-header .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cc-lightblue);
+    margin: 0 0 6px;
+    font-weight: bold;
+  }
+  header.cc-header h1 { font-size: 21px; font-weight: bold; margin: 0 0 4px; }
+  header.cc-header .subtitle { font-size: 13px; color: #CFE3E6; margin: 0; max-width: 760px; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .toolbar { margin: 1.5rem 0 1rem; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .search-box { position: relative; flex: 1 1 340px; }
+  .search-box .icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 15px; color: var(--cc-blue); pointer-events: none; }
+  .icon { width: 1em; height: 1em; display: inline-block; vertical-align: -0.15em; flex-shrink: 0; }
+  input#q {
+    width: 100%;
+    height: 40px;
+    padding: 0 14px 0 34px;
+    font-size: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface-card);
+    color: var(--cc-dark);
+  }
+  input#q:focus { outline: none; border-color: var(--cc-blue); box-shadow: 0 0 0 3px rgba(0,112,150,0.15); }
+  .match-toggle { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; padding: 0 12px; height: 40px; white-space: nowrap; }
+  .match-toggle input { margin: 0; }
+  .toolbar select { height: 40px; padding: 0 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-card); color: var(--cc-dark); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 12.5px; }
+  #count { flex-basis: 100%; font-size: 12px; color: var(--text-secondary); margin: 0 0 14px; }
+  mark { background: var(--cc-rose); color: var(--cc-wine); padding: 0 1px; border-radius: 2px; }
+  #grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--pbi-radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--pbi-shadow);
+    transition: box-shadow 0.15s ease;
+  }
+  .card:hover { box-shadow: 0 4px 10px rgba(0,0,0,.10), 0 1px 3px rgba(0,0,0,.06); }
+  .tile-head {
+    background: var(--tint-resumen);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.15rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    color: var(--cc-dark);
+  }
+  .card.featured .tile-head { background: var(--tint-caract); border-bottom-color: var(--cc-rose); }
+  .tile-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: rgba(0,70,119,0.10);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .tile-icon .icon { font-size: 24px; color: var(--cc-blue); }
+  .tile-head-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1 1 auto; }
+  .card-title p { font-weight: bold; font-size: 15px; margin: 0; color: var(--cc-dark); line-height: 1.3; }
+  .badge {
+    align-self: flex-start;
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: rgba(0,70,119,0.08);
+    border: 1px solid rgba(0,70,119,0.22);
+    color: var(--cc-navy);
+    letter-spacing: 0.02em;
+  }
+  .badge-link { text-decoration: none; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+  .badge-link:hover { background: rgba(0,70,119,0.16); text-decoration: none; }
+  .badge-link .icon { font-size: 9px; }
+  .badge-vig { align-self: flex-start; font-size: 10.5px; font-weight: 600; padding: 3px 9px; border-radius: 6px; letter-spacing: 0.02em; }
+  .badge-vig-ok { background: #E4F3E8; color: #1F7A4D; }
+  .badge-vig-warn { background: #FCEEDA; color: #8A5A00; }
+  .badge-vig-bad { background: var(--cc-rose); color: var(--cc-wine); }
+  .badge-oc-count { align-self: flex-start; font-size: 10.5px; font-weight: 600; padding: 3px 9px; border-radius: 6px; background: var(--surface-page); color: var(--text-secondary); border: 1px solid var(--border); letter-spacing: 0.02em; }
+  .tile-badges { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 2px; }
+  .sparkline { display: flex; align-items: flex-end; gap: 2px; height: 18px; margin-top: 6px; }
+  .spark-bar { flex: 1; background: rgba(0,70,119,0.18); border-radius: 1px 1px 0 0; min-width: 2px; }
+  .spark-bar-last { background: var(--cc-blue); }
+  .tile-body { padding: 1rem 1.15rem 1.15rem; display: flex; flex-direction: column; gap: 8px; }
+  .obj {
+    font-size: 12.5px; color: var(--text-secondary); margin: 0; line-height: 1.5;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .quick-facts { display: flex; flex-wrap: wrap; gap: 6px; margin: 2px 0 0; }
+  .quick-facts span { font-size: 10.5px; font-weight: 600; color: var(--cc-navy); background: var(--surface-page); border: 1px solid var(--border); border-radius: 6px; padding: 3px 7px; }
+  .full-toggle {
+    margin-top: 4px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--cc-navy);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .full-toggle .icon.chev { font-size: 13px; transition: transform 0.15s ease; }
+  .full-toggle.open .icon.chev { transform: rotate(180deg); }
+  .full-panel { display: none; flex-direction: column; gap: 8px; margin-top: 2px; }
+  .full-panel.open { display: flex; }
+  .facts { border-top: 1px solid var(--border); padding-top: 8px; margin-top: 2px; display: flex; flex-direction: column; gap: 5px; }
+  .facts p { font-size: 12px; margin: 0; color: var(--text-secondary); line-height: 1.4; }
+  .facts .icon { font-size: 13px; vertical-align: -2px; margin-right: 5px; color: var(--cc-blue); }
+  .docs { border-top: 1px solid var(--border); padding-top: 8px; margin-top: 2px; display: flex; flex-direction: column; gap: 5px; }
+  .docs a, .card > a.store-link, .tile-body a.store-link { font-size: 12px; color: var(--cc-navy); text-decoration: none; display: flex; align-items: center; gap: 5px; }
+  .docs a .icon, .card > a.store-link .icon, .tile-body a.store-link .icon { font-size: 13px; }
+  .docs a:hover, .card > a.store-link:hover, .tile-body a.store-link:hover { text-decoration: underline; }
+  .docs .unavailable { font-size: 12px; color: #7A8B8E; font-style: italic; }
+  a.store-link.cta {
+    margin-top: 6px;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    background: var(--cc-navy);
+    color: #fff !important;
+    padding: 9px 12px;
+    border-radius: 8px;
+    box-shadow: none;
+  }
+  a.store-link.cta:hover { background: var(--cc-blue); text-decoration: none !important; }
+  .btn-secondary {
+    margin-top: 4px;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 11.5px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    background: #fff;
+    color: var(--cc-navy) !important;
+    border: 1px solid var(--cc-navy);
+    padding: 8px 12px;
+    border-radius: 8px;
+  }
+  .btn-secondary:hover { background: var(--surface-page); text-decoration: none !important; }
+  .home-cta {
+    display: flex; align-items: center; gap: 10px; background: var(--cc-dark); color: #fff;
+    border-radius: var(--pbi-radius); padding: 10px 16px; margin: 0 0 1rem; font-size: 12.5px;
+    border-left: 3px solid var(--pbi-yellow);
+  }
+  .home-cta a { color: #fff; font-weight: 600; text-transform: uppercase; font-size: 11.5px; letter-spacing: 0.02em; text-decoration: none; display:flex; align-items:center; gap:6px; margin-left:auto; background: var(--cc-blue); padding: 8px 14px; border-radius: 6px; }
+  .home-cta a:hover { background: var(--cc-lightblue); color: var(--cc-dark); }
+  footer.cc-footer { margin-top: 2rem; font-size: 11px; color: var(--text-secondary); border-top: 1px solid var(--border); padding-top: 12px; }
+  footer.cc-footer a { color: var(--cc-navy); }
+  .note-box { background: var(--surface-card); border: 1px solid var(--border); box-shadow: var(--pbi-shadow); border-left: 4px solid var(--pbi-yellow); border-radius: 8px; padding: 10px 14px; font-size: 12px; color: var(--cc-wine); margin: 0 0 1rem; }
+
+  .pbi-toggle {
+    margin-top: 4px;
+    border-top: 1px solid var(--border);
+    padding-top: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--cc-navy);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .pbi-toggle .icon { font-size: 13px; transition: transform 0.15s ease; }
+  .pbi-toggle.open .icon { transform: rotate(180deg); }
+  .pbi-toggle .pbi-src { font-weight: normal; color: var(--text-secondary); margin-left: auto; font-size: 10.5px; }
+  .pbi-panel { display: none; flex-direction: column; gap: 8px; margin-top: 2px; }
+  .pbi-panel.open { display: flex; }
+  .pbi-panel-inline { display: flex; flex-direction: column; gap: 8px; margin-top: 2px; }
+  .pbi-warn {
+    font-size: 11px; color: var(--cc-wine); background: var(--cc-rose);
+    border-left: 3px solid var(--cc-red); padding: 6px 8px; line-height: 1.4;
+  }
+  .pbi-warn a { color: var(--cc-navy); font-weight: 700; text-decoration: underline; }
+  .pbi-warn a:hover { color: var(--cc-blue); }
+  .nota-docs { display: flex; flex-direction: column; gap: 3px; margin-top: 6px; }
+  .nota-docs a { font-size: 10.5px; color: var(--cc-navy); text-decoration: none; display: flex; align-items: center; gap: 5px; font-weight: bold; }
+  .nota-docs a:hover { text-decoration: underline; }
+  .pbi-section { background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; box-shadow: var(--pbi-shadow); padding: 8px 10px; }
+  .pbi-section h4 {
+    margin: 0 0 5px; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--cc-dark);
+  }
+  .pbi-section p { margin: 0 0 3px; font-size: 11.5px; color: var(--text-secondary); line-height: 1.4; }
+  .pbi-section p:last-child { margin-bottom: 0; }
+  .pbi-section p b { color: var(--cc-dark); }
+  .pbi-resumen { border-left: 3px solid var(--cc-navy); }
+  .pbi-ord { border-left: 3px solid var(--cc-blue); }
+  .pbi-extra { border-left: 3px solid var(--cc-purple); }
+  .pbi-dcto { border-left: 3px solid var(--pbi-yellow); }
+  .pbi-caract { border-left: 3px solid var(--cc-wine); }
+  .pbi-operativa { border-left: 3px solid var(--pbi-yellow); }
+  .pbi-operativa h4 { color: var(--cc-navy); }
+  .pbi-operativa ol { margin: 0; padding-left: 16px; display: flex; flex-direction: column; gap: 5px; }
+  .pbi-operativa li { font-size: 11.5px; color: var(--text-secondary); line-height: 1.4; }
+  .pbi-operativa li b { color: var(--cc-dark); }
+  .pbi-grancompra { border-left: 3px solid var(--cc-lightblue); }
+  .pbi-grancompra h4 { color: var(--cc-navy); }
+  .pbi-grancompra .gc-note { font-size: 11px; color: var(--text-secondary); margin: 0 0 6px; font-style: italic; }
+  .pbi-grancompra ul.gc-list { margin: 0; padding-left: 16px; display: flex; flex-direction: column; gap: 5px; list-style: disc; }
+  .pbi-grancompra li { font-size: 11.5px; color: var(--text-secondary); line-height: 1.4; }
+  .pbi-grancompra .gc-badge { display: inline-block; background: var(--cc-navy); color: #fff; font-size: 9.5px; padding: 1px 6px; border-radius: 10px; margin-left: 4px; }
+  .pbi-grancompra .gc-badge-alt { background: var(--cc-lightblue); color: var(--cc-dark); text-decoration: none; cursor: pointer; }
+  .pbi-grancompra .gc-badge-alt:hover { background: var(--cc-blue); color: #fff; }
+  .pbi-grancompra .gc-link { display: inline-flex; align-items: center; gap: 2px; font-size: 9.5px; color: var(--cc-blue); text-decoration: underline; margin-left: 4px; }
+  .pbi-grancompra .gc-link .icon { width: 10px; height: 10px; }
+  .pbi-grancompra details summary { cursor: pointer; font-size: 11.5px; color: var(--cc-navy); font-weight: 600; margin: 2px 0 6px; }
+  .pbi-grancompra details summary:hover { text-decoration: underline; }
+
+  .tx-toggle {
+    margin-top: 4px;
+    border-top: 1px solid var(--border);
+    padding-top: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--cc-navy);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .tx-toggle .icon.chev { font-size: 13px; transition: transform 0.15s ease; }
+  .tx-toggle.open .icon.chev { transform: rotate(180deg); }
+  .tx-toggle .tx-src { font-weight: normal; color: var(--text-secondary); margin-left: auto; font-size: 10.5px; }
+  .tx-panel { display: none; flex-direction: column; gap: 8px; margin-top: 2px; }
+  .tx-panel.open { display: flex; }
+  .tx-panel-inline { display: flex; flex-direction: column; gap: 8px; margin-top: 2px; }
+  .tx-section { border-radius: 8px; padding: 8px 10px; background: var(--surface-card); border: 1px solid var(--border); box-shadow: var(--pbi-shadow); border-left: 3px solid var(--cc-blue); }
+  .tx-section h4 {
+    margin: 0 0 5px; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--cc-dark);
+  }
+  .tx-section p { margin: 0 0 3px; font-size: 11.5px; color: var(--text-secondary); line-height: 1.4; }
+  .tx-section p b { color: var(--cc-dark); }
+  .tx-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 2px; }
+  .tx-table th, .tx-table td { text-align: left; padding: 3px 5px; border-bottom: 1px solid var(--border); }
+  .tx-table th { color: var(--cc-dark); font-weight: bold; background: var(--surface-card); }
+  .tx-table td { color: var(--text-secondary); }
+  .tx-table td.num, .tx-table th.num { text-align: right; white-space: nowrap; }
+  .tx-empty { font-size: 11.5px; color: var(--text-secondary); font-style: italic; }
+</style>
+</head>
+<body>
+<header class="cc-header">
+  <div class="header-row">
+    <div class="header-text">
+      <p class="eyebrow">Dirección ChileCompra · Mercado Público</p>
+      <h1>Fichas de convenios marco vigentes</h1>
+      <p class="subtitle">18 convenios marco de la Tienda ChileCompra, con ID de licitación, objeto, vigencia, moneda, cotizador, reajuste de precios, detalle ampliado del panel de seguimiento interno (Power BI) y datos transaccionales reales (nov-2025 a jul-2026) desde Datos Abiertos ChileCompra: órdenes de compra, top proveedores y organismos, y distribución regional.</p>
+    </div>
+    <div class="header-logo-chip">
+      <img class="header-logo" src="https://www.chilecompra.cl/wp-content/themes/chcptemp/images/logo-chilecompra-52.png" alt="ChileCompra" onerror="this.parentElement.style.display='none'" />
+    </div>
+  </div>
+</header>
+<div class="wrap">
+  <div class="home-cta">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-6"/><path d="M2 20h20"/></svg>
+    <span>Datos transaccionales de los 18 convenios consolidados en una sola vista, con filtros y gráficos.</span>
+    <a href="todas-las-transacciones.html" target="_blank" rel="noopener">Ver todas las transacciones <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M9 7h8v8"/></svg></a>
+  </div>
+  <div class="toolbar">
+    <div class="search-box">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="M20 20l-4.3-4.3"/></svg>
+      <input id="q" type="text" placeholder="Buscar por nombre, rubro, responsable, palabra clave o ID de licitación..." />
+    </div>
+    <label class="match-toggle"><input id="exact" type="checkbox" />Coincidencia exacta</label>
+    <select id="sortBy" title="Ordenar listado">
+      <option value="nombre">Ordenar: Nombre (A-Z)</option>
+      <option value="oc">N° de OC (mayor primero)</option>
+      <option value="monto">Monto transaccionado (mayor primero)</option>
+      <option value="vigencia">Vigencia (próxima a vencer primero)</option>
+    </select>
+    <select id="filterVig" title="Filtrar por vigencia">
+      <option value="">Vigencia: todas</option>
+      <option value="vigente">Vigentes</option>
+      <option value="porvencer">Por vencer (≤90 días)</option>
+      <option value="vencido">Vencidas</option>
+    </select>
+    <div id="count"></div>
+  </div>
+  <div id="grid"></div>
+  <footer class="cc-footer">
+    Fuentes: <a href="https://www.mercadopublico.cl/TiendaHome/" target="_blank" rel="noopener">Tienda Convenio Marco</a> ·
+    <a href="https://www.chilecompra.cl/convenio-marco-3/" target="_blank" rel="noopener">ChileCompra - Convenio Marco</a> ·
+    <a href="https://www.mercadopublico.cl/Home/BusquedaLicitacion" target="_blank" rel="noopener">Búsqueda de licitaciones</a> ·
+    Panel interno de seguimiento de convenios marco (Power BI) ·
+    <a href="https://datos-abiertos.chilecompra.cl/descargas/convenio-marco" target="_blank" rel="noopener">Datos Abiertos ChileCompra - Transacciones mensuales</a>
+  </footer>
+</div>
+<script>
+const data = [
+  {n:"Insumos y Dispositivos Médicos", id:"2239-21-LR23", icon:"ti-first-aid-kit",
+   obj:"Insumos médicos (curación, esterilización, quirúrgicos, sutura, EPP) y dispositivos médicos (sillas de ruedas, colchones clínicos, órtesis).",
+   vig:"14-06-2027", monto:"Monto licitado: $60.000.000 · contrato 24 meses renovable", cond:"Garantía fiel cumplimiento $2.000.000 vigente hasta 15-07-2026.",
+   moneda:"Peso chileno (CLP)", cotizador:"No — compra directa por catálogo", reajuste:"Ordinario cuatrimestral (2ª semana de abril, agosto y diciembre) desde el 4° mes de vigencia", duracion:"24 meses desde la adjudicación, con opción de renovación",
+   url:"https://conveniomarco.mercadopublico.cl/insumos2",
+   docs:[
+     {label:"Bases de licitación y modificaciones (PDF, ficha oficial Mercado Público)", url:"https://www.mercadopublico.cl/Procurement/Modules/Attachment/ViewAttachmentLC.aspx?enc=qOjcDI2t8B%2biO3%2bCXUFw2YHsvxrS87A140OpmXoo1p%2fQu9PvFvTgkq%2b2UpQnC3HfgbNknZQIcD4cepnoVoRyLWmOH5VDKUz0Ht61yP%2beDLQvXgGL4mV0VGqmq4SGuuZkcXyIxvQhZWXnAaXAzt%2bsltWZe5pPkScBGT7nutn8esf7oN3odaR6AFgblk%2fUArLGPlihULl3XTnlnpom8wiSKLQpYSIrzAgmJo5FAcnEGon4FEag%2bJxZgare3%2fOJr0Lvc9i5mPtmhnP0HogfkMahjLDR1GrYR7B8V3yW9fppw%2bQjW%2bcSXFV7hTBXpY%2fUQOOi"},
+     {label:"Res. Exenta N°621-B (29-12-2023) — Aprueba bases de licitación (PDF)", url:"docs/res-621-b-aprueba-bases-insumos-medicos-2239-21-lr23.pdf"},
+     {label:"Res. Exenta N°061-B (15-02-2024) — Modifica bases y amplía plazo (PDF)", url:"docs/res-061-b-modifica-bases-insumos-medicos-2239-21-lr23.pdf"},
+     {label:"Res. Exenta N°074-B (23-02-2024) — Modifica bases (EPP) y amplía plazo (PDF)", url:"docs/res-074-b-modifica-bases-insumos-medicos-2239-21-lr23.pdf"},
+     {label:"Res. Exenta N°330-B (02-08-2024) — Modifica adjudicación (Res. 266-B) (PDF)", url:"docs/res-330-b-modifica-adjudicacion-insumos-medicos-2239-21-lr23.pdf"},
+     {label:"Bases CM Insumos Médicos 2.0 — Texto Refundido (PDF)", url:"docs/bases-cm-insumos-medicos-2.0-texto-refundido.pdf"}
+   ],
+   operativa:[
+     {t:"Categorías disponibles", d:"El convenio cubre dos categorías: Insumos Médicos (dental, elementos de protección personal, insumos para acceso vascular y para administración de medicamentos, procedimientos diagnósticos, drenaje, esterilización y desinfección, curación, intubación, sutura, ventilación, productos quirúrgicos y vestuario médico) y Dispositivos Médicos (órtesis y ayudas técnicas: andador, bastón, silla de ruedas, colchón clínico, cojín antiescaras, collar cervical, bota ortesis)."},
+     {t:"Cómo comprar", d:"Se compra directo por catálogo en la tienda ChileCompra Express (mercadopublico.cl), sin necesidad de licitar de nuevo: se busca la ficha de producto genérica, se comparan las ofertas de los proveedores adjudicados (precio, marca, plazo de entrega y cobertura regional) y se emite la Orden de Compra directamente al proveedor elegido."},
+     {t:"Montos por orden de compra", d:"Cada Orden de Compra debe estar entre 30 UTM y 15.000 UTM."},
+     {t:"Plazos de entrega", d:"Máximo 21 días hábiles en general; hasta 35 días hábiles para las regiones de Aysén y Magallanes."},
+     {t:"Costo de despacho", d:"Se calcula por tramos de kilos totales a despachar (hasta 5, 10, 20, 40 y 100 kg, más un tramo adicional sobre 100 kg), según el tamaño/peso clasificado de cada producto (extra pequeño a extra grande) multiplicado por el precio de despacho ofertado para ese tramo."},
+     {t:"Reajustes de precios", d:"Ordinario cuatrimestral (2ª semana de abril, agosto y diciembre) según variación de IPC por producto, desde el 4° mes de vigencia; extraordinario si la variación acumulada de precios de un producto supera 7,5% en el trimestre."},
+     {t:"Garantía y continuidad de stock", d:"El convenio exige garantía de fiel cumplimiento vigente. Los proveedores no pueden descontinuar ni dejar sin stock productos adjudicados antes del tercer mes de vigencia del convenio, salvo autorización fundada de la DCCP."},
+     {t:"Encargado técnico", d:"Cada proveedor adjudicado debe mantener un Encargado Técnico habilitado (profesional de salud o especializado) para entregar instrucciones sobre el uso y mantención de los productos, exigible durante toda la vigencia del convenio."}
+   ],
+   granCompra:{"total": 6, "items": [{"id": "72980", "licitacion": "2239-21-LR23", "nombre": "BÁRNIZ FLÚOR 2025-2026 Gran Compra 72980", "fechaEnvio": "2025-02-24", "estado": "Recepción Conforme", "organismo": "JUNTA NACIONAL DE AUXILIO ESCOLAR Y BECA", "codigoOC": "85-11-CM25"}, {"id": "73752", "licitacion": "2239-21-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 73752", "fechaEnvio": "2025-03-27", "estado": "Aceptada", "organismo": "SERVICIO DE SALUD DE TALCAHUANO HOSPITAL", "codigoOC": "1057544-9874-CM24"}, {"id": "74516", "licitacion": "2239-21-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 74516", "fechaEnvio": "2025-04-16", "estado": "Recepción Conforme", "organismo": "HOSPITAL GUILLERMO GRANT BENAVENTE DE CO", "codigoOC": "886954-9619-CM25"}, {"id": "74389", "licitacion": "2239-21-LR23", "nombre": "280150_PECHERA CON MANGAS PROGRAMA STOCK_OCI 200525", "fechaEnvio": "2025-06-03", "estado": "Aceptada", "organismo": "UNIVERSIDAD DE CHILE", "codigoOC": "5153-726-CM25"}, {"id": "75512", "licitacion": "2239-21-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 75512", "fechaEnvio": "2025-06-03", "estado": "Recepción Conforme", "organismo": "HOSPITAL GUILLERMO GRANT BENAVENTE DE CO", "codigoOC": "886954-11788-CM25"}, {"id": "75739", "licitacion": "2239-21-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 75739", "fechaEnvio": "2025-07-10", "estado": "Aceptada", "organismo": "SERVICIO DE SALUD CONCEPCION", "codigoOC": "1057432-196-CM25"}]},
+   detalle:"detalle/detalle-insumos-y-dispositivos-medicos.html",
+   tx:{"periodo": "nov-2025 a jul-2026", "nOc": 20805, "nProveedores": 138, "nOrganismos": 530, "montos": [{"moneda": "CLP", "monto": 91974548267.23}], "porMes": [{"mes": "nov-2025", "moneda": "CLP", "nOc": 2000, "monto": 7348784216.49}, {"mes": "dic-2025", "moneda": "CLP", "nOc": 1899, "monto": 7151844009.94}, {"mes": "ene-2026", "moneda": "CLP", "nOc": 2556, "monto": 13221559692.11}, {"mes": "feb-2026", "moneda": "CLP", "nOc": 2169, "monto": 10881195218.95}, {"mes": "mar-2026", "moneda": "CLP", "nOc": 2396, "monto": 11527709441.97}, {"mes": "abr-2026", "moneda": "CLP", "nOc": 2488, "monto": 11639377624.55}, {"mes": "may-2026", "moneda": "CLP", "nOc": 2318, "monto": 10095711787.5}, {"mes": "jun-2026", "moneda": "CLP", "nOc": 2376, "monto": 9519391419.18}, {"mes": "jul-2026", "moneda": "CLP", "nOc": 2603, "monto": 10588974856.54}], "topProv": [{"rut": "80.447.400-5", "nombre": "MUNNICH PHARMA MEDICAL SPA", "nOc": 2466, "monto": 9780797165.58}, {"rut": "78.233.420-4", "nombre": "HOSPITALIA Productos Medicos Ltda", "nOc": 1478, "monto": 8400573004.74}, {"rut": "76.215.260-6", "nombre": "NEMO CHILE S.A.", "nOc": 1611, "monto": 6407691260.95}, {"rut": "93.366.000-1", "nombre": "Comercial LBF Limitada", "nOc": 1026, "monto": 6344069662.63}, {"rut": "81.210.400-4", "nombre": "REUTTER S A", "nOc": 1835, "monto": 6103612398.31}], "topOrg": [{"rut": "61.608.002-4", "nombre": "SERVICIO DE SALUD METROPOLITANA NORTE HOSPITAL SAN JOSE", "nOc": 185, "monto": 4420985048.34}, {"rut": "61.606.608-0", "nombre": "SERVICIO DE SALUD VINA DEL MAR QUILLOTA", "nOc": 250, "monto": 2853338556.67}, {"rut": "60.910.000-1", "nombre": "UNIVERSIDAD DE CHILE", "nOc": 252, "monto": 2815665084.47}, {"rut": "61.975.100-0", "nombre": "HOSPITAL PUERTO MONTT SERVICIO DE SALUD DEL RELONCAVI", "nOc": 360, "monto": 2444907124.38}, {"rut": "61.608.502-6", "nombre": "COMPLEJO ASISTENCIAL DR. SOTERO DEL RIO", "nOc": 275, "monto": 2231947369.75}], "porRegion": [{"region": "Metropolitana", "nOc": 7464, "monto": 37851306959.9}, {"region": "Valparaíso", "nOc": 2327, "monto": 10915087965.43}, {"region": "Bío-Bío", "nOc": 1509, "monto": 7700750764.06}, {"region": "Araucanía", "nOc": 1746, "monto": 6040009497.32}, {"region": "Maule", "nOc": 1425, "monto": 5012954631.3}, {"region": "Lib. Gral. Bdo. O'Higgins", "nOc": 1215, "monto": 4780859953.89}, {"region": "Los Lagos", "nOc": 1150, "monto": 4738749951.68}, {"region": "Coquimbo", "nOc": 910, "monto": 3888993185.88}]},
+   pbi:{responsable:"María Angélica Bahamondes", instancia:"Instancia 1",
+     ordTiene:"Sí", ordComo:"Automático", ordFrecuencia:"Anual", ordMeses:"Abril, agosto, diciembre", ordVariables:"Variación IPC por producto",
+     extraTiene:"Sí", extraComo:"Automático", extraRequisitos:"Variación acumulada de precios trimestral", extraVariables:"Variación sobre 7,5% trimestral",
+     dctoVigencia:"1 a 4 días corridos", dctoVariables:"Mínimo 5% sobre el precio regular",
+     montoMin:"30 UTM", montoMax:"15.000 UTM",
+     acuerdoCompl:"Máximo 1 año, contado desde el término de la vigencia del CM",
+     imptoOC:"Sin IVA",
+     prodNuevos:"Sólo por requerimiento de MINSAL, ISP o DCCP",
+     prodExistente:"Se puede agregar en la macrozona y subcategoría en que esté adjudicado el proveedor, con precio menor al mínimo publicado"}},
+  {n:"Seguro colectivo de vida con adicional de salud", id:"2239-12-LR23", icon:"ti-heart-handshake",
+   obj:"Contratación de plan colectivo de seguro de vida, complementario de salud y catastrófico.",
+   notaHtml:"Convenio prorrogado hasta el 25-10-2026 (<a href=\"docs/res-287-b-prorroga-seguro-vida-2239-12-lr23.pdf\" target=\"_blank\" rel=\"noopener\">Resolución Exenta N°287-B</a>, 10-07-2025), manteniéndose vigentes las bases originales aprobadas por la Resolución N°16 (30-06-2023), tomada de razón con alcance por Contraloría mediante <a href=\"docs/oficio-e367283-2023-toma-razon-bases-seguro-vida-2239-12-lr23.pdf\" target=\"_blank\" rel=\"noopener\">Oficio N°E367283/2023</a> (12-07-2023). La garantía de fiel cumplimiento debe mantenerse vigente hasta el 20-01-2027.",
+   vig:"25-10-2026 (prorrogado)", monto:"Licitación ≥5.000 UTM · publicada 14-07-2023, cierre 08-09-2023", cond:"19 compras efectuadas y 10 reclamos por pago no oportuno en 12 meses.",
+   moneda:"Unidad de Fomento (UF)", cotizador:"No — compra directa de plan, con acuerdo complementario", reajuste:"Anual, en función de la siniestralidad de los 11 primeros meses de cada año", duracion:"24 meses. Acuerdo complementario opcional entre organismo y proveedor con garantía de fiel cumplimiento ≥5% del contrato",
+   url:"https://conveniomarco2.mercadopublico.cl/seguros2022",
+   docs:[
+     {label:"Bases de licitación y modificaciones (PDF, ficha oficial Mercado Público)", url:"https://www.mercadopublico.cl/Procurement/Modules/Attachment/ViewAttachmentLC.aspx?enc=nUbAGL5paxuUdm4dZP5S1fxF4BFnhJLwTwDFeXOAo5Wi7a2GgnxSNspyNkqSl%2btU3FPdQ0lt7ODjrpVqdjm%2b4Uu6E8J4l7gHAxVWk5OXXUCIWtzSOFYiJgcPcW26h6EBc%2bGQbied44Onr5vxqfkq9KEXhERyZ4vA1lKJNydKUeF%2fPGzldJNuZTtjv7Boyhe0yVYlykpZqpEKvyLsWIFBRxf8JTuv7bX5Kt4wAs%2fGljyF%2fcDDI1EahTUyqyi0T5xXFyNMXwzxf53yB1LAbhYoGTjTNXqpMjXyrZTtojc5vRngfzD%2faZ%2fUMaIGZoCz1da9"},
+     {label:"Resolución N°16 (30-06-2023) — Aprueba bases de licitación, con Oficio N°E367283/2023 de toma de razón con alcance (PDF)", url:"docs/oficio-e367283-2023-toma-razon-bases-seguro-vida-2239-12-lr23.pdf"},
+     {label:"Res. Exenta N°287-B (10-07-2025) — Dispone prórroga hasta 25-10-2026 (PDF)", url:"docs/res-287-b-prorroga-seguro-vida-2239-12-lr23.pdf"}
+   ],
+   operativa:[
+     {t:"Planes contratados", d:"El convenio comprende tres coberturas contratadas conjuntamente: Seguro de Vida (capital UF 50, que disminuye a UF 20 a los 75 años, UF 15 a los 80 años y UF 1 a los 85 años), Seguro Complementario de Salud (Plan 1, con deducibles de 0,5, 1 o 1,4 UF según cargas y topes por ítem) y Seguro Catastrófico (monto asegurado máximo UF 2.000, con deducible de UF 25)."},
+     {t:"Cómo contratar", d:"No hay cotizador: la contratación es directa con el proveedor adjudicado del plan elegido, formalizada mediante un acuerdo complementario opcional entre el organismo y la aseguradora."},
+     {t:"Reajuste por siniestralidad", d:"Reajuste anual de la prima, aplicado según una tabla de porcentaje de siniestralidad de los 11 primeros meses de cada año (a mayor siniestralidad, mayor ajuste de la prima)."},
+     {t:"Garantía de fiel cumplimiento", d:"$10.000.000 CLP exigidos en las bases originales (Resolución N°16); su vigencia debe mantenerse hasta 60 días hábiles después del término del convenio, es decir, hasta el 20-01-2027 según la prórroga vigente."},
+     {t:"Evaluación de ofertas", d:"BMI Isapre-Fonasa 15%, farmacias asociadas 3%, cumplimiento de requisitos formales 2% y valor de la prima mensual 80%. Adjudican todos los proveedores que obtengan un puntaje igual o superior a 85."},
+     {t:"Sin monto máximo de compra", d:"El convenio no fija tope de monto para las órdenes de compra, a diferencia de la mayoría de los demás Convenios Marco."}
+   ],
+   granCompra:{"total": 3, "items": [{"id": "73686", "licitacion": "2239-12-LR23", "nombre": "Contratación seguro complementario salud vida y catastrófico PLAN ÚNICO y seguro de salud dental", "fechaEnvio": "2025-01-03", "estado": "Recepción Conforme", "organismo": "DIRECCION NACIONAL DEL SERVICIO CIVIL", "codigoOC": "554476-4-CM24"}, {"id": "75270", "licitacion": "2239-12-LR23", "nombre": "Seguro de Salud colectivo Servicio de Bienestar 2025", "fechaEnvio": "2025-07-15", "estado": "Aceptada", "organismo": "Comisión Nacional de Investigación Científica y Tecnológicas - CONICYT", "codigoOC": "1111089-352-CM25"}, {"id": "77943", "licitacion": "2239-12-LR23", "nombre": "SEGURO DE VIDA, ADICIONAL DESALUD Y CATASTRÓFICO PARA AFILIADOS/AS A BIENESTAR", "fechaEnvio": "2025-08-22", "estado": "Aceptada", "organismo": "SERVICIO NACIONAL DE GEOLOGIA Y MINERIA", "codigoOC": "558338-4-CM25"}]},
+   detalle:"detalle/detalle-seguro-colectivo-de-vida-con-adicional-de-salud.html",
+   tx:{"periodo": "nov-2025 a jul-2026", "nOc": 168, "nProveedores": 1, "nOrganismos": 65, "montos": [{"moneda": "CLF", "monto": 555449.33}], "porMes": [{"mes": "nov-2025", "moneda": "CLF", "nOc": 12, "monto": 16550.75}, {"mes": "dic-2025", "moneda": "CLF", "nOc": 20, "monto": 155629.49}, {"mes": "ene-2026", "moneda": "CLF", "nOc": 32, "monto": 25545.5}, {"mes": "feb-2026", "moneda": "CLF", "nOc": 18, "monto": 11249.63}, {"mes": "mar-2026", "moneda": "CLF", "nOc": 20, "monto": 199558.71}, {"mes": "abr-2026", "moneda": "CLF", "nOc": 16, "monto": 7304.23}, {"mes": "may-2026", "moneda": "CLF", "nOc": 15, "monto": 15013.45}, {"mes": "jun-2026", "moneda": "CLF", "nOc": 20, "monto": 71793.53}, {"mes": "jul-2026", "moneda": "CLF", "nOc": 15, "monto": 52804.05}], "topProv": [{"rut": "96.573.600-K", "nombre": "BCI SEGUROS VIDA S A", "nOc": 168, "monto": 555449.33}], "topOrg": [{"rut": "60.301.001-9", "nombre": "CORP ADMINISTRATIVA DEL PODER JUDICIAL", "nOc": 1, "monto": 130917.36}, {"rut": "70.574.900-0", "nombre": "FUNDACION EDUCACIONAL PARA EL DESAROLLO INTEGRAL DE LA NIÑEZ", "nOc": 1, "monto": 123028.15}, {"rut": "70.856.400-1", "nombre": "CORP MUNIC EDUC SALUD Y ATENCION", "nOc": 1, "monto": 32049.94}, {"rut": "60.921.000-1", "nombre": "UNIVERSIDAD DE VALPARAISO", "nOc": 1, "monto": 24281.0}, {"rut": "60.805.312-3", "nombre": "Bienestar", "nOc": 1, "monto": 23652.47}], "porRegion": [{"region": "Metropolitana", "nOc": 141, "monto": 507860.75}, {"region": "Valparaíso", "nOc": 10, "monto": 31673.36}, {"region": "Aysén", "nOc": 3, "monto": 3368.48}, {"region": "Lib. Gral. Bdo. O'Higgins", "nOc": 3, "monto": 3273.5}, {"region": "Los Lagos", "nOc": 2, "monto": 1869.29}, {"region": "Atacama", "nOc": 1, "monto": 1619.17}, {"region": "Antofagasta", "nOc": 1, "monto": 1369.06}, {"region": "Bío-Bío", "nOc": 1, "monto": 1329.56}]},
+   pbi:{responsable:"María Angélica Bahamondes", instancia:"Instancia 2",
+     ordTiene:"Sí", ordComo:"A solicitud del proveedor", ordFrecuencia:"Anual", ordMeses:"Enero", ordVariables:"Variación según siniestralidad (OYNR)",
+     extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
+     dctoVigencia:"No tiene", dctoVariables:"No aplica",
+     montoMin:"No tiene", montoMax:"1.000 UTM",
+     acuerdoCompl:"No podrá ser superior a 2 años",
+     imptoOC:"(No informado)",
+     prodNuevos:"No permite incorporación de productos nuevos",
+     prodExistente:"Se pueden incorporar hasta 4 planes nuevos con operatorias menores, en base al plan colectivo inicial pactado en el CM"}},
+  {n:"Productos y servicios de ferretería", id:"2239-9-LR23", icon:"ti-tools",
+   obj:"Adquisición de productos de ferretería e instalación de servicios complementarios (pisos, pinturas, terminaciones).",
+   vig:"20-03-2027", monto:"Licitación ≥5.000 UTM · publicada 30-06-2023, cierre 26-10-2023", cond:"Compra mínima 10 UTM. Compra en línea y retiro en tienda.",
+   moneda:"Peso chileno (CLP)", cotizador:"Sí, solo en la línea de instalación de productos (la línea de productos es compra directa)", reajuste:"Ordinario cuatrimestral, aplica solo a la línea de productos (la línea de instalación no tiene reajuste por usar cotizador)", duracion:"24 meses desde la adjudicación",
+   url:"https://conveniomarco2.mercadopublico.cl/ferreteria2",
+   docs:[
+     {label:"Res. Exenta N°307-B (29-06-2023) — Aprueba bases de licitación (PDF)", url:"docs/res-307-b-aprueba-bases-ferreteria-2239-9-lr23.pdf"},
+     {label:"Res. Exenta N°455-B (20-09-2023) — Modifica bases y amplía plazo de cierre a 16-10-2023 (PDF)", url:"docs/res-455-b-modifica-bases-amplia-plazo-ferreteria-2239-9-lr23.pdf"},
+     {label:"Bases de licitación 2239-9-LR23 — Texto Refundido (PDF)", url:"docs/bases-ferreteria-2239-9-lr23-texto-refundido.pdf"}
+   ],
+   operativa:[
+     {t:"Categorías disponibles", d:"Dos categorías: Adquisición e Instalación de Productos (proyectos de climatización, reposición de luminaria pública, mejoramiento de edificios u oficinas públicas, energías alternativas, pisos, puertas y ventanas, servicios higiénicos, pintura en muros y fachadas) y Productos de Ferretería (extenso catálogo: herramientas, fijaciones, grifería, pinturas, cañerías, protección personal, techumbre, tableros, jardín, entre muchas otras subcategorías)."},
+     {t:"Cómo operar cada línea", d:"Productos de Ferretería se compra directo por catálogo (sin cotizador), con despacho mínimo de 2 UTM y compra total mínima de 10 UTM. Adquisición e Instalación de Productos exige cotizar a través del sistema entre los proveedores adjudicados en esa categoría, ya que combina el producto con su servicio de instalación."},
+     {t:"Montos y adjudicación", d:"Compras entre 10 UTM y 25.000 UTM. En Productos de Ferretería la adjudicación es regional: se adjudica el 40% de los mejores puntajes por ficha de producto y región (60% en las regiones de Arica y Parinacota, Tarapacá, Araucanía, Aysén y Magallanes)."},
+     {t:"Evaluación de ofertas", d:"Ambas categorías se evalúan con Cumplimiento de requisitos formales (5%) y criterio económico (95%): porcentaje de descuento por tramo de compra en Adquisición e Instalación de Productos, y precio por producto y región en Productos de Ferretería."},
+     {t:"Garantía de fiel cumplimiento", d:"$1.000.000 CLP, con vigencia hasta 60 días hábiles después del término del convenio marco."},
+     {t:"Reajuste y descuentos especiales", d:"Reajuste ordinario cuatrimestral con tope 3%, aplicable solo a Productos de Ferretería (Adquisición e Instalación no reajusta por usar cotizador). Los proveedores de Productos de Ferretería pueden ofrecer descuentos especiales de al menos 5%, vigentes entre 1 y 4 días corridos."}
+   ],
+   granCompra:{"total": 2, "items": [{"id": "74763", "licitacion": "2239-9-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 74763", "fechaEnvio": "2025-02-18", "estado": "Recepción Conforme", "organismo": "SERVICIO LOCAL DE EDUCACIÓN PÚBLICA DE CHILOÉ", "codigoOC": "1393093-66-CM25"}, {"id": "74325", "licitacion": "2239-9-LR23", "nombre": "ADQUISICIÓN DE PELLET DE MADERA BOLSA DE 15 KILOS PARA ESTABLECIMIENTOS EDUCACIONALES Y JARDINES INFANTILES DEPENDIENTES DEL SERVICIO LOCAL DE EDUCACIÓN PÚBLICA DE VALDIVIA", "fechaEnvio": "2025-03-03", "estado": "Aceptada", "organismo": "SERVICIO LOCAL DE EDUCACIÓN PÚBLICA DE VALDIVIA", "codigoOC": "1305560-52-CM25"}]},
+   detalle:"detalle/detalle-productos-y-servicios-de-ferreteria.html",
+   tx:{"periodo": "nov-2025 a jul-2026", "nOc": 3326, "nProveedores": 162, "nOrganismos": 568, "montos": [{"moneda": "CLP", "monto": 23163448516.15}], "porMes": [{"mes": "nov-2025", "moneda": "CLP", "nOc": 370, "monto": 2366145692.59}, {"mes": "dic-2025", "moneda": "CLP", "nOc": 422, "monto": 3826212607.84}, {"mes": "ene-2026", "moneda": "CLP", "nOc": 272, "monto": 2156606088.72}, {"mes": "feb-2026", "moneda": "CLP", "nOc": 347, "monto": 2697297878.61}, {"mes": "mar-2026", "moneda": "CLP", "nOc": 386, "monto": 2453018038.67}, {"mes": "abr-2026", "moneda": "CLP", "nOc": 378, "monto": 2448579071.84}, {"mes": "may-2026", "moneda": "CLP", "nOc": 349, "monto": 2042528940.99}, {"mes": "jun-2026", "moneda": "CLP", "nOc": 387, "monto": 2402376983.11}, {"mes": "jul-2026", "moneda": "CLP", "nOc": 415, "monto": 2770683213.78}], "topProv": [{"rut": "77.454.264-7", "nombre": "DISTRIBUIDORA E IMPORTADORA DE MATERIALES DE FERRETERIA Y CONSTRUCCION DEL SUR SPA", "nOc": 326, "monto": 2333213788.68}, {"rut": "77.831.858-K", "nombre": "COMERCIAL GRAN VIA SPA", "nOc": 180, "monto": 1328373005.47}, {"rut": "76.962.756-1", "nombre": "LUIS ALEXANDER", "nOc": 87, "monto": 1085467689.18}, {"rut": "96.803.460-k", "nombre": "SHERWIN WILLIAMS CHILE S A", "nOc": 116, "monto": 1050541293.9}, {"rut": "77.676.860-k", "nombre": "RAC SEGURIDAD INDUSTRIAL", "nOc": 255, "monto": 959732499.81}], "topOrg": [{"rut": "60.910.000-1", "nombre": "UNIVERSIDAD DE CHILE", "nOc": 167, "monto": 1617412980.76}, {"rut": "61.202.000-0", "nombre": "MINISTERIO DE OBRAS PUBLICAS DIREC CION GRAL DE OO PP DCYF", "nOc": 71, "monto": 1301002144.47}, {"rut": "61.313.000-4", "nombre": "CORP NACIONAL FORESTAL", "nOc": 60, "monto": 972353489.87}, {"rut": "60.911.000-7", "nombre": "UNIVERSIDAD DE SANTIAGO DE CHILE", "nOc": 32, "monto": 484312482.64}, {"rut": "70.941.900-5", "nombre": "CORPORACION MUNICIPAL DE DESARROLLO SOCIAL COLINA", "nOc": 46, "monto": 411935121.92}], "porRegion": [{"region": "Metropolitana", "nOc": 1280, "monto": 9732053572.29}, {"region": "Bío-Bío", "nOc": 326, "monto": 2231742056.27}, {"region": "Valparaíso", "nOc": 383, "monto": 2063410638.16}, {"region": "Los Lagos", "nOc": 216, "monto": 1835128567.91}, {"region": "Araucanía", "nOc": 280, "monto": 1780132347.58}, {"region": "Maule", "nOc": 161, "monto": 1014385473.25}, {"region": "Coquimbo", "nOc": 141, "monto": 795269576.15}, {"region": "Lib. Gral. Bdo. O'Higgins", "nOc": 145, "monto": 735408084.85}]},
+   pbi:{responsable:"Jimmy Arancibia", instancia:"Instancia 2",
+     ordTiene:"Sí", ordComo:"Automático", ordFrecuencia:"Cuatrimestral", ordMeses:"Abril, agosto, diciembre", ordVariables:"Variación IPC según categoría",
+     extraTiene:"Sí", extraComo:"A solicitud del proveedor", extraRequisitos:"Variación acumulada de precios", extraVariables:"Variación IPC de productos superior a 7% acumulado cuatrimestral",
+     dctoVigencia:"1 a 4 días corridos, solo categoría productos", dctoVariables:"Desde un 5%, solo categoría productos",
+     montoMin:"10 UTM", montoMax:"25.000 UTM",
+     acuerdoCompl:"Máximo 1 año",
+     imptoOC:"Categoría productos: precio incluye IVA. Categoría servicios: sin IVA, monto cotizado por el total",
+     prodNuevos:"Mediante oficio de organismo público",
+     prodExistente:"Incorporar productos ya catalogados y visibles en tienda, con cobertura en la región y precio inferior al promedio; si no tienen cobertura deben ampliarla indicando plazo de entrega"}},
+  {n:"Emergencias, contingencias y prevención", id:"2239-8-LR24", icon:"ti-alert-triangle",
+   obj:"Productos y servicios para emergencias y protección civil: carpas, baños químicos, duchas, camiones aljibe.",
+   notaHtml:"Convenio prorrogado hasta el 18-02-2027 (<a href=\"docs/res-520-b-prorroga-emergencias-2239-8-lr24.pdf\" target=\"_blank\" rel=\"noopener\">Resolución Exenta N°520-B</a>, 06-08-2026; vigencia original terminaba el 18-10-2026), mientras concluye la licitación del nuevo Convenio Marco 'Prevención ante Catástrofes y Situaciones de Emergencia', <a href=\"https://www.mercadopublico.cl/fichaLicitacion.html?idLicitacion=2239-3-LR26\" target=\"_blank\" rel=\"noopener\">ID 2239-3-LR26</a>, que se encuentra en etapa de recepción de ofertas (plazo ampliado hasta el 31-08-2026 por <a href=\"docs/res-509-b-amplia-plazo-cierre-emergencias-2239-3-lr26.pdf\" target=\"_blank\" rel=\"noopener\">Resolución Exenta N°509-B</a>).",
+   vig:"18-02-2027 (prorrogado)", monto:"Licitación ≥5.000 UTM · publicada 24-06-2024, cierre 13-08-2024", cond:"Sin monto mínimo de compra.",
+   moneda:"Peso chileno (CLP)", cotizador:"No — compra directa por catálogo", reajuste:"Ordinario semestral (marzo y septiembre)", duracion:"24 meses desde la adjudicación",
+   url:"https://conveniomarco2.mercadopublico.cl/emergencias202109",
+   docs:[
+     {label:"Res. Exenta N°279-B (24-06-2024) — Aprueba bases de licitación (PDF)", url:"docs/res-279-b-aprueba-bases-emergencias-2239-8-lr24.pdf"},
+     {label:"Res. Exenta N°324-B (26-07-2024) — Modifica bases y amplía plazo de cierre a 13-08-2024 (PDF)", url:"docs/res-324-b-modifica-bases-emergencias-2239-8-lr24.pdf"},
+     {label:"Res. Exenta N°520-B (06-08-2026) — Dispone prórroga hasta 18-02-2027 (PDF)", url:"docs/res-520-b-prorroga-emergencias-2239-8-lr24.pdf"}
+   ],
+   operativa:[
+     {t:"Categorías disponibles", d:"Solución Habitacional (baño modular, viviendas de emergencia), Tratamiento de Aguas (aguas residuales), Alimentación (raciones y kit de alimentación), Limpieza (kit de higiene personal y aseo), Complementos (habitabilidad, rescate) y Servicios para la Emergencia (rescate, soluciones modulares y logística de campaña, servicios)."},
+     {t:"Situaciones de entrega", d:"Los productos y servicios se cotizan y despachan bajo dos situaciones distintas, con requisitos y plazos propios: Emergencia (activada ante catástrofes o eventos declarados) y Prevención (adquisiciones planificadas fuera de una emergencia declarada)."},
+     {t:"Plazos de entrega", d:"Máximo 48 horas corridas desde la aceptación de la Orden de Compra en situación de Emergencia; 10 días hábiles en situación de Prevención; 10 días hábiles para retiro en tienda."},
+     {t:"Garantías", d:"Seriedad de la oferta: $500.000 CLP en situación de Emergencia. Fiel cumplimiento: $6.500.000 CLP en Emergencia y $4.000.000 CLP en Prevención."},
+     {t:"Reajuste de precios", d:"Ordinario semestral (marzo y septiembre) con tope 4% anual acumulado. Extraordinario trimestral si la variación de IPC supera 4%, con tope de 9% anual."},
+     {t:"Coordinación con SENAPRED", d:"El Servicio Nacional de Prevención y Respuesta ante Desastres (SENAPRED, ex ONEMI) es el principal organismo comprador y puede solicitar la incorporación de nuevos productos catalogados."},
+     {t:"Estado de excepción constitucional", d:"Durante un estado de excepción de catástrofe, la DCCP puede autorizar la incorporación de productos no catalogados sin necesidad de adjudicación previa, mientras dure dicho estado."}
+   ],
+   granCompra:{"total": 2, "items": [{"id": "74893", "licitacion": "2239-8-LR24", "nombre": "ARRIENDO DE 4 CAMIONES ALJIBES DE 10.000 LITROS AGUA POTABLE PARA LAGUNA VERDE", "fechaEnvio": "2025-02-21", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE VALPARAISO", "codigoOC": "2426-15-CM25"}, {"id": "77131", "licitacion": "2239-8-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 77131", "fechaEnvio": "2025-07-18", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE LA REINA", "codigoOC": "2699-73-CM25"}]},
+   detalle:"detalle/detalle-emergencias-contingencias-y-prevencion.html",
+   tx:{"periodo": "nov-2025 a jul-2026", "nOc": 3048, "nProveedores": 67, "nOrganismos": 204, "montos": [{"moneda": "CLP", "monto": 37169998384.4}], "porMes": [{"mes": "nov-2025", "moneda": "CLP", "nOc": 174, "monto": 980769274.59}, {"mes": "dic-2025", "moneda": "CLP", "nOc": 167, "monto": 1250307965.97}, {"mes": "ene-2026", "moneda": "CLP", "nOc": 354, "monto": 7659916839.33}, {"mes": "feb-2026", "moneda": "CLP", "nOc": 360, "monto": 5326979335.37}, {"mes": "mar-2026", "moneda": "CLP", "nOc": 267, "monto": 2039864690.71}, {"mes": "abr-2026", "moneda": "CLP", "nOc": 266, "monto": 1550222838.92}, {"mes": "may-2026", "moneda": "CLP", "nOc": 287, "monto": 1513253099.4}, {"mes": "jun-2026", "moneda": "CLP", "nOc": 312, "monto": 2335496876.23}, {"mes": "jul-2026", "moneda": "CLP", "nOc": 861, "monto": 14513187463.88}], "topProv": [{"rut": "76.566.610-4", "nombre": "CONSULTORA SERGIO CACERES E.I.R.L.", "nOc": 353, "monto": 5135441951.22}, {"rut": "11.372.911-2", "nombre": "JOSÉ HERNÁN HENRÍQUEZ SEPÚLVEDA", "nOc": 221, "monto": 3481651927.18}, {"rut": "77.346.435-9", "nombre": "SOCIEDAD COMERCIAL DLM SPA", "nOc": 425, "monto": 2803055149.51}, {"rut": "70.016.130-7", "nombre": "Fundacion Vivienda", "nOc": 183, "monto": 2756231780.4}, {"rut": "76.287.511-k", "nombre": "SOCIEDAD COMERCIAL MAULE LTDA", "nOc": 271, "monto": 2128853942.67}], "topOrg": [{"rut": "60.509.001-K", "nombre": "SERVICIO NACIONAL DE PREVENCIÓN Y RESPUESTA ANTE D", "nOc": 2352, "monto": 30301186042.12}, {"rut": "69.060.900-2", "nombre": "I MUNICIPALIDAD DE VALPARAISO", "nOc": 4, "monto": 743358609.0}, {"rut": "69.040.300-5", "nombre": "I MUNICIPALIDAD DE COQUIMBO", "nOc": 2, "monto": 355066250.0}, {"rut": "60.509.001-k", "nombre": "SERVICIO NACIONAL DE PREVENCIÓN Y RESPUESTA ANTE DESASTRES", "nOc": 69, "monto": 274590788.78}, {"rut": "69.254.100-6", "nombre": "I MUNICIPALIDAD DE LO PRADO", "nOc": 22, "monto": 246947918.21}], "porRegion": [{"region": "Metropolitana", "nOc": 2697, "monto": 33493942407.1}, {"region": "Valparaíso", "nOc": 113, "monto": 1538124077.98}, {"region": "Coquimbo", "nOc": 36, "monto": 572909738.45}, {"region": "Maule", "nOc": 35, "monto": 382753195.79}, {"region": "Araucanía", "nOc": 30, "monto": 199938638.97}, {"region": "Atacama", "nOc": 21, "monto": 182599740.4}, {"region": "Bío-Bío", "nOc": 32, "monto": 153940132.64}, {"region": "Los Lagos", "nOc": 11, "monto": 143111180.24}]},
+   pbi:{responsable:"María Elena Reyes", instancia:"Instancia 2",
+     ordTiene:"Sí", ordComo:"Automático", ordFrecuencia:"Semestral", ordMeses:"Marzo, septiembre", ordVariables:"Variación IPC/USD según tipo de producto",
+     extraTiene:"Sí", extraComo:"Automático", extraRequisitos:"Variación acumulada de precios", extraVariables:"Variación entre 4% y 9% trimestral",
+     dctoVigencia:"1 a 7 días corridos", dctoVariables:"Desde un 1% a 30%",
+     montoMin:"No tiene", montoMax:"25.000 UTM",
+     acuerdoCompl:"Máximo 1 año",
+     imptoOC:"(No informado)",
+     prodNuevos:"Sólo lo realiza la DCCP o por solicitud de SENAPRED (ex ONEMI)",
+     prodExistente:"Se puede agregar productos ya catalogados en las categorías adjudicadas si el valor es inferior al precio promedio y la situación en la región lo amerita"}},
+  {n:"Licencia de software de ofimática", id:"2239-11-LR24", icon:"ti-apps",
+   obj:"Licencias Microsoft 365, Google Workspace y otras, más servicios de instalación y migración.",
+   vig:"06-12-2027", monto:"Licitación ≥5.000 UTM · publicada 04-09-2024, cierre 06-11-2024", cond:"Compras de 10 a 25.000 UTM. Valores en dólares (USD).",
+   moneda:"Dólar americano (USD)", cotizador:"No — compra directa por catálogo", reajuste:"Sin reajuste ordinario en pesos, al transar en USD", duracion:"36 meses desde la adjudicación",
+   url:"https://ofimaticav4.mercadopublico.cl/ofimatica4",
+   docs:[{label:"Resolución Exenta N°385-B (03-09-2024) — Aprueba bases de licitación", url:"docs/res-385-b-aprueba-bases-ofimatica-2239-11-lr24.pdf"}],
+   operativa:[
+     {t:"Subcategorías", d:"Dentro de la categoría única \"Licencias de software para ofimática\": Licencias Empresariales modalidad nube, Licencias Educacionales modalidad nube y Licencias modalidad instalable (On-Premise)."},
+     {t:"Gamas de servicio", d:"Empresariales: gamas 1 a 9 (de básica a premium), con complementos opcionales de BI avanzada, plataforma de comunicación/colaboración, almacenamiento en la nube ≥1TB e IA tipo chatbot (ej. Microsoft 365 Copilot Pro, Gemini, ChatGPT Plus). Educacionales: gamas 1 a 3 (estudiante estándar, profesor estándar, complemento IA educación)."},
+     {t:"Evaluación de ofertas", d:"Precio 95%, cumplimiento de requisitos formales 2%, programas de integridad 3%."},
+     {t:"Regla de adjudicación", d:"Se adjudica el 60% de los productos con mejor puntaje por gama, asegurando diversidad de hasta 4 marcas distintas."},
+     {t:"Garantías", d:"Seriedad de la oferta: $1.000.000 CLP, vigencia superior en 220 días hábiles a la publicación de las bases. Fiel cumplimiento del contrato: $5.000.000 CLP, vigencia 60 días hábiles posteriores al término del convenio."},
+     {t:"Reajuste extraordinario", d:"Si un producto catalogado está disponible a la venta al público general, puede reajustarse hasta el mismo porcentaje del aumento del precio público, mediante carta del proveedor y carta de la marca, revisado en hasta 20 días hábiles (+10 adicionales)."},
+     {t:"Plazo de entrega", d:"Las licencias deben entregarse dentro de 5 días hábiles luego de aceptada la Orden de Compra."},
+     {t:"Vigencia y prórroga", d:"36 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 6 meses."},
+     {t:"Multas por atraso", d:"2% diario, con tope de 10 días hábiles (máximo 20% del valor de los productos afectados)."}
+   ],
+   granCompra:{"total": 17, "items": [{"id": "74245", "licitacion": "2239-14-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 74245", "fechaEnvio": "2025-01-08", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD PEDRO AGUIRRE CERDA", "codigoOC": "2392-574-CM24"}, {"id": "74629", "licitacion": "2239-11-LR24", "nombre": "Gran Compra: 74629 Licencias Google I. Municipalidad Melipilla", "fechaEnvio": "2025-03-04", "estado": "Aceptada", "organismo": "ILUSTRE MUNICIPALIDAD DE MELIPILLA", "codigoOC": "2673-44-CM25"}, {"id": "76015", "licitacion": "2239-11-LR24", "nombre": "RENOVACION LICENCIAS GOOGLE WORKSPACE (NFO)700/PED N°3// Gran Compra: 76015", "fechaEnvio": "2025-05-30", "estado": "Recepción Conforme", "organismo": "I MUNICIPALIDAD DE VINA DEL MAR", "codigoOC": "2424-942-CM25"}, {"id": "76635", "licitacion": "2239-11-LR24", "nombre": "Gran Compra: 76635 Arriendo Licencias Microsoft Office 365 para el SSMS", "fechaEnvio": "2025-06-11", "estado": "Aceptada", "organismo": "SERVICIO DE SALUD SUR UNIDAD HOSPITALARI", "codigoOC": "1057499-258-CM25"}, {"id": "76953", "licitacion": "2239-11-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 76953", "fechaEnvio": "2025-06-13", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD ESTACION CENTRAL", "codigoOC": "2434-49-CM25"}, {"id": "76758", "licitacion": "2239-11-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 76758", "fechaEnvio": "2025-06-25", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE MAIPU", "codigoOC": "2770-168-CM25"}, {"id": "77308", "licitacion": "2239-11-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 77308", "fechaEnvio": "2025-07-04", "estado": "Aceptada", "organismo": "MOP Dirección General de Concesiones", "codigoOC": "2216-394-CM25"}, {"id": "76619", "licitacion": "2239-11-LR24", "nombre": "Adquisición del licenciamiento de software de ofimática", "fechaEnvio": "2025-07-09", "estado": "Aceptada", "organismo": "DIRECCION GENERAL DEL CREDITO PRENDARIO", "codigoOC": "1561-107-CM25"}, {"id": "77142", "licitacion": "2239-11-LR24", "nombre": "Adquisición de licencias de correo electrónico 365 y ofimática instalable", "fechaEnvio": "2025-07-23", "estado": "Recepción Conforme", "organismo": "MINISTERIO SECRETARIA GENERAL DE LA PRESIDENCIA DE LA REPUBLICA", "codigoOC": "1051173-52-CM25"}, {"id": "77616", "licitacion": "2239-11-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 77616", "fechaEnvio": "2025-07-31", "estado": "Aceptada", "organismo": "UNIVERSIDAD DE SANTIAGO DE CHILE", "codigoOC": "867990-776-CM25"}, {"id": "77597", "licitacion": "2239-11-LR24", "nombre": "LICENCIASMICROSOFTOFFICE365E3+ TEAMS,PARAELGOBIERNOREGIONAL METROPOLITANO desde Gran Compra: 77597", "fechaEnvio": "2025-08-12", "estado": "Recepción Conforme", "organismo": "GOBIERNO REGIONAL REGION METROPOLITANA", "codigoOC": "1260-185-CM25"}, {"id": "76939", "licitacion": "2239-11-LR24", "nombre": "Adquisicion Licencias del Software Office Home and Business 2024 Gran Compra: 76939", "fechaEnvio": "2025-08-14", "estado": "Aceptada", "organismo": "SERVICIO SALUD VINA DEL MAR QUILLOTA", "codigoOC": "2026-1439-CM25"}, {"id": "76712", "licitacion": "2239-11-LR24", "nombre": "ADQUISICIÓN DE LICENCIAS OFFICE , MUNICIPALIDAD DE LA FLORIDA", "fechaEnvio": "2025-08-22", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE LA FLORIDA", "codigoOC": "2378-90-CM25"}, {"id": "77575", "licitacion": "2239-11-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 77575", "fechaEnvio": "2025-08-22", "estado": "Aceptada", "organismo": "SERVICIO DE SALUD AYSEN CARLOS IBANEZ DEL CAMPO", "codigoOC": "734-761-CM25"}, {"id": "77923", "licitacion": "2239-11-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 77923", "fechaEnvio": "2025-08-22", "estado": "Aceptada", "organismo": "SERVICIO DE SALUD ARAUCANIA SUR", "codigoOC": "1175-2167-CM25"}, {"id": "77083", "licitacion": "2239-11-LR24", "nombre": "Adq 3.700 Licencias Microsoft Office 365 E1 (GC 77083)", "fechaEnvio": "2025-08-26", "estado": "Enviada a Proveedor", "organismo": "MINISTERIO DE OBRAS PUBLICAS DIREC CION GRAL DE OO PP DCYF", "codigoOC": "1020-311-CM25"}, {"id": "77097", "licitacion": "2239-11-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 77097", "fechaEnvio": "2025-08-27", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE LOS ANGELES", "codigoOC": "2408-4213-CM25"}]},
+   detalle:"detalle/detalle-licencia-de-software-de-ofimatica.html",
+   tx:{"periodo": "nov-2025 a jul-2026", "nOc": 483, "nProveedores": 24, "nOrganismos": 306, "montos": [{"moneda": "CLP", "monto": 330128295.84}, {"moneda": "USD", "monto": 14857740.02}], "porMes": [{"mes": "nov-2025", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "dic-2025", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "ene-2026", "moneda": "CLP", "nOc": 1, "monto": 330128295.84}, {"mes": "feb-2026", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "mar-2026", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "abr-2026", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "may-2026", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "jun-2026", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "jul-2026", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "nov-2025", "moneda": "USD", "nOc": 69, "monto": 3227388.95}, {"mes": "dic-2025", "moneda": "USD", "nOc": 67, "monto": 1599795.0}, {"mes": "ene-2026", "moneda": "USD", "nOc": 35, "monto": 768966.9}, {"mes": "feb-2026", "moneda": "USD", "nOc": 36, "monto": 1046092.11}, {"mes": "mar-2026", "moneda": "USD", "nOc": 49, "monto": 1137691.95}, {"mes": "abr-2026", "moneda": "USD", "nOc": 57, "monto": 1914871.39}, {"mes": "may-2026", "moneda": "USD", "nOc": 70, "monto": 2102736.43}, {"mes": "jun-2026", "moneda": "USD", "nOc": 22, "monto": 741133.73}, {"mes": "jul-2026", "moneda": "USD", "nOc": 77, "monto": 2319063.55}], "topProv": [{"rut": "76.449.580-2", "nombre": "SEIDOR TECHNOLOGIES S.A.", "nOc": 6, "monto": 330984352.69}, {"rut": "76.852.815-2", "nombre": "TECNOLOGIA BS SPA", "nOc": 132, "monto": 3526228.18}, {"rut": "880443249", "nombre": "MSLI Latam Inc.", "nOc": 17, "monto": 2960083.36}, {"rut": "77.700.780-7", "nombre": "COMERCIALIZADORA TELENET LTDA", "nOc": 94, "monto": 2199239.99}, {"rut": "76.981.642-9", "nombre": "CLOUDLATAM SPA", "nOc": 18, "monto": 2007966.86}], "topOrg": [{"rut": "61.513.000-1", "nombre": "DIRECCION PREVISION DE CARABINEROS DE CHILE", "nOc": 1, "monto": 330128295.84}, {"rut": "61.202.000-0", "nombre": "MINISTERIO DE OBRAS PUBLICAS DIREC CION GRAL DE OO PP DCYF", "nOc": 18, "monto": 1906125.78}, {"rut": "61.219.000-3", "nombre": "EMPRESA DE TRANSPORTE DE PASAJEROS METRO S A", "nOc": 1, "monto": 998528.43}, {"rut": "61.313.000-4", "nombre": "CORP NACIONAL FORESTAL", "nOc": 2, "monto": 587520.64}, {"rut": "69.254.000-k", "nombre": "I MUNICIPALIDAD DE PENALOLEN", "nOc": 1, "monto": 559476.12}], "porRegion": [{"region": "Lib. Gral. Bdo. O'Higgins", "nOc": 35, "monto": 330763099.8}, {"region": "Metropolitana", "nOc": 213, "monto": 9942840.71}, {"region": "Valparaíso", "nOc": 35, "monto": 679673.91}, {"region": "Maule", "nOc": 28, "monto": 584527.57}, {"region": "Bío-Bío", "nOc": 32, "monto": 575130.4}, {"region": "Araucanía", "nOc": 26, "monto": 419459.18}, {"region": "Antofagasta", "nOc": 13, "monto": 386129.32}, {"region": "Coquimbo", "nOc": 20, "monto": 316180.65}]},
+   pbi:{responsable:"Rodrigo Zapata", instancia:"Community",
+     ordTiene:"No", ordComo:"No aplica", ordFrecuencia:"No aplica", ordMeses:"No aplica", ordVariables:"No aplica",
+     extraTiene:"Sí", extraComo:"A solicitud del proveedor", extraRequisitos:"Variación acumulada de precios", extraVariables:"Variación de precio informada por el fabricante de forma pública",
+     dctoVigencia:"1 a 4 días", dctoVariables:"Mínimo 5% sobre el precio regular",
+     montoMin:"10 UTM", montoMax:"25.000 UTM",
+     acuerdoCompl:"Máximo 3 años",
+     imptoOC:"Sin IVA",
+     prodNuevos:"No permite, salvo que la DCCP lo requiera",
+     prodExistente:"Agregar productos en las categorías adjudicadas con precio menor o igual al mínimo publicado en tienda"}},
+  {n:"Artículos de escritorio y papelería", id:"2239-16-LR24", icon:"ti-pencil",
+   obj:"Papelería, útiles de escritorio, artículos escolares y accesorios de computación.",
+   vig:"16-05-2028", monto:"Licitación ≥5.000 UTM · publicada 09-12-2024, cierre 21-02-2025", cond:"Compra mínima 10 UTM, despacho gratis, entregas desde 2 UTM.",
+   moneda:"Peso chileno (CLP)", cotizador:"No — compra directa por catálogo", reajuste:"Ordinario cuatrimestral desde el 4° mes de vigencia", duracion:"36 meses desde la adjudicación",
+   url:"https://conveniomarco.mercadopublico.cl/escritorio3",
+   docs:[{label:"Resolución Exenta N°545-B (06-12-2024) — Aprueba bases de licitación", url:"docs/res-545-b-aprueba-bases-articulos-escritorio-papeleria-2239-16-lr24.pdf"}],
+   operativa:[
+     {t:"Categorías y subcategorías", d:"Artículos de Escritorio y Oficina (Insumos de oficina, Accesorios de computación y pilas, Artículos Escolares) y Papelería (Archivos, carpetas, cuadernos y sobres; Papel multipropósito)."},
+     {t:"Evaluación de ofertas", d:"Técnico — Experiencia por facturas de venta 7%. Administrativo — cumplimiento de requisitos formales 4%, programas de integridad 4%. Económico — precio por producto 85%."},
+     {t:"Regla de adjudicación por zona", d:"Se adjudica a quienes tengan un producto dentro del 40% de los mejores puntajes en regiones II, III, IV, V, VI, VII, VIII, X, XIII, XIV y XVI; 60% en XV, I, IX, XI y XII; y 80% en la zona Isla de Pascua - Juan Fernández."},
+     {t:"Garantía de fiel cumplimiento", d:"$1.500.000 CLP, con vigencia hasta 60 días hábiles posteriores al término del convenio marco."},
+     {t:"Reajuste ordinario", d:"Automático, cuatrimestral (segundas semanas de abril, agosto y diciembre), con tope de 3% por cuatrimestre, según variación del IPC Artículos de Escritorio y Artes Manuales (categoría Escritorio) o del IPP Fabricación de papel y productos de papel (categoría Papelería)."},
+     {t:"Reajuste extraordinario", d:"Si la variación acumulada cuatrimestral del IPC/IPP supera el 7%, procede un reajuste extraordinario con tope máximo de 10%, vigente por 1 mes o hasta el siguiente reajuste ordinario."},
+     {t:"Plazo de entrega regional", d:"Máximo 20 días hábiles (25 días hábiles para Aysén y Magallanes), mínimo 1 día hábil. Monto mínimo de despacho: 2 UTM."},
+     {t:"Multas por atraso", d:"0,5% diario por cada día hábil de atraso en la entrega, con tope de 30 días hábiles (máximo 15% del valor de los productos afectados); 5% del monto de la orden de compra por incumplimiento del formato de entrega acordado."},
+     {t:"Vigencia y prórroga", d:"36 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 12 meses mientras se tramita un nuevo proceso licitatorio."}
+   ],
+   granCompra:{"total": 6, "items": [{"id": "74968", "licitacion": "2239-2-LR23", "nombre": "COMPRA RESMA ANUAL CORPORACION 74968", "fechaEnvio": "2025-03-10", "estado": "Recepción Conforme", "organismo": "CORP MUNICIPAL PARA EL DESARROLLO SOCIAL", "codigoOC": "1216085-52-CM25"}, {"id": "75349", "licitacion": "2239-2-LR23", "nombre": "VM P02 7734 GENERAL-SEP-JUNJI RESMAS PARA EE", "fechaEnvio": "2025-03-25", "estado": "Recepción Conforme", "organismo": "SERVICIO LOCAL DE EDUCACION PUBLICA ANDALIEN SUR", "codigoOC": "1084156-2541-CM25"}, {"id": "75903", "licitacion": "2239-2-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 75903", "fechaEnvio": "2025-04-23", "estado": "Recepción Conforme", "organismo": "Corporación de Desarrollo de La Reina", "codigoOC": "1221016-218-CM25"}, {"id": "75559", "licitacion": "2239-2-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 75559", "fechaEnvio": "2025-05-06", "estado": "Aceptada", "organismo": "SERVICIO DE SALUD DE TALCAHUANO HOSPITAL", "codigoOC": "1057544-10803-CM25"}, {"id": "74183", "licitacion": "2239-2-LR23", "nombre": "ADQUISICIÓN DE RESMAS DE PAPEL", "fechaEnvio": "2025-05-14", "estado": "Recepción Conforme", "organismo": "DIRECCION DE LOGISTICA DE CARABINEROS", "codigoOC": "5240-45-CM25"}, {"id": "76801", "licitacion": "2239-2-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 76801", "fechaEnvio": "2025-06-06", "estado": "Aceptada", "organismo": "CORP MUNICIPAL DE DESARROLLO SOCIAL DE A", "codigoOC": "558869-109-CM25"}]},
+   detalle:"detalle/detalle-articulos-de-escritorio-y-papeleria.html",
+   tx:{"periodo": "nov-2025 a jul-2026", "nOc": 6535, "nProveedores": 114, "nOrganismos": 1059, "montos": [{"moneda": "CLP", "monto": 25480474178.25}], "porMes": [{"mes": "nov-2025", "moneda": "CLP", "nOc": 629, "monto": 2068031876.47}, {"mes": "dic-2025", "moneda": "CLP", "nOc": 732, "monto": 3332010344.67}, {"mes": "ene-2026", "moneda": "CLP", "nOc": 678, "monto": 3027426413.9}, {"mes": "feb-2026", "moneda": "CLP", "nOc": 796, "monto": 3517800465.55}, {"mes": "mar-2026", "moneda": "CLP", "nOc": 788, "monto": 3160393412.96}, {"mes": "abr-2026", "moneda": "CLP", "nOc": 800, "monto": 2838154193.56}, {"mes": "may-2026", "moneda": "CLP", "nOc": 669, "monto": 2493111959.73}, {"mes": "jun-2026", "moneda": "CLP", "nOc": 763, "monto": 2637414003.91}, {"mes": "jul-2026", "moneda": "CLP", "nOc": 680, "monto": 2406131507.5}], "topProv": [{"rut": "96.556.940-5", "nombre": "PROVEEDORES INTEGRALES PRISA S A", "nOc": 1308, "monto": 5293822505.79}, {"rut": "96.670.840-9", "nombre": "DIMERC S A", "nOc": 1142, "monto": 3673886521.62}, {"rut": "76.540.457-6", "nombre": "SOCIEDAD SOLUCIONES INTEGRALES SPA", "nOc": 380, "monto": 1566924868.53}, {"rut": "77.012.870-6", "nombre": "COMERCIAL RED OFFICE LIMITADA", "nOc": 288, "monto": 1418443299.21}, {"rut": "96.972.190-2", "nombre": "DISTRIBUIDORA VERGIO SPA", "nOc": 273, "monto": 802069483.11}], "topOrg": [{"rut": "70.072.600-2", "nombre": "JUNTA NACIONAL DE JARDINES         INFANTILES", "nOc": 173, "monto": 992334345.52}, {"rut": "69.110.400-1", "nombre": "I MUNICIPALIDAD DE TALCA", "nOc": 96, "monto": 401779028.84}, {"rut": "70.574.900-0", "nombre": "FUNDACION EDUCACIONAL PARA EL DESAROLLO INTEGRAL DE LA NIÑEZ", "nOc": 70, "monto": 350471135.21}, {"rut": "60.910.000-1", "nombre": "UNIVERSIDAD DE CHILE", "nOc": 90, "monto": 322868804.37}, {"rut": "61.980.920-3", "nombre": "Servicio Local de Educación Pública Licancabur", "nOc": 30, "monto": 307400357.32}], "porRegion": [{"region": "Metropolitana", "nOc": 1824, "monto": 8778254520.49}, {"region": "Valparaíso", "nOc": 626, "monto": 2509669551.9}, {"region": "Bío-Bío", "nOc": 619, "monto": 1999958315.6}, {"region": "Araucanía", "nOc": 594, "monto": 1770632778.95}, {"region": "Maule", "nOc": 443, "monto": 1670973378.9}, {"region": "Coquimbo", "nOc": 328, "monto": 1612893392.81}, {"region": "Los Lagos", "nOc": 392, "monto": 1574451559.03}, {"region": "Lib. Gral. Bdo. O'Higgins", "nOc": 528, "monto": 1484339494.47}]},
+   pbi:{responsable:"Rodrigo Zapata", instancia:"Instancia 2",
+     ordTiene:"Sí", ordComo:"Automático", ordFrecuencia:"Cuatrimestral", ordMeses:"Abril, agosto, diciembre", ordVariables:"Escritorio: variación IPC · Papelería: variación IPP de fabricación de papel",
+     extraTiene:"Sí", extraComo:"A solicitud del proveedor", extraRequisitos:"Variación acumulada de precios", extraVariables:"Variación IPC/IPP de productos superior a 7% acumulado cuatrimestral",
+     dctoVigencia:"No tiene", dctoVariables:"No aplica",
+     montoMin:"10 UTM", montoMax:"25.000 UTM",
+     acuerdoCompl:"Máximo 1 año",
+     imptoOC:"(No informado)",
+     prodNuevos:"Sólo lo realiza la DCCP",
+     prodExistente:"Agregar productos en categorías adjudicadas con precio menor al mínimo publicado en la región"}},
+  {n:"Artículos de aseo e higiene", id:"2239-8-LR25", icon:"ti-spray",
+   obj:"Detergentes, cloro, papel tissue, pañales y otros productos de aseo e higiene personal.",
+   vig:"30-11-2027", monto:"Licitación ≥5.000 UTM · publicada 27-05-2025, cierre 29-07-2025", cond:"Compra mínima 10 UTM, despacho gratis, entregas desde 3 UTM.",
+   moneda:"Peso chileno (CLP)", cotizador:"No — compra directa por catálogo", reajuste:"Ordinario cuatrimestral desde el 4° mes de vigencia", duracion:"26 meses desde la adjudicación",
+   url:"https://conveniomarco.mercadopublico.cl/aseo3",
+   docs:[
+     {label:"Texto Refundido del Convenio Marco (consolida bases y modificaciones)", url:"docs/texto-refundido-convenio-marco-aseo-e-higiene.pdf"},
+     {label:"Resolución Exenta N°217-B (26-05-2025) — Aprueba bases de licitación", url:"docs/res-217-b-aprueba-bases-cm-aseo-e-higiene-2239-8-lr25.pdf"},
+     {label:"Resolución Exenta N°268-B (25-06-2025) — Aprueba foro de preguntas y respuestas y modifica bases", url:"docs/res-268-b-aprueba-foro-modifica-bases-cm-aseo-e-higiene-2239-8-lr25.pdf"},
+     {label:"Resolución Exenta N°277-B (27-06-2025) — Rectifica Resolución 268-B y modifica bases", url:"docs/res-277-b-rectifica-268-b-modifica-bases-cm-aseo-e-higiene-2239-8-lr25.pdf"}
+   ],
+   operativa:[
+     {t:"Subcategorías y tipos de producto", d:"Categoría única \"Productos y Artículos de Aseo e Higiene Personal\", con 9 subcategorías: Accesorios de limpieza general, Aerosoles desodorantes y desinfectantes, Detergentes, Limpiador de muebles, Limpieza baño y cocina, Limpieza general y mantención de pisos, Mantención piscina, Papel tissue y Perfumería e higiene personal, con 44 tipos de producto en total."},
+     {t:"Productos químicos", d:"Los tipos de producto clasificados como químicos (cloro, insecticida, jabón desinfectante, aerosol ambiental desinfectante, limpiadores desinfectantes, lavalozas concentrado desinfectante, protector solar, trapero húmedo desinfectante, entre otros) requieren registro ISP vigente y declaración de autorización del fabricante o dueño de la marca para su comercialización."},
+     {t:"Evaluación de ofertas", d:"Técnico — Experiencia en el rubro (facturas) 20%. Administrativo — cumplimiento de requisitos formales 2%, programas de integridad 3%. Económico — ranking de precio regional 75%. El comportamiento contractual anterior resta puntaje (-15 por término anticipado que no sea de mutuo acuerdo, -10 por cobro de garantía de fiel cumplimiento)."},
+     {t:"Regla de adjudicación por zona", d:"Se adjudica a quienes tengan un producto dentro del 60% de los mejores puntajes en regiones II, III, IV, V, VI, VII, VIII, X, XIII, XIV y XVI; 70% en las regiones XV, I, IX, XI y XII; y 80% en la zona Isla de Pascua - Archipiélago Juan Fernández."},
+     {t:"Garantías", d:"Fiel cumplimiento del contrato: $400.000 CLP, con vigencia hasta 60 días hábiles posteriores al término del convenio marco. No se exige garantía de seriedad de la oferta."},
+     {t:"Reajuste ordinario", d:"Automático, cuatrimestral (segundas semanas de abril, agosto y diciembre) a partir del 4° mes de vigencia, con tope de 3% por cuatrimestre, según variación del IPC a nivel de producto (o de la subclase/clase/grupo/división respectiva si el producto es descontinuado por el INE)."},
+     {t:"Reajuste extraordinario", d:"Procede de oficio o a solicitud del proveedor cuando la variación del IPC a nivel de producto supera el 7% en un cuatrimestre móvil, con tope máximo de 13%; vigente por 1 mes o hasta el siguiente reajuste ordinario, y solo aplicable si ya se efectuó un reajuste ordinario previo."},
+     {t:"Plazo de entrega", d:"Máximo 15 días hábiles en todas las regiones, salvo Aysén y Magallanes (20 días hábiles) e Isla de Pascua / Archipiélago Juan Fernández (25 días hábiles); mínimo 1 día hábil. Monto mínimo de despacho: 3 UTM (salvo acuerdo entre comprador y proveedor para entregas menores)."},
+     {t:"Vigencia y prórroga", d:"26 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 12 meses mientras se tramita un nuevo proceso licitatorio, con posibilidad de renovación por una sola vez y bajo las mismas condiciones."},
+     {t:"Multas por atraso", d:"0,5% diario del valor de los productos con atraso, con tope de 30 días hábiles (máximo 15% del valor afectado); adicionalmente 0,5% del monto de la orden de compra por incumplimiento del formato de entrega acordado y 0,5% por entrega de un producto distinto al comprado a través del catálogo electrónico."}
+   ],
+   granCompra:{"total": 9, "items": [{"id": "74955", "licitacion": "2239-9-LR22", "nombre": "INSUMOS Y ARTICULOS DE ASEO. Gran Compra: 74955", "fechaEnvio": "2025-03-06", "estado": "Recepción Conforme", "organismo": "CORP MUNICIPAL PARA EL DESARROLLO SOCIAL", "codigoOC": "1216085-62-CM25"}, {"id": "74815", "licitacion": "2239-9-LR22", "nombre": "Orden de Compra generada por la Gran Compra: 74815", "fechaEnvio": "2025-03-28", "estado": "Recepción Conforme", "organismo": "FUNDACION EDUCACIONAL PARA EL DESAROLLO INTEGRAL DE LA NIÑEZ", "codigoOC": "707423-15-CM25"}, {"id": "75924", "licitacion": "2239-9-LR22", "nombre": "Orden de Compra generada por la Gran Compra: 75924", "fechaEnvio": "2025-04-22", "estado": "Recepción Conforme", "organismo": "Corporación de Desarrollo de La Reina", "codigoOC": "1221016-204-CM25"}, {"id": "75633", "licitacion": "2239-9-LR22", "nombre": "(MJR) INSUMOS TISSUE PARA CENTROS CODEP (Gran Compra: 75633)", "fechaEnvio": "2025-04-24", "estado": "Solicitud de Cancelación", "organismo": "CORP MUNICIPAL DE DESARROLLO SOCIAL DE PUDAHUEL", "codigoOC": "1214102-665-CM25"}, {"id": "76422", "licitacion": "2239-9-LR22", "nombre": "Orden de Compra generada por la Gran Compra: 76422", "fechaEnvio": "2025-06-04", "estado": "Recepción Conforme", "organismo": "FUNDACION EDUCACIONAL PARA EL DESAROLLO INTEGRAL DE LA NIÑEZ", "codigoOC": "707422-80-CM25"}, {"id": "75207", "licitacion": "2239-9-LR22", "nombre": "Gran Compra 75207 - AC 50/2025", "fechaEnvio": "2025-06-23", "estado": "Recepción Conforme", "organismo": "I MUNICIPALIDAD DE MAIPU", "codigoOC": "2770-164-CM25"}, {"id": "76435", "licitacion": "2239-9-LR22", "nombre": "Orden de Compra generada por la Gran Compra: 76435", "fechaEnvio": "2025-07-02", "estado": "Aceptada", "organismo": "FUNDACION EDUCACIONAL PARA EL DESAROLLO INTEGRAL DE LA NIÑEZ", "codigoOC": "594965-59-CM25"}, {"id": "76002", "licitacion": "2239-9-LR22", "nombre": "Orden de Compra generada por la Gran Compra: 76002", "fechaEnvio": "2025-07-04", "estado": "Aceptada", "organismo": "CORP MUNICIPAL DE DESARROLLO SOCIAL DE A", "codigoOC": "1261592-3733-CM25"}, {"id": "77116", "licitacion": "2239-9-LR22", "nombre": "Orden de Compra generada por la Gran Compra: 77116", "fechaEnvio": "2025-08-27", "estado": "Aceptada", "organismo": "SERVICIO DE SALUD DE TALCAHUANO HOSPITAL", "codigoOC": "1057544-14375-CM25"}]},
+   detalle:"detalle/detalle-articulos-de-aseo-e-higiene.html",
+   tx:{"periodo": "nov-2025 a jul-2026", "nOc": 8894, "nProveedores": 215, "nOrganismos": 1155, "montos": [{"moneda": "CLP", "monto": 53444165827.94}], "porMes": [{"mes": "nov-2025", "moneda": "CLP", "nOc": 721, "monto": 3812614032.22}, {"mes": "dic-2025", "moneda": "CLP", "nOc": 762, "monto": 4655725533.62}, {"mes": "ene-2026", "moneda": "CLP", "nOc": 987, "monto": 6956539007.81}, {"mes": "feb-2026", "moneda": "CLP", "nOc": 1072, "monto": 7558645345.85}, {"mes": "mar-2026", "moneda": "CLP", "nOc": 1128, "monto": 7303141745.76}, {"mes": "abr-2026", "moneda": "CLP", "nOc": 1143, "monto": 5970365398.2}, {"mes": "may-2026", "moneda": "CLP", "nOc": 916, "monto": 5618024212.88}, {"mes": "jun-2026", "moneda": "CLP", "nOc": 1031, "monto": 4964668693.81}, {"mes": "jul-2026", "moneda": "CLP", "nOc": 1134, "monto": 6604441857.79}], "topProv": [{"rut": "96.556.940-5", "nombre": "PROVEEDORES INTEGRALES PRISA S A", "nOc": 1765, "monto": 8837538745.69}, {"rut": "96.670.840-9", "nombre": "DIMERC S A", "nOc": 1154, "monto": 6404018890.01}, {"rut": "76.287.853-4", "nombre": "Comercial Agustin Limitada", "nOc": 752, "monto": 4009318001.29}, {"rut": "78.906.980-8", "nombre": "COMERCIAL MUNOZ Y COMPANIA LIMITADA", "nOc": 354, "monto": 3204795807.99}, {"rut": "89.842.300-k", "nombre": "SOLUCIONES INTEGRALES DE LIMPIEZA LIMITADA", "nOc": 209, "monto": 2120487346.6}], "topOrg": [{"rut": "70.574.900-0", "nombre": "FUNDACION EDUCACIONAL PARA EL DESAROLLO INTEGRAL DE LA NIÑEZ", "nOc": 78, "monto": 1733222997.66}, {"rut": "60.910.000-1", "nombre": "UNIVERSIDAD DE CHILE", "nOc": 191, "monto": 1455431161.24}, {"rut": "61.602.189-3", "nombre": "HOSPITAL GUILLERMO GRANT BENAVENTE DE CO", "nOc": 35, "monto": 832455212.05}, {"rut": "61.608.204-3", "nombre": "SERVICIO DE SALUD OCCIDENTE HOSPITAL SAN JUAN DE DIOS", "nOc": 120, "monto": 740185865.51}, {"rut": "70.941.900-5", "nombre": "CORPORACION MUNICIPAL DE DESARROLLO SOCIAL COLINA", "nOc": 8, "monto": 655532660.58}], "porRegion": [{"region": "Metropolitana", "nOc": 2657, "monto": 19726144732.66}, {"region": "Valparaíso", "nOc": 971, "monto": 6366061321.97}, {"region": "Bío-Bío", "nOc": 810, "monto": 5009075245.51}, {"region": "Araucanía", "nOc": 859, "monto": 3965726078.37}, {"region": "Lib. Gral. Bdo. O'Higgins", "nOc": 559, "monto": 2808719188.94}, {"region": "Maule", "nOc": 586, "monto": 2721277372.52}, {"region": "Coquimbo", "nOc": 389, "monto": 2260960183.79}, {"region": "Los Lagos", "nOc": 554, "monto": 2238568363.15}]},
+   pbi:{responsable:"María Elena Reyes", instancia:"Instancia 1",
+     ordTiene:"Sí", ordComo:"Automático", ordFrecuencia:"Cuatrimestral", ordMeses:"Abril, agosto, diciembre", ordVariables:"Variación IPC por producto",
+     extraTiene:"Sí", extraComo:"A solicitud del proveedor", extraRequisitos:"Variación del IPC superior a 7% en los 4 meses previos a la solicitud", extraVariables:"Variación % IPC a nivel de producto, cuatrimestre móvil",
+     dctoVigencia:"2 a 4 días corridos", dctoVariables:"Mínimo 5% sobre el precio catalogado",
+     montoMin:"10 UTM", montoMax:"25.000 UTM",
+     acuerdoCompl:"Máximo 1 año",
+     imptoOC:"El precio se publica neto; el IVA se genera en la OC",
+     prodNuevos:"No permite, salvo que sea requerido por la DCCP",
+     prodExistente:"Agregar productos en categorías/fichas existentes si el precio es menor al mínimo publicado, con tope de 18%"}},
+  {n:"Gas licuado de petróleo", id:"2239-1-LR25", icon:"ti-flame",
+   obj:"Recarga de gas envasado (venta directa o vales) y suministro a granel, por región.",
+   vig:"03-06-2028", monto:"Licitación ≥5.000 UTM · publicada 06-03-2025, cierre 17-04-2025", cond:"Monto máximo de compra 25.000 UTM.",
+   moneda:"Peso chileno (CLP)", cotizador:"No — compra directa por catálogo", reajuste:"Tres tipos de reajuste ordinario de aplicación automática", duracion:"36 meses desde la adjudicación",
+   url:"https://gasv3.mercadopublico.cl/gas3",
+   docs:[{label:"Resolución Exenta N°87-B (05-03-2025) — Aprueba bases de licitación", url:"docs/res-87-b-aprueba-bases-gas-licuado-de-petroleo-2239-1-lr25.pdf"}],
+   operativa:[
+     {t:"Subcategorías", d:"Categoría única \"Gas licuado de petróleo\", con tres subcategorías: envasado mediante vales de recarga, envasado mediante venta directa de recarga (ambas en formatos cilindro de 5, 11, 15 y 45 kg) y a granel (cobro por litro, según la capacidad del estanque)."},
+     {t:"Evaluación de ofertas", d:"Precio 96% (diferenciado por subcategoría y región), cumplimiento de requisitos formales 2%, pacto de integridad 2%."},
+     {t:"Regla de adjudicación", d:"Se adjudica la subcategoría y región a los oferentes que obtengan 70 o más puntos ponderados en al menos una ficha de producto regional; si solo existen dos o menos ofertas válidas para un producto regional, se adjudican todas sin importar el puntaje."},
+     {t:"Garantías", d:"No se exige garantía de seriedad de la oferta. Garantía de fiel cumplimiento del contrato: $1.000.000 CLP, a entregar dentro de 20 días hábiles desde la notificación de la adjudicación, con vigencia hasta 60 días hábiles posteriores al término del convenio marco."},
+     {t:"Reajuste ordinario semanal (ENAP)", d:"Aplicación automática por la DCCP según la variación semanal de precios informada por ENAP, convertida a pesos chilenos con el dólar observado del Banco Central del martes; sin tope."},
+     {t:"Reajuste ordinario trimestral (IPC)", d:"Cada tres meses desde la entrada en vigencia, aplicación automática según la variación del IPC general informado por el INE, solo cuando el reajuste es al alza; sin tope."},
+     {t:"Reajuste ordinario anual", d:"Con frecuencia anual, mediante fórmula basada en el precio FOB Mont Belvieu del propano y el Índice de Costos del Transporte (ICT) del INE, con tope de 10% sobre el precio base (hasta 20% en casos excepcionales como conflictos bélicos o quiebre de suministro)."},
+     {t:"Plazo de entrega (venta directa)", d:"Máximo entre 6 y 18 horas hábiles según región (Región Metropolitana: 6 horas; zonas centro-sur: 9 horas; zonas extremas: 18 horas), de 9:00 a 18:00 horas de lunes a viernes."},
+     {t:"Vigencia y prórroga", d:"36 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 12 meses mientras se tramita un nuevo proceso licitatorio."},
+     {t:"Multas por atraso", d:"Envasado mediante vales y granel: 1% diario por día hábil administrativo de atraso, con tope de 10 días hábiles (10% del valor del producto); atrasos mayores constituyen incumplimiento grave y habilitan el término anticipado. Envasado mediante venta directa: 0,5% por cada hora hábil de atraso."}
+   ],
+   granCompra:{"total": 8, "items": [{"id": "73325", "licitacion": "2239-6-LR23", "nombre": "CA/2205003/GRAN COMPRA DE GAS A GRANEL", "fechaEnvio": "2025-02-04", "estado": "Recepción Conforme", "organismo": "SERVICIO DE SALUD DEL MAULE HOSPITAL DE TALCA", "codigoOC": "5053-1837-CM24"}, {"id": "71477", "licitacion": "2239-6-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 71477", "fechaEnvio": "2025-03-14", "estado": "Enviada a Proveedor", "organismo": "SERVICIO DE SALUD CHILOE", "codigoOC": "2048-2939-CM24"}, {"id": "75809", "licitacion": "2239-6-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 75809", "fechaEnvio": "2025-03-26", "estado": "Recepción Conforme", "organismo": "I MUNICIPALIDAD DE SAN CLEMENTE", "codigoOC": "4451-187-CM25"}, {"id": "75685", "licitacion": "2239-6-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 75685", "fechaEnvio": "2025-04-07", "estado": "Aceptada", "organismo": "Ilustre Municipalidad de Yerbas Buenas", "codigoOC": "3759-341-CM25"}, {"id": "75655", "licitacion": "2239-6-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 75655", "fechaEnvio": "2025-05-05", "estado": "Aceptada", "organismo": "ILUSTRE MUNICIPALIDAD DE CHILLAN VIEJO", "codigoOC": "3671-33-CM25"}, {"id": "76451", "licitacion": "2239-6-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 76451", "fechaEnvio": "2025-05-20", "estado": "Recepción Conforme", "organismo": "I MUNICIPALIDAD DE PELLUHUE", "codigoOC": "3231-232-CM25"}, {"id": "76870", "licitacion": "2239-6-LR23", "nombre": "VALES DE GAS Gran Compra: 76870", "fechaEnvio": "2025-06-13", "estado": "Aceptada", "organismo": "MUNICIPALIDAD DE HUALPEN", "codigoOC": "4152-466-CM25"}, {"id": "75821", "licitacion": "2239-6-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 75821", "fechaEnvio": "2025-06-14", "estado": "Recepción Conforme", "organismo": "I MUNICIPALIDAD DE PUENTE ALTO", "codigoOC": "2422-789-CM25"}]},
+   detalle:"detalle/detalle-gas-licuado-de-petroleo.html",
+   tx:{"periodo": "nov-2025 a jul-2026", "nOc": 13245, "nProveedores": 4, "nOrganismos": 1122, "montos": [{"moneda": "CLP", "monto": 44952151277.89}], "porMes": [{"mes": "nov-2025", "moneda": "CLP", "nOc": 1131, "monto": 2232743626.12}, {"mes": "dic-2025", "moneda": "CLP", "nOc": 901, "monto": 2083249331.21}, {"mes": "ene-2026", "moneda": "CLP", "nOc": 770, "monto": 2841875265.83}, {"mes": "feb-2026", "moneda": "CLP", "nOc": 861, "monto": 2344203700.1}, {"mes": "mar-2026", "moneda": "CLP", "nOc": 1597, "monto": 5532806631.92}, {"mes": "abr-2026", "moneda": "CLP", "nOc": 1873, "monto": 9081331939.04}, {"mes": "may-2026", "moneda": "CLP", "nOc": 1668, "monto": 6020351682.75}, {"mes": "jun-2026", "moneda": "CLP", "nOc": 2090, "monto": 7526664315.26}, {"mes": "jul-2026", "moneda": "CLP", "nOc": 2354, "monto": 7288924785.66}], "topProv": [{"rut": "96.568.740-8", "nombre": "GASCO GLP S A", "nOc": 5919, "monto": 30164076478.01}, {"rut": "91.806.000-6", "nombre": "ABASTIBLE S.A.", "nOc": 4389, "monto": 11308816059.24}, {"rut": "96.928.510-k", "nombre": "EMPRESAS LIPIGAS S A", "nOc": 2930, "monto": 3468873158.44}, {"rut": "92.011.000-2", "nombre": "EMPRESA NACIONAL DE ENERGIA ENEX S.A.", "nOc": 7, "monto": 10385582.2}], "topOrg": [{"rut": "69.072.600-9", "nombre": "I MUNICIPALIDAD DE PAINE", "nOc": 47, "monto": 4832515486.96}, {"rut": "65.258.927-8", "nombre": "FUNDACIÓN GG", "nOc": 32, "monto": 1453518693.2}, {"rut": "69.130.400-0", "nombre": "Ilustre Municipalidad de Yerbas Buenas", "nOc": 19, "monto": 1176867477.73}, {"rut": "69.110.500-8", "nombre": "I MUNICIPALIDAD DE SAN CLEMENTE", "nOc": 11, "monto": 1134747390.84}, {"rut": "69.071.700-K", "nombre": "I MUNICIPALIDAD DE PENAFLOR", "nOc": 44, "monto": 930109024.18}], "porRegion": [{"region": "Metropolitana", "nOc": 2909, "monto": 16647311285.07}, {"region": "Maule", "nOc": 1284, "monto": 8162868609.07}, {"region": "Bío-Bío", "nOc": 1429, "monto": 3218667266.71}, {"region": "Los Lagos", "nOc": 1313, "monto": 2908000558.77}, {"region": "Valparaíso", "nOc": 1049, "monto": 2631870360.35}, {"region": "Araucanía", "nOc": 1279, "monto": 2401648413.36}, {"region": "Ñuble", "nOc": 580, "monto": 2263729829.06}, {"region": "Aysén", "nOc": 881, "monto": 1816522706.11}]},
+   pbi:{responsable:"Katherine Espinoza", instancia:"Instancia 3",
+     ordTiene:"Sí", ordComo:"Automático", ordFrecuencia:"Semanal, trimestral y anual", ordMeses:"Trimestral: marzo, junio, septiembre, diciembre", ordVariables:"Reajuste ENAP · IPC · Mont Belvieu",
+     extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
+     dctoVigencia:"Del sábado 00:01 al miércoles siguiente 23:59 hrs; se publican los viernes de 11:00 a 18:00 hrs", dctoVariables:"Desde $1",
+     montoMin:"No tiene (solo cantidad de vales)", montoMax:"25.000 UTM",
+     acuerdoCompl:"Máximo 1 año para GLP envasado, vales de recarga y venta directa; 5 años para GLP a granel",
+     imptoOC:"El precio se publica neto; el IVA se genera en la OC",
+     prodNuevos:"No permite incorporación de productos nuevos",
+     prodExistente:"Siempre que corresponda a la categoría adjudicada y el precio sea inferior al promedio visible en tienda"}},
+  {n:"Venta y arriendo de computadores y accesorios", id:"2239-5-LR25", icon:"ti-device-laptop",
+   obj:"Laptops, desktops, all-in-one, tablets, monitores y docking stations, en compra o arriendo.",
+   vig:"28-10-2028", monto:"Licitación ≥5.000 UTM · publicada 04-07-2025, cierre 26-08-2025", cond:"Arriendo hasta 36 meses con opción de compra. Valores en USD, sin límite de monto.",
+   moneda:"Dólar americano (USD)", cotizador:"No — compra directa por catálogo", reajuste:"Sin reajuste ordinario en pesos, al transar en USD", duracion:"36 meses desde la adjudicación",
+   url:"https://computadoresv6.mercadopublico.cl/computadores6",
+   docs:[{label:"Resolución Exenta (16-06-2025) — Aprueba bases de licitación", url:"docs/res-aprueba-bases-compra-arriendo-computadoras-accesorios-2239-5-lr25.pdf"}],
+   operativa:[
+     {t:"Categoría y subcategorías", d:"Categoría única \"Compra y Arriendo de Computadoras y Accesorios\", con dos subcategorías: Compra de Computadoras y Accesorios y Arriendo de Computadoras y Accesorios. Tipos de producto: Torres (Desktop), Todo en Uno (AIO), Portátiles (Laptop), Tablets, Monitores y Docking Station, clasificados en gamas (hasta 48 fichas de producto distintas)."},
+     {t:"Evaluación de ofertas", d:"Precio 80%, capacidad de comercialización 9%, oferta multimarca 5%, cumplimiento de requisitos formales 4%, programa de integridad 2%. Se descuenta puntaje adicional por comportamiento contractual anterior (sanciones firmes en los últimos 22 meses: término anticipado -5, suspensión -3, cobro de garantía -2)."},
+     {t:"Regla de adjudicación", d:"Se adjudica el 80% de los productos ofertados con mejor puntaje por ficha de producto, redondeando hacia arriba, garantizando la adjudicación de al menos un producto para 7 marcas distintas cuando existan."},
+     {t:"Garantías", d:"No se exige garantía de seriedad de la oferta. Garantía de fiel cumplimiento del contrato: $10.000.000 CLP, con vigencia hasta 60 días hábiles posteriores al término del convenio marco."},
+     {t:"Reajuste", d:"Al transar en dólares americanos (USD), la DCCP no aplica reajuste ordinario ni extraordinario de precios; solo pueden variar los valores por fluctuaciones del tipo de cambio del dólar."},
+     {t:"Plazo de entrega", d:"Zona Central: 30 días hábiles máximo para transacciones ≤1.000 UTM y 45 días hábiles mínimo para transacciones >1.000 UTM. Zonas extremas (norte, sur, insular): 45 días hábiles máximo o mínimo según el mismo umbral. El clonado y masterizado, si se solicita, agrega en promedio 20 días hábiles adicionales. La entrega es voluntaria para el proveedor en órdenes de compra inferiores a 30 UTM."},
+     {t:"Vigencia y prórroga", d:"36 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 12 meses mientras se tramita un nuevo proceso licitatorio, y renovación posible por una sola vez por el mismo período y bajo las mismas condiciones."},
+     {t:"Multas por atraso", d:"0,2% diario sobre el valor de los productos con retraso en modalidad compra y 0,33% diario en modalidad arriendo, con tope de 30 días hábiles (6% en compra y 9,9% en arriendo). En total, las multas no pueden superar el 20% del contrato, caso en el cual procede el término anticipado."},
+     {t:"Condiciones de arriendo", d:"Servicio de arriendo por 36 meses, pagadero en 36 cuotas mensuales; el organismo puede optar por comprar el equipo mediante el pago de una cuota 37 (valor total del arriendo dividido en 36). Incluye instalación y puesta en marcha, clonado y masterizado, asistencia técnica en 3 niveles de escalamiento, seguro de hardware (robo, hurto hasta 10% de los equipos, incendio y desastres naturales) y reposición del equipo si presenta 3 fallas de hardware en 1 año."},
+     {t:"Montos y adjudicación", d:"A diferencia del convenio anterior, no se fija monto mínimo ni máximo de compra, para facilitar la participación de Empresas de Menor Tamaño (87% del rubro); la adjudicación es nacional y única, sin diferenciación por región."}
+   ],
+   granCompra:{"total": 12, "items": [{"id": "74742", "licitacion": "2239-1-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 74742", "fechaEnvio": "2025-02-13", "estado": "Recepción Conforme", "organismo": "CORP MUNIC EDUC SALUD Y ATENCION", "codigoOC": "1211839-136-CM25"}, {"id": "74235", "licitacion": "2239-1-LR24", "nombre": "Adquisición de computadores/CDP.82461 DE CC102", "fechaEnvio": "2025-04-03", "estado": "Recepción Conforme", "organismo": "UNIVERSIDAD DE SANTIAGO DE CHILE", "codigoOC": "867990-164-CM25"}, {"id": "73905", "licitacion": "2239-1-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 73905", "fechaEnvio": "2025-04-15", "estado": "Aceptada", "organismo": "UNIVERSIDAD DE TALCA", "codigoOC": "1469-791-CM25"}, {"id": "76274", "licitacion": "2239-1-LR24", "nombre": "TPG ADQUISICIÓN EQUIPOS COMPUTACIONALES PARA EL CFT DE LA REGIÓN METROPOLITANA", "fechaEnvio": "2025-04-28", "estado": "Aceptada", "organismo": "CENTRO DE FORMACION TECNICA DE LA REGION METROPOLITANA DE SANTIAGO", "codigoOC": "1106245-47-CM25"}, {"id": "75142", "licitacion": "2239-1-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 75142", "fechaEnvio": "2025-05-05", "estado": "Recepción Conforme", "organismo": "SERVICIO DE SALUD CHILOE", "codigoOC": "507428-2838-CM25"}, {"id": "75931", "licitacion": "2239-1-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 75931", "fechaEnvio": "2025-06-26", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE LA FLORIDA", "codigoOC": "2378-75-CM25"}, {"id": "76600", "licitacion": "2239-1-LR24", "nombre": "PEDIDO 15220 Gran Compra de Computadores ID 76600", "fechaEnvio": "2025-06-30", "estado": "Aceptada", "organismo": "CORP DE DESARROLLO SOCIAL DE PROVIDENCIA", "codigoOC": "552975-509-CM25"}, {"id": "76741", "licitacion": "2239-1-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 76741", "fechaEnvio": "2025-07-10", "estado": "Recepción Conforme", "organismo": "SERVICIO DE SALUD CHILOE", "codigoOC": "507428-3224-CM25"}, {"id": "76742", "licitacion": "2239-1-LR24", "nombre": "Gran Compra: ID 76742", "fechaEnvio": "2025-07-21", "estado": "Recepción Conforme", "organismo": "Servicio Local de Educación Pública Aysén", "codigoOC": "1233615-1085-CM25"}, {"id": "77174", "licitacion": "2239-1-LR24", "nombre": "COMPUTADORES GAMA 3 Gran Compra: 77174 (MDN)", "fechaEnvio": "2025-08-06", "estado": "Aceptada", "organismo": "SERVICIO SALUD METROPOLITANO OCCIDENTE", "codigoOC": "1293138-190-CM25"}, {"id": "77291", "licitacion": "2239-1-LR24", "nombre": "EQUIPAMIENTO INFORMÁTICO", "fechaEnvio": "2025-08-14", "estado": "Aceptada", "organismo": "SUBSECRETARIA DE PREVENCION DEL DELITO", "codigoOC": "654478-473-CM25"}, {"id": "77853", "licitacion": "2239-1-LR24", "nombre": "IJA/la Gran Compra: 77853/COMPUTADORES", "fechaEnvio": "2025-08-21", "estado": "Aceptada", "organismo": "CORP MUNICIPAL DE DESARROLLO SOCIAL DE PUDAHUEL", "codigoOC": "1214102-1501-CM25"}]},
+   detalle:"detalle/detalle-venta-y-arriendo-de-computadores-y-accesorios.html",
+   tx:{"periodo": "nov-2025 a jul-2026", "nOc": 2493, "nProveedores": 51, "nOrganismos": 585, "montos": [{"moneda": "USD", "monto": 28557858.47}], "porMes": [{"mes": "nov-2025", "moneda": "USD", "nOc": 258, "monto": 4441846.77}, {"mes": "dic-2025", "moneda": "USD", "nOc": 242, "monto": 3288038.96}, {"mes": "ene-2026", "moneda": "USD", "nOc": 161, "monto": 2022795.82}, {"mes": "feb-2026", "moneda": "USD", "nOc": 188, "monto": 2812068.06}, {"mes": "mar-2026", "moneda": "USD", "nOc": 272, "monto": 2790805.06}, {"mes": "abr-2026", "moneda": "USD", "nOc": 323, "monto": 3522168.8}, {"mes": "may-2026", "moneda": "USD", "nOc": 335, "monto": 3202306.06}, {"mes": "jun-2026", "moneda": "USD", "nOc": 361, "monto": 3523867.87}, {"mes": "jul-2026", "moneda": "USD", "nOc": 353, "monto": 2953961.07}], "topProv": [{"rut": "96.678.350-8", "nombre": "TECHNOSYSTEMS CHILE SPA", "nOc": 204, "monto": 3938531.66}, {"rut": "78.114.650-1", "nombre": "LECHNER S.A", "nOc": 219, "monto": 2364726.47}, {"rut": "78.112.170-3", "nombre": "NET NOW S.A.", "nOc": 190, "monto": 1754914.09}, {"rut": "77.700.780-7", "nombre": "COMERCIALIZADORA TELENET LTDA", "nOc": 92, "monto": 1334714.6}, {"rut": "76.416.101-7", "nombre": "ARTEC INVERSIONES LIMITADA", "nOc": 105, "monto": 1227715.17}], "topOrg": [{"rut": "60.910.000-1", "nombre": "UNIVERSIDAD DE CHILE", "nOc": 212, "monto": 1364773.23}, {"rut": "61.202.000-0", "nombre": "MINISTERIO DE OBRAS PUBLICAS DIREC CION GRAL DE OO PP DCYF", "nOc": 32, "monto": 730509.42}, {"rut": "60.911.000-7", "nombre": "UNIVERSIDAD DE SANTIAGO DE CHILE", "nOc": 66, "monto": 442464.29}, {"rut": "61.981.360-K", "nombre": "SERVICIO LOCAL DE EDUCACIÓN PÚBLICA DE CHILOÉ", "nOc": 14, "monto": 442216.83}, {"rut": "70.925.500-2", "nombre": "CORSABER", "nOc": 1, "monto": 401767.21}], "porRegion": [{"region": "Metropolitana", "nOc": 1030, "monto": 11957949.17}, {"region": "Valparaíso", "nOc": 251, "monto": 3350106.47}, {"region": "Lib. Gral. Bdo. O'Higgins", "nOc": 145, "monto": 1836595.35}, {"region": "Los Lagos", "nOc": 144, "monto": 1656419.7}, {"region": "Maule", "nOc": 165, "monto": 1446019.66}, {"region": "Bío-Bío", "nOc": 130, "monto": 1230942.1}, {"region": "Araucanía", "nOc": 116, "monto": 1109747.81}, {"region": "Coquimbo", "nOc": 94, "monto": 1068786.03}]},
+   pbi:{responsable:"Maritza Orellana", instancia:"(No informado)",
+     ordTiene:"No", ordComo:"No aplica", ordFrecuencia:"No aplica", ordMeses:"No aplica", ordVariables:"No aplica",
+     extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
+     dctoVigencia:"1 a 7 días", dctoVariables:"No existe descuento mínimo para ofertas especiales; pueden publicarse desde ≥1% de descuento",
+     montoMin:"Sin monto mínimo fijo (según organismo público)", montoMax:"No aplica / tomado de razón",
+     acuerdoCompl:"Compra: máximo 1 año · Arriendo: máximo 3 años",
+     imptoOC:"El precio se publica neto; el IVA se genera en la OC",
+     prodNuevos:"No permite, salvo que la DCCP lo requiera",
+     prodExistente:"El proveedor puede incorporar productos ya catalogados y visibles en fichas pre-existentes, con cobertura en la región, cumpliendo especificaciones y con precio igual o inferior al promedio de tienda (sin considerar ofertas especiales)"}},
+  {n:"Suministro de combustibles", id:"2239-13-LR25", icon:"ti-gas-station",
+   obj:"Suministro de gasolina y diésel en estaciones de servicio a nivel nacional mediante tarjetas de carga.",
+   vig:"02-07-2027", monto:"Licitación ≥5.000 UTM · publicada 01-10-2025, cierre 18-11-2025", cond:"Descuento y monto de compra según proveedor adjudicado por región.",
+   moneda:"Peso chileno (CLP)", cotizador:"No — compra directa mediante tarjeta de carga", reajuste:"No contempla reajustabilidad", duracion:"18 meses desde la adjudicación",
+   url:"https://conveniomarco5.mercadopublico.cl/combustibles5",
+   docs:[
+     {label:"Resolución Exenta N°426-B (30-09-2025) — Aprueba bases de licitación", url:"docs/res-426-b-aprueba-bases-cm-suministro-de-combustibles-2239-13-lr25.pdf"},
+     {label:"Resolución Exenta N°454-B (21-10-2025) — Aprueba foro de preguntas y respuestas y modifica bases", url:"docs/res-454-b-aprueba-foro-modifica-bases-cm-suministro-de-combustibles-2239-13-lr25.pdf"}
+   ],
+   operativa:[
+     {t:"Subcategorías", d:"Categoría única \"Estaciones de Servicio (EDS) mediante plataforma web\", con dos subcategorías obligatorias: Gasolina y Diésel. Es obligatorio ofertar ambas subcategorías; si el proveedor oferta solo una, su oferta queda inadmisible."},
+     {t:"Evaluación de ofertas", d:"Técnico — cantidad de estaciones de servicio en la región 20%, cobertura comunal en la región 7%, densidad comunal en la región 7%. Administrativo — cumplimiento de requisitos formales 2%, programas de integridad 4%. Económico — descuento ponderado sobre precio pizarra 60%, calculado como [(descuento diésel × 2) + descuento gasolina] / 3."},
+     {t:"Regla de adjudicación", d:"Se adjudica a los dos oferentes cuyo puntaje total ponderado para cada región se encuentre entre los mejores de dicha región. En caso de empate, se prioriza el mayor descuento ponderado sobre precio pizarra y luego la mayor cantidad de estaciones de servicio en la región."},
+     {t:"Descuentos mínimos regionales", d:"Los oferentes deben cumplir descuentos mínimos por litro fijados por región y tipo de combustible (entre 29 y 55 CLP/litro según región y combustible); si el descuento ofertado es inferior, la oferta queda inadmisible en esa región."},
+     {t:"Garantías", d:"No se exige garantía de seriedad de la oferta. Garantía de fiel cumplimiento del contrato: $5.000.000 CLP (única, independiente de si se adjudican una o más subcategorías), a entregar dentro de 20 días hábiles desde la notificación de la adjudicación, con vigencia hasta 60 días hábiles posteriores al término del convenio marco."},
+     {t:"Reajuste", d:"El convenio no establece ni contempla condiciones de reajustabilidad de precios."},
+     {t:"Protocolo de carga y uso de tarjetas", d:"Los proveedores deben validar la patente del vehículo (por sistema o código QR) y la identidad del funcionario que realiza la carga (mediante credencial institucional y RUT), bloqueando la operación si no es posible validar alguno de los dos. La Resolución 454-B eliminó la exigencia original de tarjetas sin patente, permitiendo tarjetas con la patente visible. El plazo para implementar el protocolo es de 2 meses desde la publicación de la adjudicación."},
+     {t:"Plazo de entrega de tarjetas", d:"El plazo de entrega de las tarjetas para realizar la carga de combustible no puede sobrepasar los 5 días hábiles desde la notificación de la adjudicación."},
+     {t:"Vigencia y prórroga", d:"18 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 6 meses mientras se tramita un nuevo proceso licitatorio o se define una nueva modalidad de compra, con posibilidad de renovación por una sola vez, por igual período y bajo las mismas condiciones."},
+     {t:"Multas por atraso", d:"0,5 UTM por cada instancia de indisponibilidad diaria del sistema informático de Estaciones de Servicio; 0,5 UTM por cada instancia de indisponibilidad diaria del sistema de control de consumo; 0,5 UTM por día corrido de atraso en la entrega de las tarjetas EDS, con tope de 5 días corridos."}
+   ],
+   granCompra:{"total": 12, "items": [{"id": "74616", "licitacion": "2239-3-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 74616", "fechaEnvio": "2025-02-21", "estado": "Recepción Conforme", "organismo": "ASOCIACION DE MUNICIPIOS METROPOLITANOS PARA LA SEGURIDAD CIUDADANA", "codigoOC": "1238177-1-CM25"}, {"id": "74329", "licitacion": "2239-3-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 74329", "fechaEnvio": "2025-03-11", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE QUILICURA", "codigoOC": "2483-159-CM25"}, {"id": "74914", "licitacion": "2239-3-LR24", "nombre": "COMBUSTIBLE - VEHICULOS Y MAQUINARIA MUNICIPALIDAD DE QUILPUE", "fechaEnvio": "2025-03-12", "estado": "Recepción Conforme", "organismo": "I. MUNICIPALIDAD DE QUILPUE", "codigoOC": "2428-359-CM25"}, {"id": "75616", "licitacion": "2239-3-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 75616", "fechaEnvio": "2025-03-25", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE COIHUECO", "codigoOC": "4594-192-CM25"}, {"id": "75096", "licitacion": "2239-3-LR24", "nombre": "Adquisición de combustible para suministro de flota municipal, Gran Compra: 75096", "fechaEnvio": "2025-03-28", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE PENALOLEN", "codigoOC": "2403-234-CM25"}, {"id": "75188", "licitacion": "2239-3-LR24", "nombre": "SUMINISTRO DE COMBUSTIBLE PARA MUNICIPALIDAD DE VALPARAÍSO", "fechaEnvio": "2025-03-28", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE VALPARAISO", "codigoOC": "2426-19-CM25"}, {"id": "75478", "licitacion": "2239-3-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 75478", "fechaEnvio": "2025-03-28", "estado": "Recepción Conforme", "organismo": "I MUNICIPALIDAD DE CASABLANCA", "codigoOC": "4937-13-CM25"}, {"id": "75093", "licitacion": "2239-3-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 75093", "fechaEnvio": "2025-03-31", "estado": "Recepción Conforme", "organismo": "I MUNICIPALIDAD DE COQUIMBO", "codigoOC": "2446-347-CM25"}, {"id": "75901", "licitacion": "2239-3-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 75901", "fechaEnvio": "2025-04-09", "estado": "Recepción Conforme", "organismo": "Corporación Municipal de Desarrollo Social de Colina", "codigoOC": "1426037-31-CM25"}, {"id": "76647", "licitacion": "2239-3-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 76647", "fechaEnvio": "2025-06-19", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE SAN BERNARDO", "codigoOC": "2341-288-CM25"}, {"id": "75763", "licitacion": "2239-3-LR24", "nombre": "Suministro de Combustible para la Municipalidad de San Joaquin", "fechaEnvio": "2025-06-24", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD SAN JOAQUIN", "codigoOC": "218-354-CM25"}, {"id": "75197", "licitacion": "2239-3-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 75197", "fechaEnvio": "2025-07-02", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE CONCHALI", "codigoOC": "2581-30-CM25"}]},
+   detalle:"detalle/detalle-suministro-de-combustibles.html",
+   tx:{"periodo": "nov-2025 a jul-2026", "nOc": 7351, "nProveedores": 3, "nOrganismos": 1118, "montos": [{"moneda": "CLP", "monto": 76190641293.76}], "porMes": [{"mes": "nov-2025", "moneda": "CLP", "nOc": 849, "monto": 6944020550.96}, {"mes": "dic-2025", "moneda": "CLP", "nOc": 958, "monto": 8940002198.3}, {"mes": "ene-2026", "moneda": "CLP", "nOc": 785, "monto": 10456154585.44}, {"mes": "feb-2026", "moneda": "CLP", "nOc": 577, "monto": 5707286808.0}, {"mes": "mar-2026", "moneda": "CLP", "nOc": 785, "monto": 7967444972.96}, {"mes": "abr-2026", "moneda": "CLP", "nOc": 933, "monto": 12660903789.12}, {"mes": "may-2026", "moneda": "CLP", "nOc": 792, "monto": 7928777278.68}, {"mes": "jun-2026", "moneda": "CLP", "nOc": 862, "monto": 8145398330.8}, {"mes": "jul-2026", "moneda": "CLP", "nOc": 810, "monto": 7440652779.51}], "topProv": [{"rut": "99.520.000-7", "nombre": "COPEC S.A.", "nOc": 6487, "monto": 65459326067.99}, {"rut": "79.588.870-5", "nombre": "ESMAX DISTRIBUCION LIMITADA", "nOc": 695, "monto": 5884839878.62}, {"rut": "92.011.000-2", "nombre": "EMPRESA NACIONAL DE ENERGIA ENEX S.A.", "nOc": 169, "monto": 4846475347.16}], "topOrg": [{"rut": "61.308.000-7", "nombre": "SERVICIO AGRICOLA Y GANADERO", "nOc": 129, "monto": 2467523453.0}, {"rut": "61.313.000-4", "nombre": "CORP NACIONAL FORESTAL", "nOc": 189, "monto": 1919560241.0}, {"rut": "69.060.900-2", "nombre": "I MUNICIPALIDAD DE VALPARAISO", "nOc": 1, "monto": 1349983052.6}, {"rut": "65.118.035-K", "nombre": "ASOCIACION DE MUNICIPALIDADES PARA LA SEGURIDAD CIUDADANA EN LA ZONA ORIENTE", "nOc": 1, "monto": 1015790929.97}, {"rut": "60.910.000-1", "nombre": "UNIVERSIDAD DE CHILE", "nOc": 57, "monto": 897032674.0}], "porRegion": [{"region": "Metropolitana", "nOc": 1037, "monto": 16154269621.66}, {"region": "Valparaíso", "nOc": 740, "monto": 9265491758.45}, {"region": "Araucanía", "nOc": 736, "monto": 6998762223.69}, {"region": "Los Lagos", "nOc": 763, "monto": 6368416614.0}, {"region": "Maule", "nOc": 634, "monto": 6274897347.3}, {"region": "Bío-Bío", "nOc": 694, "monto": 6227144903.0}, {"region": "Lib. Gral. Bdo. O'Higgins", "nOc": 526, "monto": 4383764580.67}, {"region": "Coquimbo", "nOc": 377, "monto": 4024991463.64}], "historicoNota": "El convenio vigente (2239-13-LR25) fue adjudicado el 18-11-2025; buena parte del período aquí mostrado corresponde todavía al convenio anterior 2239-3-LR24."},
+   pbi:{responsable:"Jimmy Arancibia", instancia:"Instancia 1",
+     ordTiene:"No", ordComo:"No aplica", ordFrecuencia:"No aplica", ordMeses:"No aplica", ordVariables:"No aplica",
+     extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
+     dctoVigencia:"1 a 4 días corridos", dctoVariables:"Mínimo 5% sobre el descuento ya disponible del producto y región",
+     montoMin:"30 UTM", montoMax:"25.000 UTM",
+     acuerdoCompl:"Máximo 1 año",
+     imptoOC:"Sin IVA",
+     prodNuevos:"No permite incorporación de productos nuevos",
+     prodExistente:"No permite incorporación de productos ya catalogados en tienda"}},
+  {n:"Transporte privado de pasajeros y arriendo de vehículos", id:"2239-12-LR25", icon:"ti-bus",
+   obj:"Transporte privado de pasajeros, arriendo de vehículos y arriendo de maquinaria.",
+   vig:"02-01-2028", monto:"Licitación ≥5.000 UTM · publicada 16-09-2025, cierre 18-11-2025", cond:"Sin monto mínimo, máximo 25.000 UTM. Multas de 5% a 30% por incumplimiento.",
+   moneda:"Peso chileno (CLP)", cotizador:"Sí — sistema de cotización en línea por requerimiento", reajuste:"No contempla reajustabilidad en tienda; el precio se define por cotización", duracion:"24 meses desde la adjudicación",
+   url:"https://transportesv1.mercadopublico.cl/transporte",
+   docs:[
+     {label:"Texto Refundido del Convenio Marco (consolida bases y modificaciones)", url:"docs/texto-refundido-convenio-marco-transporte-arriendo-vehiculos-y-maquinaria-2239-12-lr25.pdf"},
+     {label:"Resolución Exenta N°406-B (16-09-2025) — Aprueba bases de licitación pública", url:"docs/res-406-b-aprueba-bases-cm-transporte-2239-12-lr25.pdf"},
+     {label:"Resolución Exenta N°459-B (23-10-2025) — Modifica bases de licitación (tras foro de preguntas y respuestas)", url:"docs/res-459-b-modifica-bases-transporte-2239-12-lr25.pdf"},
+     {label:"Resolución Exenta N°471-B (27-10-2025) — Rectifica y modifica la Resolución N°459-B", url:"docs/res-471-b-rectifica-modifica-459-b-transporte-2239-12-lr25.pdf"},
+     {label:"Resolución Exenta N°498-B (14-11-2025) — Modifica bases de licitación", url:"docs/res-498-b-modifica-bases-transporte-2239-12-lr25.pdf"}
+   ],
+   operativa:[
+     {t:"Subcategorías licitadas", d:"Arriendo de Vehículos (automóviles, camionetas, furgones, todo terreno, VAN, minibús y buses, entre otros), Transporte Privado de Pasajeros (buses de 18 o más asientos y minibuses de 7 a 17 asientos, VAN) y Arriendo de Maquinaria (retroexcavadoras, excavadoras, bulldozers, motoniveladoras, camiones, cargadores, entre otros), con servicio básico (solo arriendo del activo) y servicio completo (incluye conductor, combustible y mantenciones) para esta última."},
+     {t:"Evaluación de ofertas", d:"Administrativo — cumplimiento de requisitos formales 2%, pacto de integridad 3%. Económico — servicios adicionales sin costo 20% (arriendo de vehículos y transporte de pasajeros) o movilización y desmovilización sin costo 25% (arriendo de maquinaria). Técnico — tamaño de la flota 25%, tiempo de respuesta de asistencia en ruta 25% (vehículos y transporte de pasajeros) o servicio de asesoría técnica en terreno 20% (maquinaria), y antigüedad máxima de la flota 25%."},
+     {t:"Regla de adjudicación", d:"Adjudicación múltiple sin emisión de orden de compra: se adjudica cada categoría y región a los oferentes que se ubiquen dentro del 70% de los mejores puntajes considerando la región de origen declarada en la oferta; al adjudicar una categoría y región se adjudican automáticamente todas las regiones del país."},
+     {t:"Garantías", d:"No se exige garantía de seriedad de la oferta. Garantía de fiel cumplimiento de contrato única (independiente de cuántas categorías se adjudiquen): $1.000.000 CLP, a entregar dentro de 20 días hábiles desde la notificación de la adjudicación (prorrogables 20 días hábiles adicionales), con vigencia hasta 60 días hábiles posteriores al término del convenio marco."},
+     {t:"Reajuste", d:"El convenio no contempla reajuste ordinario ni extraordinario en la tienda electrónica; el precio se fija en cada proceso de cotización, donde la entidad compradora puede establecer un mecanismo de reajuste por IPC o IPC específico, con la frecuencia que defina en el requerimiento."},
+     {t:"Modelo de cotización y montos", d:"El convenio opera con un modelo de cotización en línea por categoría: el organismo publica su requerimiento y los proveedores adjudicados en esa categoría presentan oferta. Sin monto mínimo de compra; monto máximo 25.000 UTM incluyendo todos los cargos e impuestos. Acuerdo complementario obligatorio para contrataciones entre 1.000 y 25.000 UTM, con vigencia máxima de 3 años (36 meses)."},
+     {t:"Vigencia y prórroga", d:"24 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 12 meses mientras se tramita un nuevo proceso licitatorio o se define una nueva modalidad de compra. Renovable por una sola vez, por el mismo período, previo informe técnico favorable."},
+     {t:"Multas por atraso e incumplimiento", d:"17 causales de multa, entre 5% y 30% del valor del servicio con deficiencia, por evento o por día de atraso (por ejemplo: 30% por no presentarse al servicio sin aviso previo, 20% por atraso superior a 2 horas o por no contar con vehículo de reemplazo, 5% por atraso en la entrega de vehículos y maquinaria en arriendo). Todas las multas tienen un tope conjunto de 30% del valor total del servicio licitado; superado ese límite se considera incumplimiento grave y procede el término anticipado del acuerdo complementario."},
+     {t:"Requisitos de flota", d:"Los vehículos y maquinaria pueden ser propios o de terceros mediante contrato de arriendo con vigencia mínima de 6 meses (no se aceptan contratos tipo rent a car, diarios, semanales o mensuales); deben declararse en el Anexo N°5 con año de primera inscripción/compra, marca, modelo y patente."}
+   ],
+   detalle:"detalle/detalle-transporte-privado-de-pasajeros-y-arriendo-de-vehiculos.html",
+   tx:{"periodo": "nov-2025 a jul-2026", "nOc": 178, "nProveedores": 57, "nOrganismos": 75, "montos": [{"moneda": "CLP", "monto": 4037895183.0}], "porMes": [{"mes": "nov-2025", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "dic-2025", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "ene-2026", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "feb-2026", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "mar-2026", "moneda": "CLP", "nOc": 5, "monto": 52929900.0}, {"mes": "abr-2026", "moneda": "CLP", "nOc": 28, "monto": 1016587097.0}, {"mes": "may-2026", "moneda": "CLP", "nOc": 44, "monto": 1047380526.0}, {"mes": "jun-2026", "moneda": "CLP", "nOc": 38, "monto": 915529552.0}, {"mes": "jul-2026", "moneda": "CLP", "nOc": 63, "monto": 1005468108.0}], "topProv": [{"rut": "76.238.635-6", "nombre": "PESCO RENTAL SOCIEDAD ANONIMA ", "nOc": 3, "monto": 618074900.0}, {"rut": "76.310.505-9", "nombre": "SMC", "nOc": 2, "monto": 366720000.0}, {"rut": "76.791.832-1", "nombre": "TERESA GARRIDO ROJAS E HIJOS LTDA", "nOc": 11, "monto": 233518001.0}, {"rut": "77.063.031-2", "nombre": "TRANSERVI JL SPA", "nOc": 10, "monto": 229235006.0}, {"rut": "76.820.816-6", "nombre": "DAVID ISAAC", "nOc": 3, "monto": 221048000.0}], "topOrg": [{"rut": "61.608.101-2", "nombre": "SERVICIO DE SALUD METROPOLITANO SUR HOSP", "nOc": 1, "monto": 542212400.0}, {"rut": "61.104.022-9", "nombre": "Dirección General de Aeronáutica Civil", "nOc": 2, "monto": 360070000.0}, {"rut": "61.607.301-K", "nombre": "COMPLEJO ASISTENCIAL DR.VICTOR RIOS RUIZ", "nOc": 6, "monto": 230087000.0}, {"rut": "62.000.590-8", "nombre": "SERVICIO DE VIVIENDA Y URBANIZACION REGION ÑUBLE", "nOc": 1, "monto": 200000000.0}, {"rut": "61.818.002-6", "nombre": "SERVICIO DE VIVIENDA Y URBANIZACION DE V", "nOc": 1, "monto": 179800000.0}], "porRegion": [{"region": "Metropolitana", "nOc": 42, "monto": 1362155966.0}, {"region": "Bío-Bío", "nOc": 25, "monto": 616709870.0}, {"region": "Araucanía", "nOc": 21, "monto": 394599406.0}, {"region": "Ñuble", "nOc": 15, "monto": 307558940.0}, {"region": "Los Lagos", "nOc": 17, "monto": 279087400.0}, {"region": "Los Ríos", "nOc": 6, "monto": 255791200.0}, {"region": "Maule", "nOc": 13, "monto": 245252860.0}, {"region": "Valparaíso", "nOc": 14, "monto": 178844582.0}]},
+   pbi:{responsable:"Diego Miranda", instancia:"Community",
+     ordTiene:"No", ordComo:"No aplica", ordFrecuencia:"No aplica", ordMeses:"No aplica", ordVariables:"No aplica",
+     extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
+     dctoVigencia:"No tiene", dctoVariables:"No aplica",
+     montoMin:"No aplica", montoMax:"25.000 UTM",
+     acuerdoCompl:"Máximo 36 meses",
+     imptoOC:"Exenta de IVA (precios incluyen todos los impuestos)",
+     prodNuevos:"No aplica",
+     prodExistente:"No aplica"}},
+  {n:"Endoprótesis, ortopedia y trauma", id:"2239-15-LR25", icon:"ti-bone",
+   obj:"Endoprótesis, insumos ortopédicos, dispositivos de fijación ósea y kits quirúrgicos para la red de salud pública.",
+   vig:"25-02-2029", monto:"Licitación ≥5.000 UTM · publicada 22-10-2025, cierre 16-12-2025", cond:"Contratación entre 30 y 25.000 UTM.",
+   moneda:"Peso chileno (CLP)", cotizador:"No — compra directa por catálogo", reajuste:"Ordinario cuatrimestral (2ª semana de abril, agosto y diciembre) desde el 4° mes de vigencia", duracion:"36 meses desde la adjudicación",
+   url:"https://conveniomarco6.mercadopublico.cl/endoprotesis1",
+   docs:[
+     {label:"Resolución Exenta N°450-B (20-10-2025) — Aprueba bases de licitación del Convenio Marco de Endoprótesis, Ortopedia y Trauma", url:"docs/450-b-res-aprueba-bases-cm-endoprotesis.pdf"},
+     {label:"Resolución Exenta N°520-B (27-11-2025) — Modifica bases de licitación y amplía plazo de cierre de recepción de ofertas (tras foro de preguntas y respuestas)", url:"docs/520-b-res-modifica-bases-lp-cm-id-2239-15-lr25-endoprotesis-ort.pdf"}
+   ],
+   operativa:[
+     {t:"Categorías y subcategorías", d:"Cuatro categorías: Endoprótesis Trauma Ortopedia (barras, cadera, columna, componentes protésicos, extremidades), Osteosíntesis (fijación ósea química, extremidades inferiores, sistemas), Sistemas de Fijación de Trauma (fijación mecánica) y Equipo Médico (complemento operatorio e instrumental quirúrgico), con cientos de productos específicos organizados en fichas regionales."},
+     {t:"Asistente Quirúrgico obligatorio", d:"El oferente debe disponer de al menos un Asistente Quirúrgico (TENS o arsenalero) por cada región donde declare cobertura, acreditado en el Registro Nacional de Prestadores de la Salud, con esquema de vacunación vigente contra hepatitis B, disponible para asistir en pabellón según coordinación previa (mínimo 72 horas hábiles de anticipación para cirugías programadas)."},
+     {t:"Representación de marca y garantía del fabricante", d:"El oferente debe acreditar representación directa o distribución oficial de cada marca mediante carta del fabricante (Anexo N°5), que declare la garantía postoperatoria y cubra defectos de fabricación, fallas estructurales, reemplazo gratuito del producto y trazabilidad por lote y serie."},
+     {t:"Evaluación de ofertas", d:"Programa de integridad 3%, cumplimiento de requisitos formales 2%, certificado del Instituto de Salud Pública (ISP) 25%, trayectoria en ventas 15%, experiencia en contratos similares 15% y precio del producto 40%, evaluados por ficha de producto regional."},
+     {t:"Regla de adjudicación", d:"Se adjudica cada ficha de producto regional a los oferentes con puntaje ponderado igual o superior a 70 puntos (aproximando desde 69,5). Adjudicar una ficha implica adjudicar la subcategoría y la categoría respectiva, sin emisión automática de orden de compra."},
+     {t:"Garantías", d:"No se exige garantía de seriedad de la oferta. Garantía de fiel cumplimiento de contrato: $2.000.000 CLP, única e independiente del número de categorías adjudicadas, con vigencia hasta 60 días hábiles posteriores al término del convenio marco, incluida su eventual prórroga."},
+     {t:"Reajuste ordinario y extraordinario", d:"Reajuste ordinario cuatrimestral (segunda semana de abril, agosto y diciembre) desde el 4° mes de vigencia, con tope de 2,5% por cuatrimestre según fórmula ponderada de IPC Salud (52%) e Índice de Precios de Importación (48%). Reajuste extraordinario automático si la variación cuatrimestral móvil del IPC \"Otros Productos Médicos\" supera 2,5%, con tope de 15%."},
+     {t:"Plazos de entrega", d:"24 horas corridas en la Región Metropolitana, 48 horas corridas en capitales regionales de zona centro, sur y norte, y 96 horas corridas en localidades fuera del radio urbano y zonas extremas (Arica y Parinacota, Magallanes, islas), contadas desde el requerimiento."},
+     {t:"Vigencia y prórroga", d:"36 meses desde la total tramitación de la resolución de adjudicación. Prórroga posible solo por el tiempo que dure un nuevo proceso licitatorio o una nueva modalidad de compra, con un máximo de 12 meses. Renovable por un mismo período y bajo las mismas condiciones, por una sola vez, previo informe técnico favorable."},
+     {t:"Multas por incumplimiento", d:"Tabla de multas por evento: 25% del servicio no prestado por inasistencia del asistente quirúrgico, 30% por kit incompleto o defectuoso, 20% por quiebre de stock superior a 15 días, 8% por atraso en la entrega, entre otras causales, con tope conjunto de 30% del valor total de los productos licitados; superado ese tope se considera incumplimiento grave y procede el término anticipado del convenio."}
+   ],
+   detalle:"detalle/detalle-endoprotesis-ortopedia-y-trauma.html",
+   tx:{"periodo": "nov-2025 a jul-2026", "nOc": 265, "nProveedores": 24, "nOrganismos": 51, "montos": [{"moneda": "CLP", "monto": 3276699352.92}], "porMes": [{"mes": "nov-2025", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "dic-2025", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "ene-2026", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "feb-2026", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "mar-2026", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "abr-2026", "moneda": "CLP", "nOc": 5, "monto": 40441093.28}, {"mes": "may-2026", "moneda": "CLP", "nOc": 45, "monto": 644166575.5}, {"mes": "jun-2026", "moneda": "CLP", "nOc": 103, "monto": 1148682828.72}, {"mes": "jul-2026", "moneda": "CLP", "nOc": 112, "monto": 1443408855.42}], "topProv": [{"rut": "76.102.788-3", "nombre": "SOCIEDAD COMERCIALIZADORA DE INSUMOS MEDICOS CLP S.A.", "nOc": 82, "monto": 882124553.03}, {"rut": "93.745.000-1", "nombre": "JOHNSON Y JOHNSON DE CHILE S A", "nOc": 48, "monto": 873144124.02}, {"rut": "96.863.710-k", "nombre": "BIOMET CHILE S A", "nOc": 40, "monto": 396406673.88}, {"rut": "76.400.383-7", "nombre": "GLOBALMED SPA", "nOc": 9, "monto": 271886939.8}, {"rut": "78.874.470-6", "nombre": "STRYKER CORPORATION CHILE Y COMPANIA LIMITADA", "nOc": 6, "monto": 217166521.25}], "topOrg": [{"rut": "61.608.002-4", "nombre": "SERVICIO DE SALUD METROPOLITANA NORTE HOSPITAL SAN JOSE", "nOc": 16, "monto": 493944313.45}, {"rut": "61.975.100-0", "nombre": "HOSPITAL PUERTO MONTT SERVICIO DE SALUD DEL RELONCAVI", "nOc": 17, "monto": 293119611.19}, {"rut": "65.075.485-9", "nombre": "HOSPITAL CLINICO METROPOLITANO DE LA FLORIDA DOCTORA ELOISA DIAZ", "nOc": 16, "monto": 288806278.88}, {"rut": "61.602.140-0", "nombre": "SERVICIO DE SALUD HOSPITAL DE RENGO", "nOc": 8, "monto": 231585930.94}, {"rut": "61.608.502-6", "nombre": "COMPLEJO ASISTENCIAL DR. SOTERO DEL RIO", "nOc": 8, "monto": 230780842.39}], "porRegion": [{"region": "Metropolitana", "nOc": 120, "monto": 1688910672.54}, {"region": "Lib. Gral. Bdo. O'Higgins", "nOc": 16, "monto": 338748989.04}, {"region": "Los Lagos", "nOc": 20, "monto": 311359544.44}, {"region": "Valparaíso", "nOc": 36, "monto": 254892593.83}, {"region": "Bío-Bío", "nOc": 6, "monto": 179149456.78}, {"region": "Araucanía", "nOc": 8, "monto": 162219161.37}, {"region": "Magallanes y Antártica", "nOc": 28, "monto": 118572137.88}, {"region": "Coquimbo", "nOc": 7, "monto": 70185424.12}]},
+   pbi:null},
+  {n:"Adquisición de vehículos y maquinaria", id:"2239-6-LR25", icon:"ti-truck",
+   obj:"Compra de vehículos livianos, medianos y pesados, y maquinaria (excavadoras y similares). Renovación del convenio anterior.",
+   vig:"13-03-2029", monto:"Licitación ≥5.000 UTM · publicada 11-11-2025, cierre 23-01-2026", cond:"Compra de 100 a 25.000 UTM; adjudicación por combinación tipo de producto + combustible + región + marca.",
+   moneda:"Peso chileno (CLP)", cotizador:"No — compra directa por catálogo", reajuste:"Sin reajuste; el precio se fija como % de descuento sobre el precio de venta", duracion:"36 meses desde la adjudicación",
+   url:"https://conveniomarco4.mercadopublico.cl/vehiculos2025",
+   docs:[
+     {label:"Texto Refundido del Convenio Marco (consolida bases y modificaciones)", url:"docs/texto-refundido-convenio-marco-vehiculos-y-maquinaria.pdf"},
+     {label:"Resolución Exenta N°493-B (11-11-2025) — Aprueba bases de licitación pública del Convenio Marco para la Adquisición de Vehículos y Maquinaria", url:"docs/res-493-b-aprueba-bases-cm-vehiculos-y-maquinaria-2239-6-lr25.pdf"},
+     {label:"Resolución Exenta N°570-B (26-12-2025) — Modifica bases de licitación", url:"docs/res-570-b-modifica-bases-cm-vehiculos-y-maquinaria-2239-6-lr25.pdf"}
+   ],
+   operativa:[
+     {t:"Objeto del convenio", d:"Adquisición de vehículos livianos, medianos, pesados y maquinaria agrícola, forestal y de construcción de obras generales, mediante adjudicación múltiple sin emisión de orden de compra automática; el proveedor oferta un % de descuento sobre el precio de venta final a público."},
+     {t:"Subcategorías y tipos de producto", d:"Categoría Vehículos Livianos y Medianos: Camionetas, SUV, Sedán, Minibuses y Furgones. Categoría Vehículos pesados y maquinarias: Cargo, Buses pesados, Tolvas, Motoniveladora, Retroexcavadora, Cargador y Excavadora. Además, una Ficha Abierta para el pago de la documentación del vehículo (inscripción en el Registro Nacional de Vehículos Motorizados, patente, SOAP, permiso de circulación, homologación, etc.), aplicable a ambas categorías. Cada ficha se clasifica también por tipo de combustible: diésel, gasolina, eléctrico e híbrido."},
+     {t:"Evaluación de ofertas", d:"Técnico — Monto de transacciones en Mercado Público 10%, cantidad de órdenes de compra en Mercado Público 10%, servicio técnico disponible (no cubierto por garantía) 15%. Administrativo — programa de integridad 3%, cumplimiento de requisitos formales 2%. Económico — porcentaje de descuento sobre precio de venta 40%, precio de despacho 20%."},
+     {t:"Regla de adjudicación", d:"Se adjudica por combinación de ficha regional (tipo de producto + tipo de combustible + región) y marca, a todo producto con puntaje total igual o superior a 60 puntos; si solo existe una oferta válida para una ficha regional, se adjudica igualmente aunque su puntaje sea inferior a 60. No contempla criterios de desempate."},
+     {t:"Garantías", d:"Fiel cumplimiento del contrato: $5.000.000 CLP, con vigencia hasta 60 días hábiles posteriores al término del convenio marco. No se exige garantía de seriedad de la oferta. Adicionalmente, cada vehículo debe contar con garantía convencional mínima de 36 meses o 100.000 kilómetros (lo que ocurra primero) y las maquinarias, de 36 meses."},
+     {t:"Reajuste", d:"No se aplica reajuste a los productos, ya que el precio se fija como % de descuento sobre el precio de venta final a público, actualizado por el proveedor. Los precios de despacho se reajustan una vez al año según la variación del Índice de Costos de Transporte (ICT) del INE."},
+     {t:"Plazo de entrega", d:"Máximo 30 días hábiles en todas las regiones, salvo Aysén y Magallanes (35 días hábiles) e Isla de Pascua / Archipiélago Juan Fernández (35 días hábiles); mínimo 1 día hábil. El retiro en tienda es obligatorio en la región adjudicada (salvo Isla de Pascua y Juan Fernández) y sin costo; el despacho es opcional y a elección del comprador."},
+     {t:"Vigencia y prórroga", d:"36 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 12 meses mientras se tramita un nuevo proceso licitatorio, con posibilidad de renovación por una sola vez y bajo las mismas condiciones."},
+     {t:"Multas por atraso", d:"0,5% diario del valor de los productos con atraso, con tope de 30 días hábiles (máximo 15% del valor afectado); adicionalmente 0,5% del monto de la orden de compra por entrega de un producto distinto al comprado a través del catálogo electrónico."},
+     {t:"Montos de compra", d:"Las órdenes de compra no pueden ser por montos iguales o inferiores a 100 UTM ni superiores a 25.000 UTM, incluyendo todos los cargos e impuestos."}
+   ],
+   granCompra:{"total": 38, "items": [{"id": "73971", "licitacion": "2239-8-LR23", "nombre": "Adquisición de 12 vehículos livianos para la DIRSAL", "fechaEnvio": "2025-02-05", "estado": "Aceptada", "organismo": "CORP MUNICIPAL DE SAN MIGUEL", "codigoOC": "629373-54-CM25"}, {"id": "73741", "licitacion": "2239-8-LR23", "nombre": "ADQUISICION DE 3 MINIBUSES PARA LA SECCION DE INVESTIGACION POLICIAL Y APOYO LOGISTICO Orden de Compra generada por la Gran Compra: 73741", "fechaEnvio": "2025-03-13", "estado": "Recepción Conforme", "organismo": "GOBIERNO REGIONAL VI REGION DEL LI BERTADOR B O\"HIGGINS", "codigoOC": "4374-1-CM25"}, {"id": "74365", "licitacion": "2239-8-LR23", "nombre": "ADQUISICIÓN DE CAMIONETAS 4X4 COLOR FÁBRICA", "fechaEnvio": "2025-03-19", "estado": "Recepción Conforme", "organismo": "DIRECCION DE LOGISTICA DE CARABINEROS", "codigoOC": "5240-33-CM25"}, {"id": "75169", "licitacion": "2239-8-LR23", "nombre": "ADQUISICIÓN 2 CAMIONETAS MUNICIPALES Y REPOSICIÓN 4 CAMIONETAS MUNICIPALES PARA HUARA", "fechaEnvio": "2025-03-31", "estado": "Aceptada", "organismo": "ILUSTRE MUNICIPALIDAD DE HUARA", "codigoOC": "5908-17-CM25"}, {"id": "73982", "licitacion": "2239-8-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 73982", "fechaEnvio": "2025-04-03", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE QUILICURA", "codigoOC": "2483-224-CM25"}, {"id": "74387", "licitacion": "2239-8-LR23", "nombre": "ADQUISICIÓN DE CAMIONETAS 4X4 COLOR FÁBRICA PARA CARABINEROS DE CHILE", "fechaEnvio": "2025-04-14", "estado": "Recepción Conforme", "organismo": "DIRECCION DE LOGISTICA DE CARABINEROS", "codigoOC": "5240-46-CM25"}, {"id": "75181", "licitacion": "2239-8-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 75181", "fechaEnvio": "2025-04-14", "estado": "Aceptada", "organismo": "Ilustre Municipalidad de Tolten", "codigoOC": "3836-293-CM25"}, {"id": "76328", "licitacion": "2239-8-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 76328", "fechaEnvio": "2025-04-29", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE TALAGANTE", "codigoOC": "2702-189-CM25"}, {"id": "75596", "licitacion": "2239-8-LR23", "nombre": "ADQUISICION DE CAMIONETAS 4X4", "fechaEnvio": "2025-04-30", "estado": "Aceptada", "organismo": "MINISTERIO DE OBRAS PUBLICAS DIREC CION GRAL DE OO PP DCYF", "codigoOC": "1018-80-CM25"}, {"id": "75154", "licitacion": "2239-8-LR23", "nombre": "ADQUISICIÓN DE VEHÍCULOS COLOR FÁBRICA PARA CARABINEROS DE CHILE", "fechaEnvio": "2025-05-07", "estado": "Recepción Conforme", "organismo": "DIRECCION DE LOGISTICA DE CARABINEROS", "codigoOC": "5240-93-CM25"}, {"id": "75264", "licitacion": "2239-8-LR23", "nombre": "ADQUISICION DE CAMIONETA PICK-UP DOBLE CABINA 4X4 PARA CARABINEROS DE CHILE", "fechaEnvio": "2025-05-09", "estado": "Recepción Conforme", "organismo": "DIRECCION DE LOGISTICA DE CARABINEROS", "codigoOC": "5240-92-CM25"}, {"id": "76512", "licitacion": "2239-8-LR23", "nombre": "Adquisicion de Bus Para Traslado de Funcionario de la Municipalidad de Rio Verde, Gran Compra: 76512", "fechaEnvio": "2025-05-19", "estado": "Recepción Conforme", "organismo": "ILUSTRE MUNICIPALIDAD DE RIO VERDE", "codigoOC": "3595-188-CM25"}, {"id": "76713", "licitacion": "2239-8-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 76713", "fechaEnvio": "2025-05-28", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE OSORNO", "codigoOC": "2297-802-CM25"}, {"id": "76127", "licitacion": "2239-8-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 76127", "fechaEnvio": "2025-05-29", "estado": "Aceptada", "organismo": "FONDO DE SOLIDARIDAD E INVERSION SOCIAL", "codigoOC": "762-48-CM25"}, {"id": "76565", "licitacion": "2239-8-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 76565 ADQUISICIÓN DE VEHÍCULOS PARA EL MINISTERIO DE LAS CULTURAS, LAS ARTES Y EL PATRIMONIO", "fechaEnvio": "2025-05-30", "estado": "Recepción Conforme", "organismo": "SUBSECRETARÍA DE LAS CULTURAS Y LAS ARTES", "codigoOC": "1725-4794-CM25"}, {"id": "75442", "licitacion": "2239-8-LR23", "nombre": "ADQUISICIÓN DE VEHÍCULOS COLOR FÁBRICA PARA CARABINEROS DE CHILE", "fechaEnvio": "2025-06-11", "estado": "Recepción Conforme", "organismo": "DIRECCION DE LOGISTICA DE CARABINEROS", "codigoOC": "5240-112-CM25"}, {"id": "75658", "licitacion": "2239-8-LR23", "nombre": "ADQUISICION DE VEHICULOS COLOR FABRICA PARA CARABINEROS DE CHILE", "fechaEnvio": "2025-06-16", "estado": "Recepción Conforme", "organismo": "DIRECCION DE LOGISTICA DE CARABINEROS", "codigoOC": "5240-98-CM25"}, {"id": "75756", "licitacion": "2239-8-LR23", "nombre": "CAMIONETAS 4X4 Gran Compra: 75756", "fechaEnvio": "2025-06-16", "estado": "Aceptada", "organismo": "MINISTERIO DE OBRAS PUBLICAS DIREC CION GRAL DE OO PP DCYF", "codigoOC": "975-120-CM25"}, {"id": "76393", "licitacion": "2239-8-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 76393", "fechaEnvio": "2025-06-23", "estado": "Aceptada", "organismo": "I. MUNICIPALIDAD DE QUILPUE", "codigoOC": "4412-27-CM25"}, {"id": "76736", "licitacion": "2239-8-LR23", "nombre": "Adquisición de 13 camionetas para SIP y Apoyo logístico Carabineros Orden de Compra generada por la Gran Compra: 76736", "fechaEnvio": "2025-06-25", "estado": "Recepción Conforme", "organismo": "GOBIERNO REGIONAL VI REGION DEL LI BERTADOR B O\"HIGGINS", "codigoOC": "4374-58-CM25"}, {"id": "76452", "licitacion": "2239-8-LR23", "nombre": "REPOSICION DE UN CAMIÓN TOLVA, PARA LA COMUNA DE MAULE", "fechaEnvio": "2025-07-01", "estado": "Recepción Conforme", "organismo": "GOBIERNO REGIONAL VII REGION", "codigoOC": "1596-160-CM25"}, {"id": "76612", "licitacion": "2239-8-LR23", "nombre": "ADQ. DE VEHÍCULOS COLOR FÁBRICA PARA CARABINEROS DE CHILE", "fechaEnvio": "2025-07-07", "estado": "Aceptada", "organismo": "DIRECCION DE LOGISTICA DE CARABINEROS", "codigoOC": "5240-165-CM25"}, {"id": "76854", "licitacion": "2239-8-LR23", "nombre": "ADQUISICION DE VEHICULOS PARA LA MUNICIPALIDAD DE PARRAL", "fechaEnvio": "2025-07-09", "estado": "Recepción Conforme", "organismo": "I MUNICIPALIDAD DE PARRAL", "codigoOC": "2595-347-CM25"}, {"id": "77094", "licitacion": "2239-8-LR23", "nombre": "ADQUISICION DE VEHICULOS Y MAQUINARIAS DEPARTAMENTO DE SALUD SAN PEDRO DE ATACAMA", "fechaEnvio": "2025-07-11", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE SAN PEDRO DE ATACAMA", "codigoOC": "4999-127-CM25"}, {"id": "77038", "licitacion": "2239-8-LR23", "nombre": "Adquisición de 5 sedanes para sección de investigación policial y apoyo logístico Carabineros”, código BIP N° 40048998-0 Orden de Compra generada por la Gran Compra: 77038", "fechaEnvio": "2025-07-14", "estado": "Recepción Conforme", "organismo": "GOBIERNO REGIONAL VI REGION DEL LI BERTADOR B O\"HIGGINS", "codigoOC": "4374-63-CM25"}, {"id": "77072", "licitacion": "2239-8-LR23", "nombre": "CAMIONETAS DOBLE CABINA 4 x 4 por la Gran Compra: 77072", "fechaEnvio": "2025-07-18", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE CURANILAHUE", "codigoOC": "4238-160-CM25"}, {"id": "75935", "licitacion": "2239-8-LR23", "nombre": "GC 75935 Adquisición de Camionetas", "fechaEnvio": "2025-07-21", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE ARICA", "codigoOC": "2369-37-CM25"}, {"id": "74658", "licitacion": "2239-8-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 74658", "fechaEnvio": "2025-07-28", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD PEDRO AGUIRRE CERDA", "codigoOC": "2392-4410-CM25"}, {"id": "77565", "licitacion": "2239-8-LR23", "nombre": "ADQ. REPOSICION 4 CAMIONETAS MUNICIPALIDAD DE YUMBEL", "fechaEnvio": "2025-07-29", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE YUMBEL", "codigoOC": "4072-53-CM25"}, {"id": "77584", "licitacion": "2239-8-LR23", "nombre": "Adquisición Motoniveladora generada por la Gran Compra: 77584", "fechaEnvio": "2025-08-01", "estado": "Aceptada", "organismo": "ILUSTRE MUNICIPALIDAD DE RIO VERDE", "codigoOC": "3595-341-CM25"}, {"id": "77653", "licitacion": "2239-8-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 77653", "fechaEnvio": "2025-08-11", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE CONCEPCION", "codigoOC": "4988-39-CM25"}, {"id": "76395", "licitacion": "2239-8-LR23", "nombre": "OC por la Gran Compra: 76395", "fechaEnvio": "2025-08-18", "estado": "Recepción Conforme", "organismo": "SUBSECRETARIA DEL MINISTERIO DE EDUCACION PUBLICA", "codigoOC": "4660-5-CM25"}, {"id": "76853", "licitacion": "2239-8-LR23", "nombre": "REPOSICION DE 4 CAMIONETAS MUNICIPALES, COMUNA DE VILLA ALEGRE", "fechaEnvio": "2025-08-20", "estado": "Aceptada", "organismo": "GOBIERNO REGIONAL VII REGION", "codigoOC": "1596-208-CM25"}, {"id": "77397", "licitacion": "2239-8-LR23", "nombre": "ADQUISICIÓN DE 17 VEHÍCULOS SUV", "fechaEnvio": "2025-08-21", "estado": "Aceptada", "organismo": "INSTITUTO DE DESARROLLO AGROPECUARIO", "codigoOC": "609-329-CM25"}, {"id": "77211", "licitacion": "2239-8-LR23", "nombre": "ADQUISICIÓN DE 4 CAMIONETAS PARA INDAP", "fechaEnvio": "2025-08-21", "estado": "Aceptada", "organismo": "INSTITUTO DE DESARROLLO AGROPECUARIO", "codigoOC": "609-337-CM25"}, {"id": "77507", "licitacion": "2239-8-LR23", "nombre": "adquisicion 3 vehiculos para TGR", "fechaEnvio": "2025-08-21", "estado": "Aceptada", "organismo": "TESORERIA GENERAL DE LA REPUBLICA", "codigoOC": "622-417-CM25"}, {"id": "77121", "licitacion": "2239-8-LR23", "nombre": "ADQUISICION CAMIONETAS, COMUNA YERBAS BUENAS", "fechaEnvio": "2025-08-26", "estado": "Enviada a Proveedor", "organismo": "GOBIERNO REGIONAL VII REGION", "codigoOC": "1596-206-CM25"}, {"id": "76831", "licitacion": "2239-8-LR23", "nombre": "(MPB) Adquisición Vía Convenio de Camioneta- Gran Compra: 76831", "fechaEnvio": "2025-08-26", "estado": "Aceptada", "organismo": "CORPORACION DE FOMENTO DE LA PRODUCCION", "codigoOC": "618-405-CM25"}]},
+   detalle:"detalle/detalle-adquisicion-de-vehiculos-y-maquinaria.html",
+   tx:{"periodo": "nov-2025 a jul-2026", "nOc": 483, "nProveedores": 38, "nOrganismos": 259, "montos": [{"moneda": "CLP", "monto": 20533925667.23}], "porMes": [{"mes": "nov-2025", "moneda": "CLP", "nOc": 80, "monto": 3664248799.82}, {"mes": "dic-2025", "moneda": "CLP", "nOc": 86, "monto": 4997213058.95}, {"mes": "ene-2026", "moneda": "CLP", "nOc": 20, "monto": 1082010133.73}, {"mes": "feb-2026", "moneda": "CLP", "nOc": 31, "monto": 1443277789.97}, {"mes": "mar-2026", "moneda": "CLP", "nOc": 61, "monto": 1958727605.59}, {"mes": "abr-2026", "moneda": "CLP", "nOc": 27, "monto": 962196994.57}, {"mes": "may-2026", "moneda": "CLP", "nOc": 49, "monto": 1661811400.48}, {"mes": "jun-2026", "moneda": "CLP", "nOc": 73, "monto": 2402702692.4}, {"mes": "jul-2026", "moneda": "CLP", "nOc": 56, "monto": 2361737191.72}], "topProv": [{"rut": "96.572.360-9", "nombre": "COMERCIAL KAUFMANN S.A.", "nOc": 30, "monto": 2456387463.74}, {"rut": "86.519.000-K", "nombre": "Maritano y Ebensperger Ltda.", "nOc": 42, "monto": 1916213772.06}, {"rut": "76.296.863-0", "nombre": "AUTOMOTRIZ PORTILLO SUR LTDA", "nOc": 50, "monto": 1903765069.13}, {"rut": "91.502.000-3", "nombre": "SALINAS Y FABRES SOCIEDAD ANONIMA", "nOc": 35, "monto": 1417489122.54}, {"rut": "80.522.900-4", "nombre": "KOVACS SPA", "nOc": 28, "monto": 1390902488.04}], "topOrg": [{"rut": "61.938.500-4", "nombre": "DIRECCION DE LOGISTICA DE CARABINEROS", "nOc": 14, "monto": 1589583763.26}, {"rut": "61.202.000-0", "nombre": "MINISTERIO DE OBRAS PUBLICAS DIREC CION GRAL DE OO PP DCYF", "nOc": 13, "monto": 1560788028.07}, {"rut": "72.224.100-2", "nombre": "Gobierno Regional de Antofagasta", "nOc": 1, "monto": 605305876.0}, {"rut": "60.506.000-5", "nombre": "POLICIA DE INVESTIGACIONES DE CHILE", "nOc": 12, "monto": 468425997.48}, {"rut": "69.010.100-9", "nombre": "I MUNICIPALIDAD DE ARICA", "nOc": 6, "monto": 416536287.86}], "porRegion": [{"region": "Metropolitana", "nOc": 132, "monto": 6227100594.93}, {"region": "Valparaíso", "nOc": 61, "monto": 2102824828.88}, {"region": "Araucanía", "nOc": 37, "monto": 1739546889.29}, {"region": "Maule", "nOc": 45, "monto": 1660821654.16}, {"region": "Bío-Bío", "nOc": 27, "monto": 1238079713.99}, {"region": "Antofagasta", "nOc": 19, "monto": 1182749367.08}, {"region": "Coquimbo", "nOc": 19, "monto": 1095804223.15}, {"region": "Ñuble", "nOc": 28, "monto": 905234373.55}], "historicoNota": "El convenio vigente (2239-6-LR25) fue adjudicado el 23-01-2026; buena parte del período aquí mostrado corresponde todavía al convenio anterior 2239-8-LR23."},
+   pbi:{historico:true, historicoNota:"El panel Power BI aún referencia la instancia anterior del convenio (Licitación 2239-8-LR23), no el convenio vigente 2239-6-LR25. Los datos siguientes corresponden a esa instancia previa.",
+     responsable:"Maritza Orellana", instancia:"Instancia 1",
+     ordTiene:"No", ordComo:"No aplica", ordFrecuencia:"No aplica", ordMeses:"No aplica", ordVariables:"No aplica",
+     extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
+     dctoVigencia:"1 a 4 días corridos", dctoVariables:"No inferior a 1% de descuento sobre precio catalogado",
+     montoMin:"100 UTM", montoMax:"25.000 UTM",
+     acuerdoCompl:"Máxima 1 año",
+     imptoOC:"Sólo lo realiza la DCCP",
+     prodNuevos:"El descuento a incorporar debe ser mayor o igual al promedio de descuento de los proveedores vigentes para la combinación tipo de producto/combustible; si no existe proveedor con descuento para esa combinación, debe ser entre 2% y 10%",
+     prodExistente:"Agregar productos en categorías adjudicadas con precio menor al mínimo publicado por región"}},
+  {n:"Mobiliario general, escolar y clínico", id:"2239-4-LR25", icon:"ti-armchair",
+   obj:"Mobiliario general, escolar y clínico para organismos públicos.",
+   vig:"02-09-2028", monto:"Licitación ≥5.000 UTM · publicada 02-06-2025, cierre 21-07-2025", cond:"Compra de 100 a 25.000 UTM mediante solicitud de cotización.",
+   moneda:"Peso chileno (CLP)", cotizador:"Sí — sistema de cotización en línea por requerimiento", reajuste:"No contempla reajustabilidad", duracion:"36 meses desde la adjudicación",
+   url:"https://mobiliariov3.mercadopublico.cl/mobiliario3",
+   docs:[{label:"Texto Refundido del Convenio Marco (consolida bases y modificaciones)", url:"docs/texto-refundido-convenio-marco-mobiliario.pdf"},
+     {label:"Resolución Exenta N°221-B (28-05-2025) — Aprueba bases de licitación pública", url:"docs/res-221-b-aprueba-bases-cm-mobiliario-general.pdf"}],
+   operativa:[
+     {t:"Subcategorías", d:"Categoría única \"Mobiliario General, Escolar y Clínico\" con tres subcategorías: mobiliario general (sillas, escritorios, estaciones de trabajo, mesas, lockers, etc.), mobiliario escolar (sujeto al Decreto Exento N°1302 del Mineduc sobre condiciones de seguridad) y mobiliario clínico (camillas, catres, carros, sillones, con certificaciones técnicas obligatorias o deseables según Anexo N°5, como CE, FDA, JIS o ISO 13485)."},
+     {t:"Evaluación de ofertas", d:"Cumplimiento de requisitos formales 3%, programa de integridad 5%, porcentaje de descuento 5%, garantía por sobre la garantía mínima legal 35%, transacciones en Mercado Público 12%, órdenes de compra en Mercado Público 15%, antigüedad del proveedor en actividades económicas relevantes 25%."},
+     {t:"Regla de adjudicación", d:"Adjudicación múltiple sin emisión de orden de compra; se adjudica por tipo de producto y región a los oferentes que alcancen el mayor puntaje ponderado."},
+     {t:"Garantías", d:"Sin garantía de seriedad de la oferta. Garantía de fiel cumplimiento: $1.500.000 CLP, a entregar dentro de 20 días hábiles desde la notificación de la adjudicación, con vigencia hasta 60 días hábiles posteriores al término del convenio."},
+     {t:"Reajuste", d:"El convenio no establece ni contempla condiciones de reajustabilidad de precios."},
+     {t:"Sistema de cotización y montos", d:"Opera mediante cotización en línea: el organismo publica su requerimiento y los proveedores adjudicados presentan oferta. Presupuesto declarado entre 100 y 25.000 UTM; monto total ofertado entre 85 y 25.000 UTM; monto final pagado no puede ser inferior a 70 UTM ni superior a 25.000 UTM. Obligatorio suscribir acuerdo complementario para compras entre 1.000 y 25.000 UTM."},
+     {t:"Vigencia y prórroga", d:"36 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 12 meses; renovación posible por igual período, por una sola vez y bajo las mismas condiciones."},
+     {t:"Multas", d:"20% del total del contrato por no reparar fallas del mobiliario dentro del plazo fijado en la cotización (o 10 días hábiles si no se indica plazo). Por atraso en la entrega: 0,5% diario del valor de los productos afectados, con tope de 30 días (15% del valor), configurando incumplimiento grave sobre ese tope."},
+     {t:"Modificación de bases", d:"Las bases originales (Resolución 221-B) fueron modificadas por la Resolución Exenta N°275-B, de 27-06-2025, cuyo texto fue incorporado al Texto Refundido citado como fuente principal."}
+   ],
+   detalle:"detalle/detalle-mobiliario-general-escolar-y-clinico.html",
+   tx:{"periodo": "nov-2025 a jul-2026", "nOc": 498, "nProveedores": 55, "nOrganismos": 214, "montos": [{"moneda": "CLP", "monto": 9154898598.87}], "porMes": [{"mes": "nov-2025", "moneda": "CLP", "nOc": 82, "monto": 1497766342.97}, {"mes": "dic-2025", "moneda": "CLP", "nOc": 90, "monto": 1617717329.28}, {"mes": "ene-2026", "moneda": "CLP", "nOc": 37, "monto": 793479102.37}, {"mes": "feb-2026", "moneda": "CLP", "nOc": 31, "monto": 494958178.74}, {"mes": "mar-2026", "moneda": "CLP", "nOc": 41, "monto": 748632494.66}, {"mes": "abr-2026", "moneda": "CLP", "nOc": 44, "monto": 940677174.92}, {"mes": "may-2026", "moneda": "CLP", "nOc": 59, "monto": 895634509.05}, {"mes": "jun-2026", "moneda": "CLP", "nOc": 54, "monto": 916386293.02}, {"mes": "jul-2026", "moneda": "CLP", "nOc": 60, "monto": 1249647173.86}], "topProv": [{"rut": "96.882.140-7", "nombre": "MELMAN SPA", "nOc": 63, "monto": 999194321.48}, {"rut": "76.102.918-5", "nombre": "JUEGOS MAGICOS", "nOc": 49, "monto": 868010413.76}, {"rut": "76.710.414-6", "nombre": "EVENTAIL SPA", "nOc": 52, "monto": 770315683.76}, {"rut": "77.324.357-3", "nombre": "LEFI SPA", "nOc": 47, "monto": 742360294.2}, {"rut": "77.393.671-4", "nombre": "STATUS SPA", "nOc": 47, "monto": 732677387.45}], "topOrg": [{"rut": "60.910.000-1", "nombre": "UNIVERSIDAD DE CHILE", "nOc": 64, "monto": 1833959443.68}, {"rut": "60.301.001-9", "nombre": "CORP ADMINISTRATIVA DEL PODER JUDICIAL", "nOc": 12, "monto": 210398420.98}, {"rut": "87.912.900-1", "nombre": "UNIVERSIDAD DE LA FRONTERA", "nOc": 2, "monto": 189281668.77}, {"rut": "61.002.000-3", "nombre": "SERVICIO DE REGISTRO CIVIL E IDENTIFICACION", "nOc": 3, "monto": 175181727.6}, {"rut": "60.911.000-7", "nombre": "UNIVERSIDAD DE SANTIAGO DE CHILE", "nOc": 15, "monto": 165666442.4}], "porRegion": [{"region": "Metropolitana", "nOc": 239, "monto": 5146716891.67}, {"region": "Los Lagos", "nOc": 32, "monto": 509108539.01}, {"region": "Coquimbo", "nOc": 32, "monto": 488869157.77}, {"region": "Valparaíso", "nOc": 36, "monto": 447635735.71}, {"region": "Araucanía", "nOc": 23, "monto": 440304324.53}, {"region": "Bío-Bío", "nOc": 31, "monto": 385119366.78}, {"region": "Antofagasta", "nOc": 11, "monto": 269862636.08}, {"region": "Aysén", "nOc": 15, "monto": 244943002.37}]},
+   pbi:{historico:true, historicoNota:"El panel Power BI referencia la instancia anterior del convenio (Licitación 2239-3-LR23, término 16-10-2025, ya vencida), no el convenio vigente 2239-4-LR25. Los datos siguientes corresponden a esa instancia previa.",
+     responsable:"Diego Miranda", instancia:"Community",
+     ordTiene:"No", ordComo:"No aplica", ordFrecuencia:"No aplica", ordMeses:"No aplica", ordVariables:"No aplica",
+     extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
+     dctoVigencia:"No tiene", dctoVariables:"No aplica",
+     montoMin:"70 UTM", montoMax:"25.000 UTM",
+     acuerdoCompl:"Obligatoria para monto mayor a 1.000 hasta 25.000 UTM",
+     imptoOC:"Exenta de IVA (precios incluyen todos los impuestos)",
+     prodNuevos:"No aplica",
+     prodExistente:"No aplica"}},
+  {n:"Administración y entrega de beneficios", id:"2239-1-LR26", icon:"ti-gift",
+   obj:"Administración y entrega de beneficios de alimentación, sala cuna, jardines infantiles y tarjetas de beneficios institucionales y sociales.",
+   vig:"19-05-2029", monto:"Licitación ≥5.000 UTM · publicada 13-02-2026, cierre 06-04-2026", cond:"El más reciente en adjudicarse de los 17 convenios.",
+   moneda:"Peso chileno (CLP)", cotizador:"No — compra directa por catálogo", reajuste:"No contempla reajustabilidad", duracion:"36 meses desde la adjudicación",
+   url:"https://voucherv4.mercadopublico.cl/voucher2025",
+   docs:[{label:"Resolución Exenta N°107-B (12-02-2026) — Aprueba bases de licitación pública", url:"docs/res-107-b-aprueba-bases-cm-voucher.pdf"}],
+   operativa:[
+     {t:"Categorías licitadas", d:"Administración de Beneficios Institucionales (alimentación, vestuario y calzado, sala cuna y jardines infantiles) y Entrega de Beneficio Social (locales al por mayor y menor, vestuario y calzado, hogar y construcción)."},
+     {t:"Montos de compra", d:"Entre 100 y 25.000 UTM. Las bases permiten montos inferiores a 100 UTM para fomentar la participación de PYMEs."},
+     {t:"Garantía de fiel cumplimiento", d:"$12.000.000 CLP, con vigencia durante toda la duración del convenio marco."},
+     {t:"Vigencia y prórroga", d:"36 meses desde la adjudicación, con posibilidad de prórroga de hasta 12 meses adicionales."},
+     {t:"Multas", d:"Atraso en habilitación: 2% diario hasta un máximo de 20%. Indisponibilidad de plataformas: 0,5 UF por hora, entre otras causales."},
+     {t:"Plataformas electrónicas exigidas", d:"El proveedor debe mantener operativas las plataformas de administración y entrega de beneficios durante toda la vigencia del convenio."},
+     {t:"Anexos exigidos", d:"Anexos N°1 a N°9: declaración jurada sin deudas, UTP, programas de integridad, plataformas electrónicas, comercios asociados (categoría institucional y social), características y experiencia del servicio, y contrato tipo."}
+   ],
+   granCompra:{"total": 6, "items": [{"id": "74448", "licitacion": "2239-13-LR23", "nombre": "DAG N° 100000/68, Gran Compra: 74448 ALIMENTACION", "fechaEnvio": "2025-02-28", "estado": "Recepción Conforme", "organismo": "ESTADO MAYOR CONJUNTO", "codigoOC": "2021-9-CM25"}, {"id": "75129", "licitacion": "2239-13-LR23", "nombre": "ADQUISICIÓN DEL SERVICIO BENEFICIO DE ALIMENTACIÓN", "fechaEnvio": "2025-03-25", "estado": "Aceptada", "organismo": "SUBSECRETARIA DE DEFENSA", "codigoOC": "604944-14-CM25"}, {"id": "75496", "licitacion": "2239-13-LR23", "nombre": "ALIMENTACIÓN CCA por la Gran Compra: 75496", "fechaEnvio": "2025-03-26", "estado": "Recepción Conforme", "organismo": "ESTADO MAYOR CONJUNTO", "codigoOC": "517903-23-CM25"}, {"id": "76112", "licitacion": "2239-13-LR23", "nombre": "GC-CONVENIO BENEFICIO DE ALIMENTACION-HOSPITAL MULCHEN-22.01.001.002-HFCM 31302-(PTV)", "fechaEnvio": "2025-05-07", "estado": "Recepción Conforme", "organismo": "SERVICIO DE SALUD BIO BIO HOSPITAL DE MULCHEN", "codigoOC": "1057418-302-CM25"}, {"id": "76265", "licitacion": "2239-13-LR23", "nombre": "FOLIO Nº141 + GRAN COMPRA ID 76265 + FBC", "fechaEnvio": "2025-07-17", "estado": "Recepción Conforme", "organismo": "SERVICIO DE SALUD METROPOLI CENTRAL DIRECCION DE ATENCION PRIMARIA", "codigoOC": "1655-1005-CM25"}, {"id": "77825", "licitacion": "2239-13-LR23", "nombre": "Adquisición de recargas de tarjetas de alimentación SS.FF.AA.Orden de Compra generada por la Gran Compra: 77825", "fechaEnvio": "2025-08-14", "estado": "Aceptada", "organismo": "SUBSECRETARIA PARA LAS FUERZAS ARMADAS", "codigoOC": "1157285-13-CM25"}]},
+   detalle:"detalle/detalle-administracion-y-entrega-de-beneficios.html",
+   tx:{"periodo": "nov-2025 a jul-2026", "nOc": 2729, "nProveedores": 4, "nOrganismos": 547, "montos": [{"moneda": "CLP", "monto": 50299303063.76}], "porMes": [{"mes": "nov-2025", "moneda": "CLP", "nOc": 414, "monto": 6444360167.42}, {"mes": "dic-2025", "moneda": "CLP", "nOc": 407, "monto": 8033036268.72}, {"mes": "ene-2026", "moneda": "CLP", "nOc": 233, "monto": 4192303127.23}, {"mes": "feb-2026", "moneda": "CLP", "nOc": 220, "monto": 5213703742.55}, {"mes": "mar-2026", "moneda": "CLP", "nOc": 301, "monto": 5402196494.07}, {"mes": "abr-2026", "moneda": "CLP", "nOc": 305, "monto": 5092674810.16}, {"mes": "may-2026", "moneda": "CLP", "nOc": 268, "monto": 5457019213.79}, {"mes": "jun-2026", "moneda": "CLP", "nOc": 263, "monto": 5345070736.55}, {"mes": "jul-2026", "moneda": "CLP", "nOc": 318, "monto": 5118938503.27}], "topProv": [{"rut": "96.781.350-8", "nombre": "EDENRED CHILE SOCIEDAD ANONIMA", "nOc": 2693, "monto": 49869796603.98}, {"rut": "76.032.107-9", "nombre": "FDD INNOVACION & CRECIMIENTO S.A.", "nOc": 20, "monto": 378537754.23}, {"rut": "96.556.930-8", "nombre": "SODEXO SOLUCIONES DE MOTIVACION CHILE S.A.", "nOc": 14, "monto": 49391705.55}, {"rut": "76.045.081-2", "nombre": "SOCIEDAD DE CONFECCIONES CLER LIMITADA", "nOc": 2, "monto": 1577000.0}], "topOrg": [{"rut": "61.606.901-2", "nombre": "SERVICIO DE SALUD DEL MAULE HOSPITAL DE TALCA", "nOc": 9, "monto": 1957648239.26}, {"rut": "61.606.500-9", "nombre": "SERVICIO DE SALUD VALPARAISO SAN ANTONIO", "nOc": 2, "monto": 1599034044.73}, {"rut": "61.602.275-k", "nombre": "Hospital de Castro", "nOc": 7, "monto": 1355426608.54}, {"rut": "61.606.000-7", "nombre": "SERVICIO DE SALUD DE ARICA Y PARINACOTA", "nOc": 7, "monto": 1289922255.35}, {"rut": "60.706.000-2", "nombre": "CORPORACION DE FOMENTO DE LA PRODUCCION", "nOc": 5, "monto": 1200649478.92}], "porRegion": [{"region": "Metropolitana", "nOc": 748, "monto": 10314575226.25}, {"region": "Maule", "nOc": 247, "monto": 6964243812.75}, {"region": "Valparaíso", "nOc": 305, "monto": 6564807725.37}, {"region": "Los Lagos", "nOc": 213, "monto": 4481131556.64}, {"region": "Araucanía", "nOc": 228, "monto": 3625001834.57}, {"region": "Bío-Bío", "nOc": 161, "monto": 3217363587.2}, {"region": "Lib. Gral. Bdo. O'Higgins", "nOc": 181, "monto": 3015529536.72}, {"region": "Arica y Parinacota", "nOc": 65, "monto": 2820914659.64}], "historicoNota": "El convenio vigente (2239-1-LR26) fue adjudicado el 06-04-2026; buena parte del período aquí mostrado corresponde todavía a convenios anteriores (2239-13-LR23 y remanentes de 2239-2-LR21)."},
+   pbi:{historico:true, historicoNota:"El panel Power BI referencia la instancia anterior del convenio (Licitación 2239-13-LR23, término 20-06-2026), previa a la adjudicación más reciente 2239-1-LR26. Los datos siguientes corresponden a esa instancia previa.",
+     responsable:"Diego Miranda", instancia:"Instancia 1",
+     ordTiene:"No", ordComo:"No aplica", ordFrecuencia:"No aplica", ordMeses:"No aplica", ordVariables:"No aplica",
+     extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
+     dctoVigencia:"Mínimo 1 a 7 días hábiles (no se puede republicar más de dos veces seguidas)", dctoVariables:"Mejorar el descuento entregado",
+     montoMin:"No aplica", montoMax:"25.000 UTM",
+     acuerdoCompl:"Máximo 36 meses",
+     imptoOC:"En categoría de beneficios sociales, la OC de la comisión tiene IVA; el resto está exento",
+     prodNuevos:"No permite, salvo que la DCCP lo requiera",
+     prodExistente:"(No informado)"}},
+  {n:"Desarrollo y mantención de software, TI e IAAS", id:"2239-19-LR23", icon:"ti-code",
+   obj:"Desarrollo y mantención de software, servicios profesionales TI e infraestructura como servicio.",
+   vig:"12-01-2027", monto:"Licitación ≥5.000 UTM · publicada 09-01-2024, cierre 21-03-2024", cond:"Compra de 100 a 25.000 UTM vía cotizador. No incluye horas-hombre ni SaaS/licencias. Renovación ya en curso (ID 2239-2-LR26, cierre 10-09-2026).",
+   moneda:"Unidad de Fomento (UF)", cotizador:"Sí — siempre vía cotizador, incluso desde 1.000 UTM", reajuste:"No contempla reajustabilidad", duracion:"30 meses desde la adjudicación",
+   url:"https://conveniomarco2.mercadopublico.cl/software3",
+   docs:[{label:"Resolución Exenta N°0007-B (08-01-2024) — Aprueba bases de licitación pública", url:"docs/res-007-b-aprueba-bases-cm-desarrollo-software.pdf"}],
+   operativa:[
+     {t:"Categorías licitadas", d:"Desarrollo de Software y Servicios Profesionales TI; e Infraestructura como Servicio (IaaS), con subcategorías Nube privada y Nube pública. Un proveedor puede ofertar a una o varias categorías."},
+     {t:"Montos de compra", d:"Entre 100 UTM y 25.000 UTM por orden de compra, organizados en 4 tramos con distinto porcentaje de descuento cada uno."},
+     {t:"Cotizador y grandes compras", d:"Toda compra se realiza vía cotizador. Las compras mayores a 1.000 UTM ('Grandes Compras') siguen un procedimiento adicional con evaluación técnica y económica de las ofertas."},
+     {t:"Garantía de fiel cumplimiento", d:"$2.500.000 CLP, con vencimiento 60 días hábiles posteriores al término de la vigencia del convenio marco."},
+     {t:"Reajustabilidad", d:"El convenio no establece ni contempla condiciones de reajustabilidad."},
+     {t:"Acuerdo complementario", d:"Plazo máximo de 1 año, con igual monto y plazo de vigencia que la garantía que reemplaza en caso de renovación."},
+     {t:"Anexos exigidos", d:"Anexos N°1 a N°9: declaración jurada sin deudas previsionales, UTP, programas de integridad, entre otros según la categoría ofertada."}
+   ],
+   detalle:"detalle/detalle-desarrollo-y-mantencion-de-software-ti-e-iaas.html",
+   tx:{"periodo": "nov-2025 a jul-2026", "nOc": 506, "nProveedores": 143, "nOrganismos": 237, "montos": [{"moneda": "CLF", "monto": 902238.07}, {"moneda": "CLP", "monto": 333253668.0}], "porMes": [{"mes": "nov-2025", "moneda": "CLF", "nOc": 71, "monto": 119172.99}, {"mes": "dic-2025", "moneda": "CLF", "nOc": 94, "monto": 170220.87}, {"mes": "ene-2026", "moneda": "CLF", "nOc": 45, "monto": 63075.97}, {"mes": "feb-2026", "moneda": "CLF", "nOc": 54, "monto": 88424.56}, {"mes": "mar-2026", "moneda": "CLF", "nOc": 49, "monto": 87644.47}, {"mes": "abr-2026", "moneda": "CLF", "nOc": 38, "monto": 89452.35}, {"mes": "may-2026", "moneda": "CLF", "nOc": 50, "monto": 101050.84}, {"mes": "jun-2026", "moneda": "CLF", "nOc": 44, "monto": 54662.55}, {"mes": "jul-2026", "moneda": "CLF", "nOc": 59, "monto": 128533.47}, {"mes": "nov-2025", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "dic-2025", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "ene-2026", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "feb-2026", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "mar-2026", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "abr-2026", "moneda": "CLP", "nOc": 0, "monto": 0.0}, {"mes": "may-2026", "moneda": "CLP", "nOc": 1, "monto": 324000000.0}, {"mes": "jun-2026", "moneda": "CLP", "nOc": 1, "monto": 9253668.0}, {"mes": "jul-2026", "moneda": "CLP", "nOc": 0, "monto": 0.0}], "topProv": [{"rut": "96.777.670-k", "nombre": "Servicos Integrados en Información Geográfica S.A.", "nOc": 11, "monto": 324031899.64}, {"rut": "76.334.381-2", "nombre": "TICHILE  REVENTA  DE SOFTWARE Y HARDWARE SPA", "nOc": 4, "monto": 9254739.03}, {"rut": "83.628.100-4", "nombre": "SONDA S A", "nOc": 3, "monto": 59743.01}, {"rut": "77.063.770-8", "nombre": "Pragma Informatica S.A.", "nOc": 8, "monto": 55442.65}, {"rut": "96.616.770-k", "nombre": "Kibernum S.A", "nOc": 10, "monto": 45218.92}], "topOrg": [{"rut": "61.533.000-0", "nombre": "Instituto de Seguridad Laboral", "nOc": 1, "monto": 324000000.0}, {"rut": "61.607.502-0", "nombre": "SERVICIO DE SALUD VALDIVIA HOSPITAL BASE", "nOc": 1, "monto": 9253668.0}, {"rut": "61.603.000-0", "nombre": "FONDO NACIONAL DE SALUD", "nOc": 3, "monto": 78037.38}, {"rut": "65.075.485-9", "nombre": "HOSPITAL CLINICO METROPOLITANO DE LA FLORIDA DOCTORA ELOISA DIAZ", "nOc": 6, "monto": 61477.83}, {"rut": "60.801.000-9", "nombre": "SUBSECRETARIA DEL MINISTERIO DE HACIENDA", "nOc": 6, "monto": 56964.12}], "porRegion": [{"region": "Metropolitana", "nOc": 361, "monto": 324701244.5}, {"region": "Los Ríos", "nOc": 1, "monto": 9253668.0}, {"region": "Valparaíso", "nOc": 41, "monto": 67264.34}, {"region": "Maule", "nOc": 20, "monto": 32350.01}, {"region": "Lib. Gral. Bdo. O'Higgins", "nOc": 10, "monto": 25223.35}, {"region": "Bío-Bío", "nOc": 13, "monto": 21579.73}, {"region": "Los Lagos", "nOc": 7, "monto": 13251.77}, {"region": "Araucanía", "nOc": 11, "monto": 7908.28}]},
+   pbi:{responsable:"Diego Miranda", instancia:"Instancia 2",
+     terminoNota:"Power BI indica término 17-01-2027 (la ficha de bases indica 12-01-2027)",
+     ordTiene:"No", ordComo:"No aplica", ordFrecuencia:"No aplica", ordMeses:"No aplica", ordVariables:"No aplica",
+     extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
+     dctoVigencia:"No tiene", dctoVariables:"No aplica",
+     montoMin:"100 UTM", montoMax:"25.000 UTM",
+     acuerdoCompl:"Máximo 1 año",
+     imptoOC:"Exenta de IVA (precios incluyen todos los impuestos)",
+     prodNuevos:"No aplica",
+     prodExistente:"No aplica"}},
+  {n:"Alimentos", id:"2239-9-LR24", icon:"ti-shopping-cart",
+   obj:"Carnes, bebestibles, congelados, frutas, verduras y productos de despensa.",
+   vig:"20-02-2028", monto:"Licitación ≥5.000 UTM · publicada 10-09-2024, cierre 28-11-2024", cond:"Catálogo amplio por categoría de alimento.",
+   moneda:"Peso chileno (CLP)", cotizador:"No — compra directa por catálogo", reajuste:"Ordinario cuatrimestral (alza o baja) desde el 4° mes de vigencia", duracion:"36 meses desde la adjudicación",
+   url:"https://conveniomarco2.mercadopublico.cl/alimentos2",
+   docs:[{label:"Resolución Exenta N°391-B (09-09-2024) — Aprueba bases de licitación pública", url:"docs/res-391-b-aprueba-bases-cm-alimentos.pdf"}],
+   operativa:[
+     {t:"Categorías licitadas", d:"Estructura en categorías de nivel 1, nivel 2 y subcategoría (p. ej. Alimentos Generales que requieren autorización sanitaria, Alimentos que no la requieren, Alimentos de Producción Local), con detalle de productos en planilla anexa."},
+     {t:"Montos de compra", d:"Entre 10 UTM y 25.000 UTM por orden de compra, considerando el precio total de la oferta con todos los cargos e impuestos."},
+     {t:"Despacho mínimo", d:"El proveedor puede establecer un monto mínimo de despacho, que no puede ser inferior a 10 UTM."},
+     {t:"Garantía de fiel cumplimiento", d:"$700.000 CLP, con vencimiento 60 días hábiles posteriores al término de la vigencia del convenio marco."},
+     {t:"Vigencia", d:"36 meses desde la adjudicación, a través del portal Mercado Público."},
+     {t:"Reajuste ordinario", d:"Cuatrimestral (terceras semanas de abril, agosto y diciembre) desde el 4° mes de vigencia, según variación del IPC a nivel de producto."}
+   ],
+   granCompra:{"total": 5, "items": [{"id": "73639", "licitacion": "2239-7-LR17", "nombre": "Orden de Compra generada por la Gran Compra: 73639", "fechaEnvio": "2025-02-10", "estado": "Recepción Conforme", "organismo": "DIRECCION GENERAL DE GENDARMERIA DE CHIL", "codigoOC": "1172953-26-CM25"}, {"id": "75380", "licitacion": "2239-7-LR17", "nombre": "SOL. 942969, ALIMENTOS", "fechaEnvio": "2025-03-11", "estado": "Recepción Conforme", "organismo": "I MUNICIPALIDAD DE PUENTE ALTO", "codigoOC": "2422-238-CM25"}, {"id": "77557", "licitacion": "2239-9-LR24", "nombre": "ADQUISICION DE CAJAS DE VIVERES PARA CASOS SOCIALES DE LA COMUNA", "fechaEnvio": "2025-07-31", "estado": "Recepción Conforme", "organismo": "I MUNICIPALIDAD DE CHIMBARONGO", "codigoOC": "3729-90-CM25"}, {"id": "77756", "licitacion": "2239-9-LR24", "nombre": "ADQUISICION DE CAJAS DE VIVERES PARA ADULTOS MAYORES DE LA COMUNA", "fechaEnvio": "2025-08-05", "estado": "Aceptada", "organismo": "I MUNICIPALIDAD DE CHIMBARONGO", "codigoOC": "3729-94-CM25"}, {"id": "76628", "licitacion": "2239-9-LR24", "nombre": "Orden de Compra generada por la Gran Compra: 76628", "fechaEnvio": "2025-08-18", "estado": "Aceptada", "organismo": "SERVICIO DE SALUD DE TALCAHUANO HOSPITAL", "codigoOC": "1057544-12380-CM25"}]},
+   detalle:"detalle/detalle-alimentos.html",
+   tx:{"periodo": "nov-2025 a jul-2026", "nOc": 25519, "nProveedores": 266, "nOrganismos": 836, "montos": [{"moneda": "CLP", "monto": 122562669582.74}], "porMes": [{"mes": "nov-2025", "moneda": "CLP", "nOc": 3061, "monto": 13079607693.44}, {"mes": "dic-2025", "moneda": "CLP", "nOc": 2415, "monto": 11588445201.58}, {"mes": "ene-2026", "moneda": "CLP", "nOc": 2956, "monto": 15217584989.0}, {"mes": "feb-2026", "moneda": "CLP", "nOc": 2476, "monto": 12202596506.0}, {"mes": "mar-2026", "moneda": "CLP", "nOc": 2951, "monto": 15170784827.87}, {"mes": "abr-2026", "moneda": "CLP", "nOc": 3234, "monto": 16092138632.0}, {"mes": "may-2026", "moneda": "CLP", "nOc": 2607, "monto": 12297739347.95}, {"mes": "jun-2026", "moneda": "CLP", "nOc": 2862, "monto": 13297897754.5}, {"mes": "jul-2026", "moneda": "CLP", "nOc": 2957, "monto": 13615874630.41}], "topProv": [{"rut": "76.299.358-9", "nombre": "SERVICIOS INTEGRADOS SIDAPT LIMITADA", "nOc": 2399, "monto": 11135640971.44}, {"rut": "79.984.240-8", "nombre": "AGROSUPER COMERCIALIZADORA DE ALIMENTOS LTDA", "nOc": 1216, "monto": 4495547142.0}, {"rut": "76.193.972-6", "nombre": "COMERCIALIZACION Y DISTRIBUCION DE ALIMENTOS S & F LIMITADA", "nOc": 553, "monto": 4378540752.0}, {"rut": "76.102.347-0", "nombre": "COMERCIAL SOLO FRESCO SA", "nOc": 1036, "monto": 3674198607.93}, {"rut": "77.274.650-4", "nombre": "ALIMENTOS SAN MATEO S.A.", "nOc": 446, "monto": 3527816240.0}], "topOrg": [{"rut": "61.933.800-6", "nombre": "Dirección Regional de Gendarmeria - Metropolitana", "nOc": 1484, "monto": 11501730696.0}, {"rut": "61.004.024-1", "nombre": "Dirección Regional de Gendarmeria - Valparaiso", "nOc": 809, "monto": 4276455413.0}, {"rut": "61.602.189-3", "nombre": "HOSPITAL GUILLERMO GRANT BENAVENTE DE CO", "nOc": 205, "monto": 3248542070.0}, {"rut": "61.102.004-K", "nombre": "DIRECCION DE ABASTECIMIENTO DE LA ARMADA", "nOc": 363, "monto": 3095118320.0}, {"rut": "61.004.087-K", "nombre": "Dirección Regional de Gendarmeria - Temuco", "nOc": 1240, "monto": 3052615864.0}], "porRegion": [{"region": "Metropolitana", "nOc": 7879, "monto": 45942309759.99}, {"region": "Valparaíso", "nOc": 4192, "monto": 19591678073.93}, {"region": "Bío-Bío", "nOc": 2188, "monto": 11554647805.0}, {"region": "Araucanía", "nOc": 2573, "monto": 10637085994.0}, {"region": "Maule", "nOc": 2273, "monto": 6118901587.27}, {"region": "Los Lagos", "nOc": 1187, "monto": 5147960912.0}, {"region": "Arica y Parinacota", "nOc": 650, "monto": 4656089811.0}, {"region": "Tarapacá", "nOc": 741, "monto": 3667057008.98}]},
+   pbi:{responsable:"Katherine Espinoza", instancia:"Instancia 2",
+     ordTiene:"Sí", ordComo:"Automático", ordFrecuencia:"Cuatrimestral", ordMeses:"Abril, agosto, diciembre", ordVariables:"Variación IPC por producto",
+     extraTiene:"Sí", extraComo:"A solicitud del proveedor", extraRequisitos:"Variación sobre 7% del producto de forma anual móvil", extraVariables:"IPC/IPP",
+     dctoVigencia:"2 a 4 días corridos", dctoVariables:"Mínimo 5% sobre el menor precio de la ficha (precio catalogado)",
+     montoMin:"10 UTM", montoMax:"25.000 UTM",
+     acuerdoCompl:"Máximo 1 año, sin exceder ese plazo tras el fin de vigencia del convenio",
+     imptoOC:"Precios en catálogo con IVA",
+     prodNuevos:"Por solicitud del comprador, mediante formulario enviado por oficio a la DCCP",
+     prodExistente:"Agregar productos en categorías adjudicadas con precio menor al mínimo publicado por región"}},
+  {n:"Pasajes aéreos nacionales", id:"2239-16-LR23 (vigente) · 2239-4-LR26 (adjudicado, en transición)", icon:"ti-plane",
+   featured:true,
+   obj:"Reserva y postventa de pasajes aéreos nacionales en clase económica. Proveedores del convenio vigente: Latam, Sky Airline y JetSMART. El nuevo convenio (adjudicado el 18-06-2026) mantiene los mismos proveedores con descuentos garantizados de 5% Latam, 10% Sky y 15% JetSMART.",
+   vig:"23-11-2026 (convenio vigente) · el nuevo convenio (ID 2239-4-LR26) reemplazará a este al finalizar su vigencia",
+   monto:"Compras hasta 1.000 UTM por transacción", cond:"Solo clase económica en vuelos nacionales. No incluye pasajes internacionales (deben tramitarse por licitación pública, Compra Ágil o trato directo). Ancillaries (equipaje extra, upgrade, wifi, etc.) no están permitidos, salvo el servicio de menor sin acompañante.",
+   moneda:"Peso chileno (CLP)", cotizador:"No — reserva directa e integrada con las aerolíneas adjudicadas", reajuste:"No aplica reajuste de precios; opera con descuento porcentual fijo sobre tarifa publicada por cada aerolínea", duracion:"Convenio nuevo: 36 meses desde la adjudicación (18-06-2026), con opción de renovación por igual período y prórroga de hasta 12 meses adicionales",
+   docs:[
+     {label:"Política de compra de pasajes nacionales (PDF)", url:"https://docs.cmpasajes.mercadopublico.cl/Política_de_Compra_Pasajes_Nacionales.pdf"},
+     {label:"Condiciones de postventa (PDF)", url:"docs/condiciones-postventa-pasajes-aereos.pdf"},
+     {label:"Resolución Exenta N°059-B (09-02-2024) — Bases del convenio vigente (2239-16-LR23)", url:"docs/res-059-b-aprueba-bases-cm-pasajes-aereos-nacionales.pdf"},
+     {label:"Resolución Exenta N°252-B (18-03-2026) — Bases del nuevo convenio (2239-4-LR26)", url:"docs/res-252-b-aprueba-bases-cm-pasajes-aereos-nacionales.pdf"}
+   ],
+   operativa:[
+     {t:"Montos de compra", d:"Hasta 1.000 UTM como monto máximo por transacción. El nuevo convenio (252-B) no exige monto mínimo, para fomentar la participación de Empresas de Menor Tamaño (EMT)."},
+     {t:"Descuento sobre tarifa", d:"Criterio económico principal: porcentaje de descuento sobre el valor del pasaje, entre 3% y 15% según las bases 059-B, y clasificado en tramos (5-9%, 10-14%, 15% o más) en las bases 252-B. El descuento aplica solo al valor del boleto, no a tasas de embarque ni ancillaries."},
+     {t:"Garantía de fiel cumplimiento", d:"Convenio vigente (059-B): $7.000.000 CLP. Nuevo convenio (252-B): $10.000.000 CLP, más una garantía adicional de $5.000.000 CLP para la etapa de operatoria/integración."},
+     {t:"Vigencia y vencimiento de garantía", d:"60 días hábiles posteriores al término de la vigencia del convenio marco."},
+     {t:"Reajustabilidad", d:"Ninguno de los dos convenios contempla condiciones de reajustabilidad de precios."},
+     {t:"Acuerdo complementario", d:"Plazo máximo de 3 años (36 meses), por igual período y garantía que el convenio original."},
+     {t:"Vigencia y anulación de la reserva", d:"Vigencia de la reserva en el sistema: Latam hasta las 23:59 hrs del mismo día de la compra; Sky 18 horas; JetSMART 12 horas. Los mismos plazos aplican para anular la reserva sin costo, salvo JetSMART que permite anular dentro del día de emisión del pasaje."},
+     {t:"Cesión del pasaje", d:"Las tres aerolíneas permiten ceder el pasaje sin costo, con al menos 24 horas de anticipación, máximo una cesión por semestre, sin fines de lucro, y en mesones/agencias de viaje autorizadas o mediante el sitio web de la aerolínea."},
+     {t:"Derecho a retracto", d:"Vuelos contratados con 7 o más días de anticipación: retracto dentro de las 48 horas posteriores a la compra, hasta media hora antes de la salida. Vuelos contratados con menos de 7 días: retracto dentro de los 7 días posteriores a la compra, con un máximo de 30 días y sin exceder la fecha de salida (Ley Pro Consumidor N°21.398)."},
+     {t:"Devoluciones y modificaciones en postventa", d:"Latam y JetSMART permiten devoluciones y modificaciones (cambio de fecha, ruta o pasajero) si el boleto lo autoriza. Sky permite devoluciones; el cambio de fecha/ruta no está habilitado directamente por la entidad, por lo que se solicita la devolución del 100% hasta 4 horas antes vía contact center."},
+     {t:"Costo del servicio de postventa", d:"Gratuito con Latam y Sky. Con JetSMART tiene un costo de $17.000 a cargo de la institución."},
+     {t:"Canales de atención postventa", d:"Latam: 600 526 5000, opción 1 (cotización). Sky: 600 600 2828, opción Chilecompra, lunes a domingo de 09:00 a 18:00 hrs. JetSMART: 600 600 13 11 o soporte.chilecompra@jetsmart.com, ambos disponibles 24/7."},
+     {t:"Cantidad máxima de pasajeros por reserva", d:"Las bases no fijan una cifra explícita; solo indican que el sistema debe permitir ingresar la cantidad de pasajeros según los límites propios de cada plataforma. En la práctica, el límite operativo es de 9 pasajeros por reserva en las tres aerolíneas; para grupos mayores, Sky requiere solicitarlo por correo a gruposoft@skyairline.com mediante un proceso de compra manual."}
+   ],
+   url:"https://cmpasajes.mercadopublico.cl/",
+   detalle:"detalle/detalle-pasajes-aereos-nacionales.html",
+   tx:{"periodo": "nov-2025 a jul-2026", "nOc": 46282, "nProveedores": 9, "nOrganismos": 847, "montos": [{"moneda": "CLP", "monto": 15609238027.85}], "porMes": [{"mes": "nov-2025", "moneda": "CLP", "nOc": 6858, "monto": 2549439117.58}, {"mes": "dic-2025", "moneda": "CLP", "nOc": 4369, "monto": 1569659757.47}, {"mes": "ene-2026", "moneda": "CLP", "nOc": 4923, "monto": 1801004290.32}, {"mes": "feb-2026", "moneda": "CLP", "nOc": 3498, "monto": 1055945949.55}, {"mes": "mar-2026", "moneda": "CLP", "nOc": 4920, "monto": 1455390226.48}, {"mes": "abr-2026", "moneda": "CLP", "nOc": 5477, "monto": 1691626172.27}, {"mes": "may-2026", "moneda": "CLP", "nOc": 5039, "monto": 1530210984.0}, {"mes": "jun-2026", "moneda": "CLP", "nOc": 5462, "monto": 2043556972.98}, {"mes": "jul-2026", "moneda": "CLP", "nOc": 5736, "monto": 1912404557.2}], "topProv": [{"rut": "89.862.200-2", "nombre": "LATAM AIRLINES GROUP S.A.", "nOc": 30562, "monto": 11368238087.38}, {"rut": "88.417.000-1", "nombre": "SKY AIRLINE S A", "nOc": 12183, "monto": 3403566147.0}, {"rut": "76.574.879-8", "nombre": "JETSMART", "nOc": 3530, "monto": 832706266.54}, {"rut": "80.116.100-6", "nombre": "BLANCO VIAJES SPA", "nOc": 1, "monto": 2900403.0}, {"rut": "76.882.864-4", "nombre": "SEBASTIÁN ANDRÉS", "nOc": 1, "monto": 856788.0}], "topOrg": [{"rut": "60.505.000-K", "nombre": "Dirección General de Carabineros de Chile", "nOc": 2960, "monto": 1414681520.0}, {"rut": "60.910.000-1", "nombre": "UNIVERSIDAD DE CHILE", "nOc": 2189, "monto": 845469411.0}, {"rut": "61.606.001-5", "nombre": "SERVICIO DE SALUD ARICA HOSP DR JUAN NOE CREVANI", "nOc": 1927, "monto": 832416464.0}, {"rut": "61.202.000-0", "nombre": "MINISTERIO DE OBRAS PUBLICAS DIREC CION GRAL DE OO PP DCYF", "nOc": 2151, "monto": 587085318.0}, {"rut": "61.980.120-2", "nombre": "Ejercito de Chile", "nOc": 1139, "monto": 534234329.0}], "porRegion": [{"region": "Metropolitana", "nOc": 20275, "monto": 7523976098.35}, {"region": "Valparaíso", "nOc": 3311, "monto": 1339127922.7}, {"region": "Arica y Parinacota", "nOc": 3308, "monto": 1338981070.41}, {"region": "Tarapacá", "nOc": 4553, "monto": 974653485.0}, {"region": "Aysén", "nOc": 2376, "monto": 919593961.0}, {"region": "Antofagasta", "nOc": 3257, "monto": 887903694.99}, {"region": "Magallanes y Antártica", "nOc": 2588, "monto": 840060909.13}, {"region": "Araucanía", "nOc": 1541, "monto": 446842105.8}]},
+   pbi:{responsable:"Katherine Espinoza", instancia:"Individual",
+     ordTiene:"No", ordComo:"No aplica", ordFrecuencia:"No aplica", ordMeses:"No aplica", ordVariables:"No aplica",
+     extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
+     dctoVigencia:"No tiene", dctoVariables:"No aplica",
+     montoMin:"No tiene", montoMax:"No aplica",
+     acuerdoCompl:"No aplica",
+     imptoOC:"(No informado)",
+     prodNuevos:"No aplica",
+     prodExistente:"No aplica"}}
+];
+
+const ICONS = {
+  'chart-histogram': '<path d="M4 20V10M10 20V4M16 20v-6"/><path d="M2 20h20"/>',
+  'external-link': '<path d="M7 17L17 7"/><path d="M9 7h8v8"/>',
+  'search': '<circle cx="10" cy="10" r="6"/><path d="M20 20l-4.3-4.3"/>',
+  'first-aid-kit': '<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M9 8V6a3 3 0 0 1 3-3v0a3 3 0 0 1 3 3v2"/><path d="M12 12v4M10 14h4"/>',
+  'heart-handshake': '<path d="M12 20s-7-4.2-9.4-8.3C.8 8.5 3 5 6.4 5c2 0 3.4 1.4 3.9 2.4.5-1 1.9-2.4 3.9-2.4 3.4 0 5.6 3.5 3.8 6.7C19 15.8 12 20 12 20z"/>',
+  'tools': '<path d="M21 3a5 5 0 0 1-6.8 6.8L7 17l-3-3 7.2-7.2A5 5 0 0 1 21 3z"/>',
+  'alert-triangle': '<path d="M12 3L22 20H2z"/><path d="M12 10v4M12 17h.01"/>',
+  'apps': '<rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/>',
+  'pencil': '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>',
+  'spray': '<rect x="7" y="9" width="6" height="12" rx="1"/><path d="M10 9V5a2 2 0 0 1 2-2"/><path d="M16 6l2-2M17 9h3M16 12l2 1"/>',
+  'flame': '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.3 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
+  'device-laptop': '<rect x="3" y="4" width="18" height="12" rx="1"/><path d="M2 20h20"/>',
+  'gas-station': '<path d="M4 21V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v15"/><path d="M3 21h11"/><path d="M14 9h2.5L19 11.5V18a1.5 1.5 0 0 1-3 0v-3"/>',
+  'bus': '<rect x="3" y="6" width="18" height="11" rx="2"/><path d="M3 12h18"/><circle cx="7" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/>',
+  'bone': '<circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M8.5 8.5l7 7"/>',
+  'truck': '<rect x="1" y="6" width="14" height="10" rx="1"/><path d="M15 10h4l3 3v3h-7z"/><circle cx="6" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/>',
+  'armchair': '<path d="M5 10V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3"/><path d="M4 10h16v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M5 17v3M19 17v3"/>',
+  'gift': '<rect x="4" y="9" width="16" height="11" rx="1"/><path d="M4 13h16"/><path d="M12 9v11"/><path d="M12 9C10 9 8 7.4 8 5.7 8 4.3 9 3.4 10.2 3.4c1.5 0 1.8 2.6 1.8 5.6z"/><path d="M12 9c2 0 4-1.6 4-3.3 0-1.4-1-2.3-2.2-2.3-1.5 0-1.8 2.6-1.8 5.6z"/>',
+  'code': '<path d="M9 6L3 12l6 6"/><path d="M15 6l6 6-6 6"/>',
+  'shopping-cart': '<circle cx="9" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M3 4h2l2.4 12h11.2L21 8H6.5"/>',
+  'plane': '<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-1 .1-1.3.5l-.4.5c-.4.5-.2 1.2.3 1.5L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.5 1 .7 1.5.3l.5-.4c.4-.3.6-.8.5-1.3z"/>',
+  'info-circle': '<circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 11h1v5h1"/>',
+  'chevron-down': '<path d="M6 9l6 6 6-6"/>',
+  'file-text': '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6M9 9h1"/>',
+  'file-type-pdf': '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 12.5h1.4a1.4 1.4 0 0 1 0 2.8H8z"/><path d="M8 15.3V18"/>',
+  'calendar-event': '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><circle cx="12" cy="15" r="1.4"/>',
+  'file-description': '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h4"/>',
+  'currency-dollar': '<circle cx="12" cy="12" r="9"/><path d="M12 6v12"/><path d="M15 9a3 3 0 0 0-3-1.5c-1.7 0-3 1-3 2.3 0 3.2 6 1.6 6 4.7 0 1.3-1.3 2.5-3 2.5a3.3 3.3 0 0 1-3-1.6"/>',
+  'calculator': '<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/>',
+  'trending-up': '<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>',
+  'hourglass': '<path d="M6 2h12M6 22h12"/><path d="M6 2c0 5 4 6 6 8 2-2 6-3 6-8"/><path d="M6 22c0-5 4-6 6-8 2 2 6 3 6 8"/>',
+  'chart-bar': '<path d="M4 20V10M10 20V4M16 20v-6"/><path d="M2 20h20"/>',
+};
+function icon(name, extraCls){
+  var d = ICONS[name] || '';
+  return '<svg class="icon' + (extraCls?(' '+extraCls):'') + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// Vigencia: extrae la primera fecha DD-MM-YYYY de d.vig y calcula días restantes desde hoy.
+function vigInfo(vigStr){
+  var m = String(vigStr||'').match(/(\d{2})-(\d{2})-(\d{4})/);
+  if (!m) return {days: null, cls: '', label: ''};
+  var d = new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1]));
+  var days = Math.round((d - new Date()) / 86400000);
+  if (days < 0) return {days: days, cls: 'badge-vig-bad', label: 'Vencido'};
+  if (days <= 90) return {days: days, cls: 'badge-vig-warn', label: 'Vence en ' + days + ' días'};
+  return {days: days, cls: 'badge-vig-ok', label: 'Vigente'};
+}
+
+// Mini tendencia de N° de OC de los últimos meses, agregando monedas si hay más de una.
+function sparkline(tx){
+  if (!tx || !tx.porMes || !tx.porMes.length) return '';
+  var byMes = {}, order = [];
+  tx.porMes.forEach(function(m){
+    if (!(m.mes in byMes)) { byMes[m.mes] = 0; order.push(m.mes); }
+    byMes[m.mes] += m.nOc;
+  });
+  var vals = order.map(function(me){ return byMes[me]; });
+  var max = Math.max.apply(null, vals) || 1;
+  var bars = vals.map(function(v, i){
+    var h = Math.max(Math.round((v / max) * 100), 8);
+    var cls = i === vals.length - 1 ? 'spark-bar spark-bar-last' : 'spark-bar';
+    return '<span class="' + cls + '" style="height:' + h + '%" title="' + esc(order[i]) + ': ' + v + ' OC"></span>';
+  }).join('');
+  return '<div class="sparkline">' + bars + '</div>';
+}
+
+// Monto aproximado (sin distinguir moneda) para orden de mayor a menor en el listado.
+function montoAprox(d){
+  if (!d.tx || !d.tx.montos || !d.tx.montos.length) return 0;
+  return d.tx.montos.reduce(function(s, m){ return s + (m.monto || 0); }, 0);
+}
+
+// Extrae el primer ID de licitación limpio (formato NNNN-NN-LRNN / LPNN) de un texto que puede
+// traer más de un ID separado por " · " (ej. IDs históricos o en transición).
+function firstLicId(idText){
+  var m = String(idText).match(/\d{3,5}-\d+-(?:LR|LP)\d+/);
+  return m ? m[0] : String(idText).split(/[\s·(]/)[0];
+}
+function fichaLicUrl(idText){
+  return 'https://www.mercadopublico.cl/fichaLicitacion.html?idLicitacion=' + encodeURIComponent(firstLicId(idText));
+}
+
+// Fichas de Gran Compra: requieren un token cifrado (IURL) por proceso que Mercado Público
+// genera al buscar — no es derivable desde el N° de Gran Compra. Solo se cuenta con el link
+// real de los procesos confirmados manualmente; para el resto se enlaza al buscador público
+// de Grandes Compras, donde basta con pegar el número para llegar a la ficha en un paso más.
+var GC_LINKS = {
+  "72980": "https://www.mercadopublico.cl/CMII/Tienda/frm_GCV2_Ficha.aspx?IURL=uPteMZpbYBeM$07mUAV9$08EFecMSuZM0euS4Z$07cbeFMX_05ohEOMPbeteMZpbYBeM"
+};
+var GC_BUSCADOR_URL = 'https://www.mercadopublico.cl/Portal/Modules/Site/Busquedas/BuscadorAvanzado.aspx?qs=9';
+function gcUrl(id){ return GC_LINKS[id] || GC_BUSCADOR_URL; }
+
+function highlight(text, words){
+  if (!words.length) return esc(text);
+  var pattern = words.map(function(w){ return w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }).join('|');
+  var re = new RegExp('(' + pattern + ')', 'gi');
+  return esc(text).replace(re, '<mark>$1</mark>');
+}
+
+function pbiPanel(d, idx, words){
+  var p = d.pbi || {};
+  var warn = p.historico ? '<div class="pbi-warn">' + icon('alert-triangle') + ' ' + esc(p.historicoNota) + (p.historico ? ' <em>(instancia anterior)</em>' : '') + '</div>' : '';
+  var termNota = p.terminoNota ? '<p><b>Nota término:</b> ' + highlight(p.terminoNota, words) + '</p>' : '';
+  var resumen =
+    '<div class="pbi-section pbi-resumen"><h4>Resumen convenio</h4>' +
+      '<p>' + icon('calendar-event') + '<b>Vigente hasta:</b> ' + esc(d.vig) + '</p>' +
+      '<p>' + icon('file-description') + '' + highlight(d.monto, words) + '</p>' +
+      '<p>' + icon('info-circle') + '' + highlight(d.cond, words) + '</p>' +
+      '<p>' + icon('currency-dollar') + '<b>Moneda:</b> ' + highlight(d.moneda, words) + '</p>' +
+      '<p>' + icon('calculator') + '<b>Cotizador:</b> ' + highlight(d.cotizador, words) + '</p>' +
+      '<p>' + icon('trending-up') + '<b>Reajuste:</b> ' + highlight(d.reajuste, words) + '</p>' +
+      '<p>' + icon('hourglass') + '<b>Duración/vigencia del acuerdo:</b> ' + highlight(d.duracion, words) + '</p>' +
+      (p.responsable ? '<p><b>Responsable:</b> ' + highlight(p.responsable, words) + '</p>' : '') +
+      (p.instancia ? '<p><b>Instancia:</b> ' + highlight(p.instancia, words) + '</p>' : '') +
+      termNota +
+    '</div>';
+  var operativaHtml = '';
+  if (d.operativa && d.operativa.length){
+    operativaHtml = '<div class="pbi-section pbi-operativa"><h4>' + icon('info-circle') + 'Cómo operar este convenio</h4>' +
+      '<ol>' + d.operativa.map(function(o){
+        return '<li><b>' + esc(o.t) + ':</b> ' + highlight(o.d, words) + '</li>';
+      }).join('') + '</ol>' +
+    '</div>';
+  }
+  var granCompraHtml = '';
+  if (d.granCompra && d.granCompra.items && d.granCompra.items.length){
+    granCompraHtml = '<div class="pbi-section pbi-grancompra"><h4>' + icon('apps') + 'Procesos de Gran Compra (' + d.granCompra.total + ')</h4>' +
+      '<p class="gc-note">Procesos de compra consolidada (Gran Compra) gestionados aparte del catálogo estándar de este convenio. Se listan solo como referencia informativa: sus montos no forman parte de las cifras transaccionales de esta vista y no se suman a ellas. El N° de OC enlaza a su ficha pública en Mercado Público; el N° de Gran Compra corresponde al proceso que la originó.</p>' +
+      '<details><summary>Ver los ' + d.granCompra.total + ' procesos</summary><ul class="gc-list">' + d.granCompra.items.map(function(it){
+        var ocUrl = 'https://www.mercadopublico.cl/PurchaseOrder/Modules/PO/DetailsPurchaseOrder.aspx?codigooc=' + encodeURIComponent(it.codigoOC);
+        return '<li><b>' + highlight(it.nombre, words) + '</b> · ' + esc(it.fechaEnvio) + ' · ' + highlight(it.organismo, words) +
+          ' <span class="gc-badge">Lic. ' + esc(it.licitacion) + '</span>' +
+          ' <a class="gc-link" href="' + ocUrl + '" target="_blank" rel="noopener">' + icon('external-link') + 'OC ' + esc(it.codigoOC) + '</a>' +
+          ' <a class="gc-badge gc-badge-alt" href="' + gcUrl(it.id) + '" target="_blank" rel="noopener">N° GC ' + esc(it.id) + '</a></li>';
+      }).join('') + '</ul></details>' +
+    '</div>';
+  }
+  if (!d.pbi){
+    return warn + resumen + operativaHtml + '<div class="pbi-section"><p>' + icon('info-circle') + 'Sin detalle operativo Power BI (reajustes, montos) disponible para este convenio.</p></div>' + granCompraHtml;
+  }
+  var caractHtml =
+    '<div class="pbi-section pbi-caract"><h4>Características del convenio</h4>' +
+      '<p><b>Monto mínimo:</b> ' + esc(p.montoMin) + ' · <b>Monto máximo:</b> ' + esc(p.montoMax) + '</p>' +
+      '<p><b>Acuerdo complementario:</b> ' + esc(p.acuerdoCompl) + '</p>' +
+      '<p><b>Impuesto en OC:</b> ' + esc(p.imptoOC) + '</p>' +
+      '<p><b>Incorporación de productos nuevos:</b> ' + esc(p.prodNuevos) + '</p>' +
+      '<p><b>Incorporación de productos existentes:</b> ' + esc(p.prodExistente) + '</p>' +
+    '</div>';
+  return warn + resumen + operativaHtml + caractHtml +
+    '<div class="pbi-section pbi-ord"><h4>Reajuste ordinario</h4>' +
+      '<p><b>Tiene:</b> ' + esc(p.ordTiene) + ' · <b>Cómo se aplica:</b> ' + esc(p.ordComo) + '</p>' +
+      '<p><b>Frecuencia:</b> ' + esc(p.ordFrecuencia) + ' · <b>Meses:</b> ' + esc(p.ordMeses) + '</p>' +
+      '<p><b>Variables:</b> ' + esc(p.ordVariables) + '</p>' +
+    '</div>' +
+    '<div class="pbi-section pbi-extra"><h4>Reajuste extraordinario</h4>' +
+      '<p><b>Tiene:</b> ' + esc(p.extraTiene) + ' · <b>Cómo se aplica:</b> ' + esc(p.extraComo) + '</p>' +
+      '<p><b>Requisitos:</b> ' + esc(p.extraRequisitos) + '</p>' +
+      '<p><b>Variables:</b> ' + esc(p.extraVariables) + '</p>' +
+    '</div>' +
+    '<div class="pbi-section pbi-dcto"><h4>Descuentos especiales</h4>' +
+      '<p><b>Vigencia:</b> ' + esc(p.dctoVigencia) + '</p>' +
+      '<p><b>Variables:</b> ' + esc(p.dctoVariables) + '</p>' +
+    '</div>' +
+    granCompraHtml;
+}
+
+function togglePbi(idx){
+  var panel = document.getElementById('pbi-' + idx);
+  var toggle = document.getElementById('pbi-toggle-' + idx);
+  if (!panel) return;
+  panel.classList.toggle('open');
+  toggle.classList.toggle('open');
+}
+
+function fmtMonto(n){
+  return Number(n).toLocaleString('es-CL', {maximumFractionDigits: 0});
+}
+
+function txPanel(d, idx){
+  if (!d.tx){
+    return '<div class="tx-section"><p>' + icon('info-circle') + 'Sin datos transaccionales para este convenio</p></div>';
+  }
+  var t = d.tx;
+  if (!t.nOc){
+    return '<div class="tx-section"><p>' + icon('info-circle') + 'Sin órdenes de compra registradas (' + esc(t.periodo) + ')</p></div>';
+  }
+  var warn = t.historicoNota ? '<div class="pbi-warn">' + icon('alert-triangle') + ' ' + esc(t.historicoNota) + '</div>' : '';
+  var montosTxt = t.montos.map(function(m){ return '$' + fmtMonto(m.monto) + ' ' + esc(m.moneda); }).join(' + ');
+
+  var mesRows = t.porMes.map(function(m){
+    return '<tr><td>' + esc(m.mes) + '</td><td>' + esc(m.moneda) + '</td><td class="num">' + m.nOc + '</td><td class="num">$' + fmtMonto(m.monto) + '</td></tr>';
+  }).join('');
+
+  var provRows = t.topProv.map(function(p){
+    return '<tr><td>' + esc(p.nombre) + '</td><td class="num">' + p.nOc + '</td><td class="num">$' + fmtMonto(p.monto) + '</td></tr>';
+  }).join('');
+
+  var orgRows = t.topOrg.map(function(o){
+    return '<tr><td>' + esc(o.nombre) + '</td><td class="num">' + o.nOc + '</td><td class="num">$' + fmtMonto(o.monto) + '</td></tr>';
+  }).join('');
+
+  var regRows = t.porRegion.map(function(r){
+    return '<tr><td>' + esc(r.region) + '</td><td class="num">' + r.nOc + '</td><td class="num">$' + fmtMonto(r.monto) + '</td></tr>';
+  }).join('');
+
+  var panel =
+    '<div class="tx-panel-inline" id="tx-' + idx + '">' +
+      warn +
+      '<div class="tx-section"><h4>Resumen del período (' + esc(t.periodo) + ')' +
+        (t.historicoNota ? ' <span class="tx-src">' + icon('alert-triangle') + ' incluye ID histórico</span>' : '') + '</h4>' +
+        '<p><b>N° de órdenes de compra:</b> ' + t.nOc + '</p>' +
+        '<p><b>N° de proveedores distintos:</b> ' + t.nProveedores + '</p>' +
+        '<p><b>N° de organismos compradores:</b> ' + t.nOrganismos + '</p>' +
+        '<p><b>Monto total:</b> ' + montosTxt + '</p>' +
+      '</div>' +
+      '<div class="tx-section"><h4>Evolución mensual</h4>' +
+        '<table class="tx-table"><thead><tr><th>Mes</th><th>Moneda</th><th class="num">N° OC</th><th class="num">Monto</th></tr></thead><tbody>' + mesRows + '</tbody></table>' +
+      '</div>' +
+      '<div class="tx-section"><h4>Top proveedores</h4>' +
+        '<table class="tx-table"><thead><tr><th>Proveedor</th><th class="num">N° OC</th><th class="num">Monto</th></tr></thead><tbody>' + provRows + '</tbody></table>' +
+      '</div>' +
+      '<div class="tx-section"><h4>Top organismos compradores</h4>' +
+        '<table class="tx-table"><thead><tr><th>Organismo</th><th class="num">N° OC</th><th class="num">Monto</th></tr></thead><tbody>' + orgRows + '</tbody></table>' +
+      '</div>' +
+      '<div class="tx-section"><h4>Distribución por región</h4>' +
+        '<table class="tx-table"><thead><tr><th>Región</th><th class="num">N° OC</th><th class="num">Monto</th></tr></thead><tbody>' + regRows + '</tbody></table>' +
+      '</div>' +
+    '</div>';
+  return panel;
+}
+
+function toggleFull(idx){
+  var panel = document.getElementById('full-' + idx);
+  var toggle = document.getElementById('full-toggle-' + idx);
+  if (!panel) return;
+  panel.classList.toggle('open');
+  toggle.classList.toggle('open');
+}
+
+function render(list, words){
+  words = words || [];
+  document.getElementById('count').textContent = list.length + ' de ' + data.length + ' convenios marco';
+  document.getElementById('grid').innerHTML = list.map(function(d){
+    var idx = data.indexOf(d);
+    var docsHtml = '<div class="docs">';
+    if (d.docs && d.docs.length){
+      d.docs.forEach(function(doc){
+        docsHtml += '<a href="' + doc.url + '" target="_blank" rel="noopener">' + icon('file-type-pdf') + '' + doc.label + '</a>';
+      });
+    } else {
+      docsHtml += '<span class="unavailable">' + icon('file-text') + 'Bases de licitación: pendiente de enlace (ver ID de la licitación arriba)</span>';
+    }
+    docsHtml += '</div>';
+
+    var fullPanel =
+      '<div class="full-panel" id="full-' + idx + '">' +
+        '<div class="pbi-panel-inline">' + pbiPanel(d, idx, words) + '</div>' +
+        docsHtml +
+        txPanel(d, idx) +
+      '</div>';
+
+    var fullToggle = '<div class="full-toggle" onclick="toggleFull(' + idx + ')" id="full-toggle-' + idx + '">' +
+      '' + icon('chevron-down', 'chev') + 'Ver ficha completa' +
+      '</div>';
+
+    var vi = vigInfo(d.vig);
+    var ocBadge = (d.tx && d.tx.nOc) ? '<span class="badge-oc-count">' + d.tx.nOc.toLocaleString('es-CL') + ' OC</span>' : '';
+    var vigBadge = vi.label ? '<span class="badge-vig ' + vi.cls + '">' + vi.label + '</span>' : '';
+
+    return '<div class="card' + (d.featured ? ' featured' : '') + '">' +
+      '<div class="tile-head">' +
+        '<div class="tile-icon">' + icon(String(d.icon).replace(/^ti-/, '')) + '</div>' +
+        '<div class="tile-head-text">' +
+          '<div class="card-title"><p>' + highlight(d.n, words) + '</p></div>' +
+          '<a class="badge badge-link" href="' + fichaLicUrl(d.id) + '" target="_blank" rel="noopener" title="Ver ficha electrónica en Mercado Público">ID ' + highlight(d.id, words) + ' ' + icon('external-link') + '</a>' +
+          '<div class="tile-badges">' + vigBadge + ocBadge + '</div>' +
+          sparkline(d.tx) +
+        '</div>' +
+      '</div>' +
+      '<div class="tile-body">' +
+        '<p class="obj">' + highlight(d.obj, words) + '</p>' +
+        '<div class="quick-facts">' +
+          '<span>' + icon('currency-dollar') + ' ' + esc(d.moneda) + '</span>' +
+          '<span>' + icon('calendar-event') + ' Hasta ' + esc(d.vig) + '</span>' +
+        '</div>' +
+        ((d.nota || d.notaHtml) ? '<div class="pbi-warn">' + icon('alert-triangle') + ' ' + (d.notaHtml || esc(d.nota)) +
+          (d.notaDocs && d.notaDocs.length ? '<div class="nota-docs">' + d.notaDocs.map(function(nd){
+            return '<a href="' + nd.url + '" target="_blank" rel="noopener">' + icon('file-type-pdf') + nd.label + '</a>';
+          }).join('') + '</div>' : '') +
+        '</div>' : '') +
+        fullToggle +
+        fullPanel +
+        '<a class="store-link cta" href="' + d.url + '" target="_blank" rel="noopener">Ir a la tienda ' + icon('external-link') + '</a>' +
+        (d.detalle ? '<a class="store-link btn-secondary" href="' + d.detalle + '" target="_blank" rel="noopener">' + icon('chart-bar') + 'Datos transaccionales</a>' : '') +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function fields(d){
+  var base = [d.n, d.id, d.obj, d.moneda, d.cotizador, d.reajuste, d.duracion, d.cond];
+  if (d.pbi){
+    base.push(d.pbi.responsable, d.pbi.instancia, d.pbi.ordVariables, d.pbi.extraVariables, d.pbi.dctoVariables, d.pbi.acuerdoCompl, d.pbi.imptoOC, d.pbi.prodNuevos, d.pbi.prodExistente);
+  }
+  return base.filter(Boolean).join(' ').toLowerCase();
+}
+
+function applySort(list){
+  var sortBy = document.getElementById('sortBy').value;
+  var sorted = list.slice();
+  if (sortBy === 'oc') sorted.sort(function(a,b){ return ((b.tx&&b.tx.nOc)||0) - ((a.tx&&a.tx.nOc)||0); });
+  else if (sortBy === 'monto') sorted.sort(function(a,b){ return montoAprox(b) - montoAprox(a); });
+  else if (sortBy === 'vigencia') sorted.sort(function(a,b){
+    var da = vigInfo(a.vig).days, db = vigInfo(b.vig).days;
+    if (da === null) da = Infinity;
+    if (db === null) db = Infinity;
+    return da - db;
+  });
+  else sorted.sort(function(a,b){ return a.n.localeCompare(b.n); });
+  return sorted;
+}
+function applyVigFilter(list){
+  var f = document.getElementById('filterVig').value;
+  if (!f) return list;
+  return list.filter(function(d){
+    var vi = vigInfo(d.vig);
+    if (f === 'vigente') return vi.cls === 'badge-vig-ok';
+    if (f === 'porvencer') return vi.cls === 'badge-vig-warn';
+    if (f === 'vencido') return vi.cls === 'badge-vig-bad';
+    return true;
+  });
+}
+
+function runSearch(){
+  var raw = document.getElementById('q').value.trim();
+  var exact = document.getElementById('exact').checked;
+  var words = raw ? raw.toLowerCase().split(/\s+/).filter(Boolean) : [];
+  var filtered = !raw ? data.slice() : data.filter(function(d){
+    var idNorm = d.id.toLowerCase();
+    var text = fields(d);
+    if (exact){
+      var idExact = words.some(function(w){ return idNorm.split(/[^a-z0-9]+/).includes(w); });
+      var wordExact = words.every(function(w){
+        var re = new RegExp('\\b' + w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + '\\b', 'i');
+        return re.test(text);
+      });
+      return idExact || wordExact;
+    }
+    return words.every(function(w){ return text.includes(w); });
+  });
+  filtered = applyVigFilter(filtered);
+  filtered = applySort(filtered);
+  render(filtered, words);
+}
+
+document.getElementById('q').addEventListener('input', runSearch);
+document.getElementById('exact').addEventListener('change', runSearch);
+document.getElementById('sortBy').addEventListener('change', runSearch);
+document.getElementById('filterVig').addEventListener('change', runSearch);
+
+render(applySort(data), []);
+</script>
+</body>
+</html>
