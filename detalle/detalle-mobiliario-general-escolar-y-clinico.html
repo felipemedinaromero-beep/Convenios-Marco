@@ -70,7 +70,7 @@
   table.dt td.num { text-align:right; }
   table.dt tbody tr:nth-child(even) { background:#F7FAFB; }
   table.dt tr.dt-filter-row th { background:var(--surface-page); padding:4px 6px; cursor:default; }
-  table.dt tr.dt-filter-row input.col-filter { width:100%; box-sizing:border-box; height:24px; padding:0 6px; font-size:10.5px; border:1px solid var(--border); border-radius:3px; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; color:var(--cc-dark); background:#fff; }
+  table.dt tr.dt-filter-row input.col-filter, table.dt tr.dt-filter-row select.col-filter { width:100%; box-sizing:border-box; height:24px; padding:0 6px; font-size:10.5px; border:1px solid var(--border); border-radius:3px; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; color:var(--cc-dark); background:#fff; }
   .table-wrap { overflow-x:auto; margin-top:0.5rem; }
   .pager { display:flex; align-items:center; gap:10px; margin:10px 0; font-size:12px; }
   .pager button { height:30px; padding:0 12px; border:1px solid var(--border); background:#fff; border-radius:4px; cursor:pointer; }
@@ -147,10 +147,10 @@
         <th data-k="moneda">Moneda</th><th data-k="monto" class="num">Monto</th>
         </tr>
         <tr class="dt-filter-row">
-        <th><input class="col-filter" data-idx="0" /></th><th><input class="col-filter" data-idx="1" /></th><th><input class="col-filter" data-idx="2" /></th><th><input class="col-filter" data-idx="3" /></th>
-        <th><input class="col-filter" data-idx="4" /></th><th><input class="col-filter" data-idx="5" /></th><th><input class="col-filter" data-idx="6" /></th>
-        <th><input class="col-filter" data-idx="7" /></th><th><input class="col-filter" data-idx="8" /></th><th><input class="col-filter" data-idx="9" /></th>
-        <th><input class="col-filter" data-idx="10" /></th><th><input class="col-filter" data-idx="11" /></th><th><input class="col-filter" data-idx="12" /></th>
+        <th><input class="col-filter" data-idx="0" /></th><th><select class="col-filter" data-idx="1"><option value="">(Todas)</option></select></th><th><select class="col-filter" data-idx="2"><option value="">(Todos)</option></select></th><th><input class="col-filter" data-idx="3" /></th>
+        <th><select class="col-filter" data-idx="4"><option value="">(Todos)</option></select></th><th><input class="col-filter" data-idx="5" /></th><th><input class="col-filter" data-idx="6" /></th>
+        <th><select class="col-filter" data-idx="7"><option value="">(Todas)</option></select></th><th><input class="col-filter" data-idx="8" /></th><th><input class="col-filter" data-idx="9" /></th>
+        <th><select class="col-filter" data-idx="10"><option value="">(Todas)</option></select></th><th><select class="col-filter" data-idx="11"><option value="">(Todas)</option></select></th><th><input class="col-filter" data-idx="12" /></th>
         </tr>
       </thead>
       <tbody id="tblBody"></tbody>
@@ -548,19 +548,35 @@ function applyFilters(){
   page = 1;
   renderTable();
 }
-document.querySelectorAll('input.col-filter').forEach(inp => {
-  inp.addEventListener('input', () => {
+try {
+  const COL_SELECT_IDX = [1, 2, 4, 7, 10, 11];
+  COL_SELECT_IDX.forEach(idx => {
+    const sel = document.querySelector('select.col-filter[data-idx="' + idx + '"]');
+    if (!sel) return;
+    const vals = [...new Set(ROWS.map(r => r[idx]))].filter(Boolean);
+    if (idx !== 2) vals.sort();
+    vals.forEach(v => { const o = document.createElement('option'); o.value = v; o.textContent = v; sel.appendChild(o); });
+  });
+} catch(e) { console.error('Error poblando combos de columna', e); }
+document.querySelectorAll('.col-filter').forEach(inp => {
+  const onColFilterChange = () => {
     const idx = parseInt(inp.getAttribute('data-idx'), 10);
     COL_FILTERS[idx] = inp.value.trim().toLowerCase();
     applyFilters();
-  });
+  };
+  inp.addEventListener('input', onColFilterChange);
+  inp.addEventListener('change', onColFilterChange);
 });
+document.getElementById('fAnio').addEventListener('change', applyFilters);
+document.getElementById('fMes').addEventListener('change', applyFilters);
+document.getElementById('fRegion').addEventListener('change', applyFilters);
+document.getElementById('fMoneda').addEventListener('change', applyFilters);
 function resetFilters(){
   document.getElementById('fAnio').value='';
   document.getElementById('fMes').value='';
   document.getElementById('fRegion').value='';
   document.getElementById('fMoneda').value='';
-  document.querySelectorAll('input.col-filter').forEach(inp => { inp.value=''; });
+  document.querySelectorAll('.col-filter').forEach(inp => { inp.value=''; });
   COL_FILTERS.fill('');
   selectedRutOrg.clear();
   document.getElementById('msRutOrgInput').value='';
