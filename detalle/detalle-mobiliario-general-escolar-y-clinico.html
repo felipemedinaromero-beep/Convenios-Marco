@@ -43,6 +43,12 @@
   .charts { display:grid; grid-template-columns:repeat(auto-fit,minmax(420px,1fr)); gap:14px; margin:1.5rem 0; }
   .chart-card { background:var(--surface-card); border:none; box-shadow:0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04); border-radius:10px; padding:14px; }
   .chart-card h3 { font-size:12.5px; margin:0 0 10px; color:var(--cc-dark); text-transform:uppercase; letter-spacing:0.02em; }
+  .xlsx-dl-line { margin:-6px 0 8px; font-size:11px; }
+  .xlsx-dl-line a { color:var(--cc-navy); text-decoration:none; }
+  .xlsx-dl-line a:hover { text-decoration:underline; }
+  .kpi-xlsx-line { font-size:11px; margin:6px 0 0; }
+  .kpi-xlsx-line a { color:var(--cc-navy); text-decoration:none; }
+  .kpi-xlsx-line a:hover { text-decoration:underline; }
   .chart-svg-container { width:100%; }
   .chart-svg-container svg { width:100%; height:auto; display:block; }
   .chart-svg-container a:hover rect { opacity:0.78; }
@@ -203,6 +209,10 @@ try {
     ['Monto total', montosTxt, 'monto'],
   ];
   el.innerHTML = kpis.map(k => '<div class="kpi kpi-'+k[2]+'"><p class="lbl">'+kpiIcon(k[2])+k[0]+'</p><p class="val">'+k[1]+'</p></div>').join('');
+  const kpiLine = document.createElement('p');
+  kpiLine.className = 'kpi-xlsx-line';
+  kpiLine.innerHTML = '<a href="../docs/oc-mensuales/' + META.slug + '/todos.xlsx" target="_blank" rel="noopener">⬇ Descargar Excel con el detalle completo (' + AGG.nOc.toLocaleString('es-CL') + ' OC)</a>';
+  el.insertAdjacentElement('afterend', kpiLine);
 } catch(e) { console.error('Error en KPIs', e); }
 
 const CC_COLORS = ['#004677','#007096','#6BCCD6','#613B75','#E94860','#51283C','#E73438','#3C5459'];
@@ -361,6 +371,24 @@ function renderLineChart(containerId, opts){
   }
 }
 
+function xlsxSlugify(s){
+  return String(s).normalize('NFKD').replace(/[̀-ͯ]/g,'').replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-+|-+$/g,'').toLowerCase();
+}
+function xlsxRegion(region){ return '../docs/oc-regiones/' + META.slug + '/' + xlsxSlugify(region) + '.xlsx'; }
+function addChartDownloadLink(containerId, url, label){
+  try {
+    if (!url) return;
+    const el = document.getElementById(containerId);
+    const card = el && el.closest('.chart-card');
+    if (!card || card.querySelector('.xlsx-dl-line')) return;
+    const h3 = card.querySelector('h3');
+    const p = document.createElement('p');
+    p.className = 'xlsx-dl-line';
+    p.innerHTML = '<a href="' + url + '" target="_blank" rel="noopener">⬇ ' + (label || 'Descargar Excel (detalle completo)') + '</a>';
+    if (h3) h3.insertAdjacentElement('afterend', p); else card.insertBefore(p, card.firstChild);
+  } catch(e) { console.error('Error agregando link de descarga', e); }
+}
+
 function buildCharts(){
   const meses = [...new Set(AGG.porMes.map(m => m.mes))];
   const monedas = [...new Set(AGG.porMes.map(m => m.moneda))];
@@ -403,8 +431,12 @@ function buildCharts(){
 
   renderBarChart('chartRegion', {
     labels: AGG.porRegion.map(r=>r.region), showValues: true, valueFormatter: v => Math.round(v).toLocaleString('es-CL'),
+    links: AGG.porRegion.map(r => xlsxRegion(r.region)),
     series: [{ label:'N° OC', color:'#6BCCD6', data: AGG.porRegion.map(r=>r.nOc) }]
   });
+
+  addChartDownloadLink('chartProv', '../docs/oc-top-proveedores/' + META.slug + '.xlsx');
+  addChartDownloadLink('chartOrg', '../docs/oc-top-organismos/' + META.slug + '.xlsx');
 }
 
 // Filters + table (populated first so they work even if charts fail)

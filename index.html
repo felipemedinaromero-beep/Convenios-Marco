@@ -297,6 +297,10 @@
   .tx-table th { color: var(--cc-dark); font-weight: bold; background: var(--surface-card); }
   .tx-table td { color: var(--text-secondary); }
   .tx-table td.num, .tx-table th.num { text-align: right; white-space: nowrap; }
+  .xlsx-dl-line { font-size: 11px; margin: 4px 0 0; font-weight: normal; text-transform: none; display: inline; }
+  .xlsx-dl-line a, .xlsx-dl-cell { color: var(--cc-navy); text-decoration: none; }
+  .xlsx-dl-line a:hover, .xlsx-dl-cell:hover { text-decoration: underline; }
+  .xlsx-dl-cell { font-size: 10px; margin-left: 3px; }
   .tx-empty { font-size: 11.5px; color: var(--text-secondary); font-style: italic; }
 </style>
 </head>
@@ -1106,6 +1110,13 @@ function montoUsdDe(tx){
   return usd ? usd.monto : tx.montos[0].monto;
 }
 
+function xlsxSlugify(s){
+  return String(s).normalize('NFKD').replace(/[̀-ͯ]/g,'').replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-+|-+$/g,'').toLowerCase();
+}
+function fichaSlug(d){
+  return d.detalle ? d.detalle.replace('detalle/detalle-', '').replace('.html', '') : '';
+}
+
 function txPanel(d, idx){
   if (!d.tx){
     return '<div class="tx-section"><p>' + icon('info-circle') + 'Sin datos transaccionales para este convenio</p></div>';
@@ -1116,9 +1127,11 @@ function txPanel(d, idx){
   }
   var warn = t.historicoNota ? '<div class="pbi-warn">' + icon('alert-triangle') + ' ' + esc(t.historicoNota) + '</div>' : '';
   var montosTxt = t.montos.map(function(m){ return '$' + fmtMonto(m.monto) + ' ' + esc(m.moneda); }).join(' + ');
+  var slug = fichaSlug(d);
 
   var mesRows = t.porMes.map(function(m){
-    return '<tr><td>' + esc(m.mes) + '</td><td>' + esc(m.moneda) + '</td><td class="num">' + m.nOc + '</td><td class="num">$' + fmtMonto(m.monto) + '</td></tr>';
+    var link = (slug && m.nOc) ? ' <a class="xlsx-dl-cell" href="docs/oc-mensuales/' + slug + '/' + esc(m.mes) + '.xlsx" target="_blank" rel="noopener" title="Descargar Excel de ' + esc(m.mes) + '">⬇</a>' : '';
+    return '<tr><td>' + esc(m.mes) + link + '</td><td>' + esc(m.moneda) + '</td><td class="num">' + m.nOc + '</td><td class="num">$' + fmtMonto(m.monto) + '</td></tr>';
   }).join('');
 
   var provRows = t.topProv.map(function(p){
@@ -1130,8 +1143,13 @@ function txPanel(d, idx){
   }).join('');
 
   var regRows = t.porRegion.map(function(r){
-    return '<tr><td>' + esc(r.region) + '</td><td class="num">' + r.nOc + '</td><td class="num">$' + fmtMonto(r.monto) + '</td></tr>';
+    var link = slug ? ' <a class="xlsx-dl-cell" href="docs/oc-regiones/' + slug + '/' + xlsxSlugify(r.region) + '.xlsx" target="_blank" rel="noopener" title="Descargar Excel de ' + esc(r.region) + '">⬇</a>' : '';
+    return '<tr><td>' + esc(r.region) + link + '</td><td class="num">' + r.nOc + '</td><td class="num">$' + fmtMonto(r.monto) + '</td></tr>';
   }).join('');
+
+  var xlsxTodos = slug ? '<p class="xlsx-dl-line"><a href="docs/oc-mensuales/' + slug + '/todos.xlsx" target="_blank" rel="noopener">⬇ Descargar Excel con el detalle completo (' + t.nOc + ' OC)</a></p>' : '';
+  var xlsxProv = slug ? ' <a class="xlsx-dl-line" href="docs/oc-top-proveedores/' + slug + '.xlsx" target="_blank" rel="noopener">⬇ Descargar Excel</a>' : '';
+  var xlsxOrg = slug ? ' <a class="xlsx-dl-line" href="docs/oc-top-organismos/' + slug + '.xlsx" target="_blank" rel="noopener">⬇ Descargar Excel</a>' : '';
 
   var panel =
     '<div class="tx-panel-inline" id="tx-' + idx + '">' +
@@ -1142,14 +1160,15 @@ function txPanel(d, idx){
         '<p><b>N° de proveedores distintos:</b> ' + t.nProveedores + '</p>' +
         '<p><b>N° de organismos compradores:</b> ' + t.nOrganismos + '</p>' +
         '<p><b>Monto total:</b> ' + montosTxt + '</p>' +
+        xlsxTodos +
       '</div>' +
       '<div class="tx-section"><h4>Evolución mensual</h4>' +
         '<table class="tx-table"><thead><tr><th>Mes</th><th>Moneda</th><th class="num">N° OC</th><th class="num">Monto</th></tr></thead><tbody>' + mesRows + '</tbody></table>' +
       '</div>' +
-      '<div class="tx-section"><h4>Top proveedores</h4>' +
+      '<div class="tx-section"><h4>Top proveedores' + xlsxProv + '</h4>' +
         '<table class="tx-table"><thead><tr><th>Proveedor</th><th class="num">N° OC</th><th class="num">Monto</th></tr></thead><tbody>' + provRows + '</tbody></table>' +
       '</div>' +
-      '<div class="tx-section"><h4>Top organismos compradores</h4>' +
+      '<div class="tx-section"><h4>Top organismos compradores' + xlsxOrg + '</h4>' +
         '<table class="tx-table"><thead><tr><th>Organismo</th><th class="num">N° OC</th><th class="num">Monto</th></tr></thead><tbody>' + orgRows + '</tbody></table>' +
       '</div>' +
       '<div class="tx-section"><h4>Distribución por región</h4>' +
