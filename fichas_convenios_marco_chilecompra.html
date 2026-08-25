@@ -709,7 +709,8 @@ const data = [
    url:"https://conveniomarco6.mercadopublico.cl/endoprotesis1",
    docs:[
      {label:"Resolución Exenta N°450-B (20-10-2025) — Aprueba bases de licitación del Convenio Marco de Endoprótesis, Ortopedia y Trauma", url:"docs/450-b-res-aprueba-bases-cm-endoprotesis.pdf"},
-     {label:"Resolución Exenta N°520-B (27-11-2025) — Modifica bases de licitación y amplía plazo de cierre de recepción de ofertas (tras foro de preguntas y respuestas)", url:"docs/520-b-res-modifica-bases-lp-cm-id-2239-15-lr25-endoprotesis-ort.pdf"}
+     {label:"Resolución Exenta N°520-B (27-11-2025) — Modifica bases de licitación y amplía plazo de cierre de recepción de ofertas (tras foro de preguntas y respuestas)", url:"docs/520-b-res-modifica-bases-lp-cm-id-2239-15-lr25-endoprotesis-ort.pdf"},
+     {label:"Preguntas frecuentes — Convenio Marco de Endoprótesis, Ortopedia y Trauma", url:"https://ayuda.mercadopublico.cl/preguntasfrecuentes/articulo/?id=KA-02016", icon:"info-circle"}
    ],
    operativa:[
      {t:"Categorías y subcategorías", d:"Cuatro categorías: Endoprótesis Trauma Ortopedia (barras, cadera, columna, componentes protésicos, extremidades), Osteosíntesis (fijación ósea química, extremidades inferiores, sistemas), Sistemas de Fijación de Trauma (fijación mecánica) y Equipo Médico (complemento operatorio e instrumental quirúrgico), con cientos de productos específicos organizados en fichas regionales."},
@@ -1194,7 +1195,7 @@ function render(list, words){
     var docsHtml = '<div class="docs">';
     if (d.docs && d.docs.length){
       d.docs.forEach(function(doc){
-        docsHtml += '<a href="' + doc.url + '" target="_blank" rel="noopener">' + icon('file-type-pdf') + '' + doc.label + '</a>';
+        docsHtml += '<a href="' + doc.url + '" target="_blank" rel="noopener">' + icon(doc.icon || 'file-type-pdf') + '' + doc.label + '</a>';
       });
     } else {
       docsHtml += '<span class="unavailable">' + icon('file-text') + 'Bases de licitación: pendiente de enlace (ver ID de la licitación arriba)</span>';
