@@ -168,6 +168,9 @@
   .docs a .icon, .card > a.store-link .icon, .tile-body a.store-link .icon { font-size: 13px; }
   .docs a:hover, .card > a.store-link:hover, .tile-body a.store-link:hover { text-decoration: underline; }
   .docs .unavailable { font-size: 12px; color: #7A8B8E; font-style: italic; }
+  .docs a.doc-faq { background: #E7F6F8; border: 1px solid #A9DDE4; border-radius: 20px; padding: 5px 12px; font-weight: 700; align-self: flex-start; }
+  .docs a.doc-faq:hover { background: #D4EEF2; text-decoration: none; }
+  .docs a.doc-faq .icon { color: #007096; }
   a.store-link.cta {
     margin-top: 6px;
     justify-content: center;
@@ -1195,7 +1198,8 @@ function render(list, words){
     var docsHtml = '<div class="docs">';
     if (d.docs && d.docs.length){
       d.docs.forEach(function(doc){
-        docsHtml += '<a href="' + doc.url + '" target="_blank" rel="noopener">' + icon(doc.icon || 'file-type-pdf') + '' + doc.label + '</a>';
+        var docCls = doc.icon === 'info-circle' ? ' class="doc-faq"' : '';
+        docsHtml += '<a href="' + doc.url + '" target="_blank" rel="noopener"' + docCls + '>' + icon(doc.icon || 'file-type-pdf') + '' + doc.label + '</a>';
       });
     } else {
       docsHtml += '<span class="unavailable">' + icon('file-text') + 'Bases de licitación: pendiente de enlace (ver ID de la licitación arriba)</span>';
