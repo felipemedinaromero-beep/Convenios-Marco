@@ -378,7 +378,7 @@ const data = [
      {t:"Costo de despacho", d:"Se calcula por tramos de kilos totales a despachar (hasta 5, 10, 20, 40 y 100 kg, más un tramo adicional sobre 100 kg), según el tamaño/peso clasificado de cada producto (extra pequeño a extra grande) multiplicado por el precio de despacho ofertado para ese tramo."},
      {t:"Reajustes de precios", d:"Ordinario cuatrimestral (2ª semana de abril, agosto y diciembre) según variación de IPC por producto, desde el 4° mes de vigencia; extraordinario si la variación acumulada de precios de un producto supera 7,5% en el trimestre."},
      {t:"Garantía y continuidad de stock", d:"El convenio exige garantía de fiel cumplimiento vigente. Los proveedores no pueden descontinuar ni dejar sin stock productos adjudicados antes del tercer mes de vigencia del convenio, salvo autorización fundada de la DCCP."},
-     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse entre el organismo comprador y el adjudicatario, con garantía de fiel cumplimiento no inferior al 5% del monto del contrato; su plazo de vigencia no puede superar los 3 años."},
+     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse entre el organismo comprador y el adjudicatario, con garantía de fiel cumplimiento no inferior al 5% del monto del contrato. Su plazo de vigencia no puede superar los 3 años; las bases no lo limitan al término del convenio marco (24 meses), por lo que puede seguir vigente después de esa fecha."},
      {t:"Vigencia y prórroga", d:"24 meses desde la total tramitación de la resolución de adjudicación; la DCCP puede prorrogarlo solo por el tiempo que dure un nuevo proceso licitatorio, con un máximo de 12 meses adicionales."},
      {t:"Multas por atraso", d:"0,5% diario del valor total de la orden de compra por cada día hábil de atraso en la entrega, con tope de 30 días hábiles (hasta 15% del valor de la orden de compra); superado ese plazo se considera incumplimiento grave y procede el término anticipado del contrato o acuerdo complementario."},
      {t:"Encargado técnico", d:"Cada proveedor adjudicado debe mantener un Encargado Técnico habilitado (profesional de salud o especializado) para entregar instrucciones sobre el uso y mantención de los productos, exigible durante toda la vigencia del convenio."}
@@ -391,7 +391,6 @@ const data = [
      extraTiene:"Sí", extraComo:"Automático", extraRequisitos:"Variación acumulada de precios trimestral", extraVariables:"Variación sobre 7,5% trimestral",
      dctoVigencia:"1 a 4 días corridos", dctoVariables:"Mínimo 5% sobre el precio regular",
      montoMin:"30 UTM", montoMax:"15.000 UTM",
-     acuerdoCompl:"Máximo 1 año, contado desde el término de la vigencia del CM",
      imptoOC:"Sin IVA",
      prodNuevos:"Sólo por requerimiento de MINSAL, ISP o DCCP",
      prodExistente:"Se puede agregar en la macrozona y subcategoría en que esté adjudicado el proveedor, con precio menor al mínimo publicado"}},
@@ -399,7 +398,7 @@ const data = [
    obj:"Contratación de plan colectivo de seguro de vida, complementario de salud y catastrófico.",
    notaHtml:"Convenio prorrogado hasta el 25-10-2026 (<a href=\"docs/res-287-b-prorroga-seguro-vida-2239-12-lr23.pdf\" target=\"_blank\" rel=\"noopener\">Resolución Exenta N°287-B</a>, 10-07-2025), manteniéndose vigentes las bases originales aprobadas por la Resolución N°16 (30-06-2023), tomada de razón con alcance por Contraloría mediante <a href=\"docs/oficio-e367283-2023-toma-razon-bases-seguro-vida-2239-12-lr23.pdf\" target=\"_blank\" rel=\"noopener\">Oficio N°E367283/2023</a> (12-07-2023). La garantía de fiel cumplimiento debe mantenerse vigente hasta el 20-01-2027.",
    vig:"25-10-2026 (prorrogado)", monto:"Licitación ≥5.000 UTM · publicada 14-07-2023, cierre 08-09-2023", cond:"19 compras efectuadas y 10 reclamos por pago no oportuno en 12 meses.",
-   moneda:"Unidad de Fomento (UF)", cotizador:"No — compra directa de plan, con acuerdo complementario", reajuste:"Anual, en función de la siniestralidad de los 11 primeros meses de cada año", duracion:"24 meses. Acuerdo complementario opcional entre organismo y proveedor con garantía de fiel cumplimiento ≥5% del contrato",
+   moneda:"Unidad de Fomento (UF)", cotizador:"No — compra directa de plan", reajuste:"Anual, en función de la siniestralidad de los 11 primeros meses de cada año", duracion:"24 meses",
    url:"https://conveniomarco2.mercadopublico.cl/seguros2022",
    docs:[
      {label:"Bases de licitación y modificaciones (PDF, ficha oficial Mercado Público)", url:"https://www.mercadopublico.cl/Procurement/Modules/Attachment/ViewAttachmentLC.aspx?enc=nUbAGL5paxuUdm4dZP5S1fxF4BFnhJLwTwDFeXOAo5Wi7a2GgnxSNspyNkqSl%2btU3FPdQ0lt7ODjrpVqdjm%2b4Uu6E8J4l7gHAxVWk5OXXUCIWtzSOFYiJgcPcW26h6EBc%2bGQbied44Onr5vxqfkq9KEXhERyZ4vA1lKJNydKUeF%2fPGzldJNuZTtjv7Boyhe0yVYlykpZqpEKvyLsWIFBRxf8JTuv7bX5Kt4wAs%2fGljyF%2fcDDI1EahTUyqyi0T5xXFyNMXwzxf53yB1LAbhYoGTjTNXqpMjXyrZTtojc5vRngfzD%2faZ%2fUMaIGZoCz1da9"},
@@ -408,11 +407,11 @@ const data = [
    ],
    operativa:[
      {t:"Planes contratados", d:"El convenio comprende tres coberturas contratadas conjuntamente: Seguro de Vida (capital UF 50, que disminuye a UF 20 a los 75 años, UF 15 a los 80 años y UF 1 a los 85 años), Seguro Complementario de Salud (Plan 1, con deducibles de 0,5, 1 o 1,4 UF según cargas y topes por ítem) y Seguro Catastrófico (monto asegurado máximo UF 2.000, con deducible de UF 25)."},
-     {t:"Cómo contratar", d:"No hay cotizador: la contratación es directa con el proveedor adjudicado del plan elegido, formalizada mediante un acuerdo complementario opcional entre el organismo y la aseguradora."},
+     {t:"Cómo contratar", d:"No hay cotizador: la contratación es directa con el proveedor adjudicado del plan elegido (ver detalle de plazos y garantía en \"Acuerdo complementario\")."},
      {t:"Reajuste por siniestralidad", d:"Reajuste anual de la prima, aplicado según una tabla de porcentaje de siniestralidad de los 11 primeros meses de cada año (a mayor siniestralidad, mayor ajuste de la prima)."},
      {t:"Garantía de fiel cumplimiento", d:"$10.000.000 CLP exigidos en las bases originales (Resolución N°16); su vigencia debe mantenerse hasta 60 días hábiles después del término del convenio, es decir, hasta el 20-01-2027 según la prórroga vigente."},
      {t:"Evaluación de ofertas", d:"BMI Isapre-Fonasa 15%, farmacias asociadas 3%, cumplimiento de requisitos formales 2% y valor de la prima mensual 80%. Adjudican todos los proveedores que obtengan un puntaje igual o superior a 85."},
-     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato; su plazo de vigencia no puede superar los 24 meses."},
+     {t:"Acuerdo complementario", d:"Opcional entre el organismo comprador y la aseguradora: no hay cotizador, la contratación es directa con el proveedor del plan elegido. Requiere garantía de fiel cumplimiento no inferior al 5% del monto del contrato. Su plazo de vigencia no puede superar los 24 meses, y no puede extenderse más de 1 año después de finalizado el convenio marco."},
      {t:"Vigencia y prórroga", d:"24 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 12 meses mientras se tramita un nuevo proceso licitatorio."},
      {t:"Multas", d:"2% diario del valor de los seguros con atraso por atraso en el inicio de la cobertura (tope 10 días); 0,5% diario del valor del reembolso por atraso en su pago (tope 10 días, hasta 5%); la suma de todas las multas no puede superar el 15% del monto total del contrato."},
      {t:"Sin monto máximo de compra", d:"El convenio no fija tope de monto para las órdenes de compra, a diferencia de la mayoría de los demás Convenios Marco."}
@@ -425,7 +424,6 @@ const data = [
      extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
      dctoVigencia:"No tiene", dctoVariables:"No aplica",
      montoMin:"No tiene", montoMax:"1.000 UTM",
-     acuerdoCompl:"No podrá ser superior a 2 años",
      imptoOC:"(No informado)",
      prodNuevos:"No permite incorporación de productos nuevos",
      prodExistente:"Se pueden incorporar hasta 4 planes nuevos con operatorias menores, en base al plan colectivo inicial pactado en el CM"}},
@@ -445,7 +443,7 @@ const data = [
      {t:"Montos y adjudicación", d:"Compras entre 10 UTM y 25.000 UTM. En Productos de Ferretería la adjudicación es regional: se adjudica el 40% de los mejores puntajes por ficha de producto y región (60% en las regiones de Arica y Parinacota, Tarapacá, Araucanía, Aysén y Magallanes)."},
      {t:"Evaluación de ofertas", d:"Ambas categorías se evalúan con Cumplimiento de requisitos formales (5%) y criterio económico (95%): porcentaje de descuento por tramo de compra en Adquisición e Instalación de Productos, y precio por producto y región en Productos de Ferretería."},
      {t:"Garantía de fiel cumplimiento", d:"$1.000.000 CLP, con vigencia hasta 60 días hábiles después del término del convenio marco."},
-     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato; su plazo de vigencia no puede superar 1 año."},
+     {t:"Acuerdo complementario", d:"Opcional en general, con garantía de fiel cumplimiento no inferior al 5% del monto del contrato; obligatorio en la categoría Adquisición e Instalación de productos para compras iguales o superiores a 1.000 UTM. Su plazo de vigencia no puede superar 1 año; las bases no lo limitan al término del convenio marco (24 meses), por lo que puede seguir vigente después de esa fecha."},
      {t:"Vigencia y prórroga", d:"24 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 12 meses mientras se tramita un nuevo proceso licitatorio."},
      {t:"Multas por atraso", d:"0,5% diario del valor de los productos con atraso, con tope de 30 días hábiles (hasta 15% del valor afectado)."},
      {t:"Reajuste y descuentos especiales", d:"Reajuste ordinario cuatrimestral con tope 3%, aplicable solo a Productos de Ferretería (Adquisición e Instalación no reajusta por usar cotizador). Los proveedores de Productos de Ferretería pueden ofrecer descuentos especiales de al menos 5%, vigentes entre 1 y 4 días corridos."}
@@ -458,7 +456,6 @@ const data = [
      extraTiene:"Sí", extraComo:"A solicitud del proveedor", extraRequisitos:"Variación acumulada de precios", extraVariables:"Variación IPC de productos superior a 7% acumulado cuatrimestral",
      dctoVigencia:"1 a 4 días corridos, solo categoría productos", dctoVariables:"Desde un 5%, solo categoría productos",
      montoMin:"10 UTM", montoMax:"25.000 UTM",
-     acuerdoCompl:"Máximo 1 año",
      imptoOC:"Categoría productos: precio incluye IVA. Categoría servicios: sin IVA, monto cotizado por el total",
      prodNuevos:"Mediante oficio de organismo público",
      prodExistente:"Incorporar productos ya catalogados y visibles en tienda, con cobertura en la región y precio inferior al promedio; si no tienen cobertura deben ampliarla indicando plazo de entrega"}},
@@ -480,7 +477,7 @@ const data = [
      {t:"Garantías", d:"Seriedad de la oferta: $500.000 CLP en situación de Emergencia. Fiel cumplimiento: $6.500.000 CLP en Emergencia y $4.000.000 CLP en Prevención."},
      {t:"Reajuste de precios", d:"Ordinario semestral (marzo y septiembre) con tope 4% anual acumulado. Extraordinario trimestral si la variación de IPC supera 4%, con tope de 9% anual."},
      {t:"Coordinación con SENAPRED", d:"El Servicio Nacional de Prevención y Respuesta ante Desastres (SENAPRED, ex ONEMI) es el principal organismo comprador y puede solicitar la incorporación de nuevos productos catalogados."},
-     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato; su plazo de vigencia no puede superar 1 año, ni extenderse más de 1 año después de finalizado el convenio marco."},
+     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato. Su plazo de vigencia no puede superar 1 año, y no puede extenderse más de 1 año después de finalizado el convenio marco."},
      {t:"Vigencia y prórroga", d:"24 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 12 meses mientras se tramita un nuevo proceso licitatorio."},
      {t:"Multas", d:"Varían según situación: en Prevención, 1,4% diario del valor de los bienes o servicios con atraso (tope 30 días, hasta 28%), 20% por incumplimiento de la fecha de vencimiento o plazo de duración pactado, y 20% por incumplimiento en las condiciones de entrega del servicio; en Emergencia, esas mismas causales se sancionan con 2% diario (tope 20 días, hasta 40%), 30% y 30%, respectivamente."},
      {t:"Estado de excepción constitucional", d:"Durante un estado de excepción de catástrofe, la DCCP puede autorizar la incorporación de productos no catalogados sin necesidad de adjudicación previa, mientras dure dicho estado."}
@@ -493,7 +490,6 @@ const data = [
      extraTiene:"Sí", extraComo:"Automático", extraRequisitos:"Variación acumulada de precios", extraVariables:"Variación entre 4% y 9% trimestral",
      dctoVigencia:"1 a 7 días corridos", dctoVariables:"Desde un 1% a 30%",
      montoMin:"No tiene", montoMax:"25.000 UTM",
-     acuerdoCompl:"Máximo 1 año",
      imptoOC:"(No informado)",
      prodNuevos:"Sólo lo realiza la DCCP o por solicitud de SENAPRED (ex ONEMI)",
      prodExistente:"Se puede agregar productos ya catalogados en las categorías adjudicadas si el valor es inferior al precio promedio y la situación en la región lo amerita"}},
@@ -511,7 +507,7 @@ const data = [
      {t:"Garantías", d:"Seriedad de la oferta: $1.000.000 CLP, vigencia superior en 220 días hábiles a la publicación de las bases. Fiel cumplimiento del contrato: $5.000.000 CLP, vigencia 60 días hábiles posteriores al término del convenio."},
      {t:"Reajuste extraordinario", d:"Si un producto catalogado está disponible a la venta al público general, puede reajustarse hasta el mismo porcentaje del aumento del precio público, mediante carta del proveedor y carta de la marca, revisado en hasta 20 días hábiles (+10 adicionales)."},
      {t:"Plazo de entrega", d:"Las licencias deben entregarse dentro de 5 días hábiles luego de aceptada la Orden de Compra."},
-     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato; su plazo de vigencia no puede superar los 3 años."},
+     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato. Su plazo de vigencia no puede superar los 3 años; las bases no lo limitan al término del convenio marco, por lo que puede seguir vigente después de esa fecha."},
      {t:"Vigencia y prórroga", d:"36 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 6 meses."},
      {t:"Multas por atraso", d:"2% diario, con tope de 10 días hábiles (máximo 20% del valor de los productos afectados)."}
    ],
@@ -523,7 +519,6 @@ const data = [
      extraTiene:"Sí", extraComo:"A solicitud del proveedor", extraRequisitos:"Variación acumulada de precios", extraVariables:"Variación de precio informada por el fabricante de forma pública",
      dctoVigencia:"1 a 4 días", dctoVariables:"Mínimo 5% sobre el precio regular",
      montoMin:"10 UTM", montoMax:"25.000 UTM",
-     acuerdoCompl:"Máximo 3 años",
      imptoOC:"Sin IVA",
      prodNuevos:"No permite, salvo que la DCCP lo requiera",
      prodExistente:"Agregar productos en las categorías adjudicadas con precio menor o igual al mínimo publicado en tienda"}},
@@ -542,7 +537,7 @@ const data = [
      {t:"Reajuste extraordinario", d:"Si la variación acumulada cuatrimestral del IPC/IPP supera el 7%, procede un reajuste extraordinario con tope máximo de 10%, vigente por 1 mes o hasta el siguiente reajuste ordinario."},
      {t:"Plazo de entrega regional", d:"Máximo 20 días hábiles (25 días hábiles para Aysén y Magallanes), mínimo 1 día hábil. Monto mínimo de despacho: 2 UTM."},
      {t:"Multas por atraso", d:"0,5% diario por cada día hábil de atraso en la entrega, con tope de 30 días hábiles (máximo 15% del valor de los productos afectados); 5% del monto de la orden de compra por incumplimiento del formato de entrega acordado."},
-     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato; su plazo de vigencia no puede superar 1 año."},
+     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato. Su plazo de vigencia no puede superar 1 año, y no puede extenderse más allá de ese plazo contado desde el término del convenio marco (es decir, puede seguir vigente como máximo 1 año después de finalizado)."},
      {t:"Vigencia y prórroga", d:"36 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 12 meses mientras se tramita un nuevo proceso licitatorio."}
    ],
    granCompra:{"total": 6, "items": [{"id": "74968", "licitacion": "2239-2-LR23", "nombre": "COMPRA RESMA ANUAL CORPORACION 74968", "fechaEnvio": "2025-03-10", "estado": "Recepción Conforme", "organismo": "CORP MUNICIPAL PARA EL DESARROLLO SOCIAL", "codigoOC": "1216085-52-CM25"}, {"id": "75349", "licitacion": "2239-2-LR23", "nombre": "VM P02 7734 GENERAL-SEP-JUNJI RESMAS PARA EE", "fechaEnvio": "2025-03-25", "estado": "Recepción Conforme", "organismo": "SERVICIO LOCAL DE EDUCACION PUBLICA ANDALIEN SUR", "codigoOC": "1084156-2541-CM25"}, {"id": "75903", "licitacion": "2239-2-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 75903", "fechaEnvio": "2025-04-23", "estado": "Recepción Conforme", "organismo": "Corporación de Desarrollo de La Reina", "codigoOC": "1221016-218-CM25"}, {"id": "75559", "licitacion": "2239-2-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 75559", "fechaEnvio": "2025-05-06", "estado": "Aceptada", "organismo": "SERVICIO DE SALUD DE TALCAHUANO HOSPITAL", "codigoOC": "1057544-10803-CM25"}, {"id": "74183", "licitacion": "2239-2-LR23", "nombre": "ADQUISICIÓN DE RESMAS DE PAPEL", "fechaEnvio": "2025-05-14", "estado": "Recepción Conforme", "organismo": "DIRECCION DE LOGISTICA DE CARABINEROS", "codigoOC": "5240-45-CM25"}, {"id": "76801", "licitacion": "2239-2-LR23", "nombre": "Orden de Compra generada por la Gran Compra: 76801", "fechaEnvio": "2025-06-06", "estado": "Aceptada", "organismo": "CORP MUNICIPAL DE DESARROLLO SOCIAL DE A", "codigoOC": "558869-109-CM25"}]},
@@ -553,7 +548,6 @@ const data = [
      extraTiene:"Sí", extraComo:"A solicitud del proveedor", extraRequisitos:"Variación acumulada de precios", extraVariables:"Variación IPC/IPP de productos superior a 7% acumulado cuatrimestral",
      dctoVigencia:"No tiene", dctoVariables:"No aplica",
      montoMin:"10 UTM", montoMax:"25.000 UTM",
-     acuerdoCompl:"Máximo 1 año",
      imptoOC:"(No informado)",
      prodNuevos:"Sólo lo realiza la DCCP",
      prodExistente:"Agregar productos en categorías adjudicadas con precio menor al mínimo publicado en la región"}},
@@ -577,7 +571,7 @@ const data = [
      {t:"Reajuste ordinario", d:"Automático, cuatrimestral (segundas semanas de abril, agosto y diciembre) a partir del 4° mes de vigencia, con tope de 3% por cuatrimestre, según variación del IPC a nivel de producto (o de la subclase/clase/grupo/división respectiva si el producto es descontinuado por el INE)."},
      {t:"Reajuste extraordinario", d:"Procede de oficio o a solicitud del proveedor cuando la variación del IPC a nivel de producto supera el 7% en un cuatrimestre móvil, con tope máximo de 13%; vigente por 1 mes o hasta el siguiente reajuste ordinario, y solo aplicable si ya se efectuó un reajuste ordinario previo."},
      {t:"Plazo de entrega", d:"Máximo 15 días hábiles en todas las regiones, salvo Aysén y Magallanes (20 días hábiles) e Isla de Pascua / Archipiélago Juan Fernández (25 días hábiles); mínimo 1 día hábil. Monto mínimo de despacho: 3 UTM (salvo acuerdo entre comprador y proveedor para entregas menores)."},
-     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato; su plazo de vigencia no puede superar 1 año."},
+     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato. Su plazo de vigencia no puede superar 1 año, y no puede extenderse más allá de ese plazo contado desde el término del convenio marco (es decir, puede seguir vigente como máximo 1 año después de finalizado)."},
      {t:"Vigencia y prórroga", d:"26 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 12 meses mientras se tramita un nuevo proceso licitatorio, con posibilidad de renovación por una sola vez y bajo las mismas condiciones."},
      {t:"Multas por atraso", d:"0,5% diario del valor de los productos con atraso, con tope de 30 días hábiles (máximo 15% del valor afectado); adicionalmente 0,5% del monto de la orden de compra por incumplimiento del formato de entrega acordado y 0,5% por entrega de un producto distinto al comprado a través del catálogo electrónico."}
    ],
@@ -589,7 +583,6 @@ const data = [
      extraTiene:"Sí", extraComo:"A solicitud del proveedor", extraRequisitos:"Variación del IPC superior a 7% en los 4 meses previos a la solicitud", extraVariables:"Variación % IPC a nivel de producto, cuatrimestre móvil",
      dctoVigencia:"2 a 4 días corridos", dctoVariables:"Mínimo 5% sobre el precio catalogado",
      montoMin:"10 UTM", montoMax:"25.000 UTM",
-     acuerdoCompl:"Máximo 1 año",
      imptoOC:"El precio se publica neto; el IVA se genera en la OC",
      prodNuevos:"No permite, salvo que sea requerido por la DCCP",
      prodExistente:"Agregar productos en categorías/fichas existentes si el precio es menor al mínimo publicado, con tope de 18%"}},
@@ -608,7 +601,7 @@ const data = [
      {t:"Reajuste ordinario trimestral (IPC)", d:"Cada tres meses desde la entrada en vigencia, aplicación automática según la variación del IPC general informado por el INE, solo cuando el reajuste es al alza; sin tope."},
      {t:"Reajuste ordinario anual", d:"Con frecuencia anual, mediante fórmula basada en el precio FOB Mont Belvieu del propano y el Índice de Costos del Transporte (ICT) del INE, con tope de 10% sobre el precio base (hasta 20% en casos excepcionales como conflictos bélicos o quiebre de suministro)."},
      {t:"Plazo de entrega (venta directa)", d:"Máximo entre 6 y 18 horas hábiles según región (Región Metropolitana: 6 horas; zonas centro-sur: 9 horas; zonas extremas: 18 horas), de 9:00 a 18:00 horas de lunes a viernes."},
-     {t:"Acuerdo complementario", d:"Opcional: plazo máximo de 1 año para las modalidades envasado (vales de recarga y venta directa); para la modalidad granel (comodato de estanques y medidores) el plazo puede llegar hasta 5 años."},
+     {t:"Acuerdo complementario", d:"Opcional: plazo máximo de 1 año para las modalidades envasado (vales de recarga y venta directa); para la modalidad granel (comodato de estanques y medidores) el plazo puede llegar hasta 5 años. Las bases no limitan estos plazos al término del convenio marco, por lo que el acuerdo puede seguir vigente después de esa fecha."},
      {t:"Vigencia y prórroga", d:"36 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 12 meses mientras se tramita un nuevo proceso licitatorio."},
      {t:"Multas por atraso", d:"Envasado mediante vales y granel: 1% diario por día hábil administrativo de atraso, con tope de 10 días hábiles (10% del valor del producto); atrasos mayores constituyen incumplimiento grave y habilitan el término anticipado. Envasado mediante venta directa: 0,5% por cada hora hábil de atraso."}
    ],
@@ -620,7 +613,6 @@ const data = [
      extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
      dctoVigencia:"Del sábado 00:01 al miércoles siguiente 23:59 hrs; se publican los viernes de 11:00 a 18:00 hrs", dctoVariables:"Desde $1",
      montoMin:"No tiene (solo cantidad de vales)", montoMax:"25.000 UTM",
-     acuerdoCompl:"Máximo 1 año para GLP envasado, vales de recarga y venta directa; 5 años para GLP a granel",
      imptoOC:"El precio se publica neto; el IVA se genera en la OC",
      prodNuevos:"No permite incorporación de productos nuevos",
      prodExistente:"Siempre que corresponda a la categoría adjudicada y el precio sea inferior al promedio visible en tienda"}},
@@ -637,7 +629,7 @@ const data = [
      {t:"Garantías", d:"No se exige garantía de seriedad de la oferta. Garantía de fiel cumplimiento del contrato: $10.000.000 CLP, con vigencia hasta 60 días hábiles posteriores al término del convenio marco."},
      {t:"Reajuste", d:"Al transar en dólares americanos (USD), la DCCP no aplica reajuste ordinario ni extraordinario de precios; solo pueden variar los valores por fluctuaciones del tipo de cambio del dólar."},
      {t:"Plazo de entrega", d:"Zona Central: 30 días hábiles máximo para transacciones ≤1.000 UTM y 45 días hábiles mínimo para transacciones >1.000 UTM. Zonas extremas (norte, sur, insular): 45 días hábiles máximo o mínimo según el mismo umbral. El clonado y masterizado, si se solicita, agrega en promedio 20 días hábiles adicionales. La entrega es voluntaria para el proveedor en órdenes de compra inferiores a 30 UTM."},
-     {t:"Acuerdo complementario", d:"Recomendado especialmente para la subcategoría de arriendo. Plazo máximo de 1 año para la subcategoría Compra y de 3 años para la subcategoría Arriendo."},
+     {t:"Acuerdo complementario", d:"Recomendado especialmente para la subcategoría de Arriendo. Plazo máximo de 1 año para la subcategoría Compra y de 3 años para la subcategoría Arriendo; las bases no limitan estos plazos al término del convenio marco, por lo que puede seguir vigente después de esa fecha."},
      {t:"Vigencia y prórroga", d:"36 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 12 meses mientras se tramita un nuevo proceso licitatorio, y renovación posible por una sola vez por el mismo período y bajo las mismas condiciones."},
      {t:"Multas por atraso", d:"0,2% diario sobre el valor de los productos con retraso en modalidad compra y 0,33% diario en modalidad arriendo, con tope de 30 días hábiles (6% en compra y 9,9% en arriendo). En total, las multas no pueden superar el 20% del contrato, caso en el cual procede el término anticipado."},
      {t:"Condiciones de arriendo", d:"Servicio de arriendo por 36 meses, pagadero en 36 cuotas mensuales; el organismo puede optar por comprar el equipo mediante el pago de una cuota 37 (valor total del arriendo dividido en 36). Incluye instalación y puesta en marcha, clonado y masterizado, asistencia técnica en 3 niveles de escalamiento, seguro de hardware (robo, hurto hasta 10% de los equipos, incendio y desastres naturales) y reposición del equipo si presenta 3 fallas de hardware en 1 año."},
@@ -651,7 +643,6 @@ const data = [
      extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
      dctoVigencia:"1 a 7 días", dctoVariables:"No existe descuento mínimo para ofertas especiales; pueden publicarse desde ≥1% de descuento",
      montoMin:"Sin monto mínimo fijo (según organismo público)", montoMax:"No aplica / tomado de razón",
-     acuerdoCompl:"Compra: máximo 1 año · Arriendo: máximo 3 años",
      imptoOC:"El precio se publica neto; el IVA se genera en la OC",
      prodNuevos:"No permite, salvo que la DCCP lo requiera",
      prodExistente:"El proveedor puede incorporar productos ya catalogados y visibles en fichas pre-existentes, con cobertura en la región, cumpliendo especificaciones y con precio igual o inferior al promedio de tienda (sin considerar ofertas especiales)"}},
@@ -673,7 +664,7 @@ const data = [
      {t:"Reajuste", d:"El convenio no establece ni contempla condiciones de reajustabilidad de precios."},
      {t:"Protocolo de carga y uso de tarjetas", d:"Los proveedores deben validar la patente del vehículo (por sistema o código QR) y la identidad del funcionario que realiza la carga (mediante credencial institucional y RUT), bloqueando la operación si no es posible validar alguno de los dos. La Resolución 454-B eliminó la exigencia original de tarjetas sin patente, permitiendo tarjetas con la patente visible. El plazo para implementar el protocolo es de 2 meses desde la publicación de la adjudicación."},
      {t:"Plazo de entrega de tarjetas", d:"El plazo de entrega de las tarjetas para realizar la carga de combustible no puede sobrepasar los 5 días hábiles desde la notificación de la adjudicación."},
-     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato; su plazo de vigencia no puede superar 1 año (12 meses)."},
+     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato. Su plazo de vigencia no puede superar 1 año (12 meses); es un plazo fatal que no puede renovarse ni modificarse para extenderlo, independiente del término del convenio marco."},
      {t:"Vigencia y prórroga", d:"18 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 6 meses mientras se tramita un nuevo proceso licitatorio o se define una nueva modalidad de compra, con posibilidad de renovación por una sola vez, por igual período y bajo las mismas condiciones."},
      {t:"Multas por atraso", d:"0,5 UTM por cada instancia de indisponibilidad diaria del sistema informático de Estaciones de Servicio; 0,5 UTM por cada instancia de indisponibilidad diaria del sistema de control de consumo; 0,5 UTM por día corrido de atraso en la entrega de las tarjetas EDS, con tope de 5 días corridos."}
    ],
@@ -685,7 +676,6 @@ const data = [
      extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
      dctoVigencia:"1 a 4 días corridos", dctoVariables:"Mínimo 5% sobre el descuento ya disponible del producto y región",
      montoMin:"30 UTM", montoMax:"25.000 UTM",
-     acuerdoCompl:"Máximo 1 año",
      imptoOC:"Sin IVA",
      prodNuevos:"No permite incorporación de productos nuevos",
      prodExistente:"No permite incorporación de productos ya catalogados en tienda"}},
@@ -707,8 +697,8 @@ const data = [
      {t:"Regla de adjudicación", d:"Adjudicación múltiple sin emisión de orden de compra: se adjudica cada categoría y región a los oferentes que se ubiquen dentro del 70% de los mejores puntajes considerando la región de origen declarada en la oferta; al adjudicar una categoría y región se adjudican automáticamente todas las regiones del país."},
      {t:"Garantías", d:"No se exige garantía de seriedad de la oferta. Garantía de fiel cumplimiento de contrato única (independiente de cuántas categorías se adjudiquen): $1.000.000 CLP, a entregar dentro de 20 días hábiles desde la notificación de la adjudicación (prorrogables 20 días hábiles adicionales), con vigencia hasta 60 días hábiles posteriores al término del convenio marco."},
      {t:"Reajuste", d:"El convenio no contempla reajuste ordinario ni extraordinario en la tienda electrónica; el precio se fija en cada proceso de cotización, donde la entidad compradora puede establecer un mecanismo de reajuste por IPC o IPC específico, con la frecuencia que defina en el requerimiento."},
-     {t:"Modelo de cotización y montos", d:"El convenio opera con un modelo de cotización en línea por categoría: el organismo publica su requerimiento y los proveedores adjudicados en esa categoría presentan oferta. Sin monto mínimo de compra; monto máximo 25.000 UTM incluyendo todos los cargos e impuestos. Acuerdo complementario obligatorio para contrataciones entre 1.000 y 25.000 UTM, con vigencia máxima de 3 años (36 meses)."},
-     {t:"Acuerdo complementario", d:"Obligatorio para contrataciones entre 1.000 y 25.000 UTM (ver detalle en \"Modelo de cotización y montos\"); plazo máximo de 3 años (36 meses)."},
+     {t:"Modelo de cotización y montos", d:"El convenio opera con un modelo de cotización en línea por categoría: el organismo publica su requerimiento y los proveedores adjudicados en esa categoría presentan oferta. Sin monto mínimo de compra; monto máximo 25.000 UTM incluyendo todos los cargos e impuestos. Acuerdo complementario obligatorio para contrataciones entre 1.000 y 25.000 UTM (ver detalle en \"Acuerdo complementario\")."},
+     {t:"Acuerdo complementario", d:"Obligatorio para contrataciones entre 1.000 y 25.000 UTM. Su plazo de vigencia no puede superar 3 años (36 meses); es un plazo fatal que no puede renovarse ni modificarse para extenderlo, independiente del término del convenio marco."},
      {t:"Vigencia y prórroga", d:"24 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 12 meses mientras se tramita un nuevo proceso licitatorio o se define una nueva modalidad de compra. Renovable por una sola vez, por el mismo período, previo informe técnico favorable."},
      {t:"Multas por atraso e incumplimiento", d:"17 causales de multa, entre 5% y 30% del valor del servicio con deficiencia, por evento o por día de atraso (por ejemplo: 30% por no presentarse al servicio sin aviso previo, 20% por atraso superior a 2 horas o por no contar con vehículo de reemplazo, 5% por atraso en la entrega de vehículos y maquinaria en arriendo). Todas las multas tienen un tope conjunto de 30% del valor total del servicio licitado; superado ese límite se considera incumplimiento grave y procede el término anticipado del acuerdo complementario."},
      {t:"Requisitos de flota", d:"Los vehículos y maquinaria pueden ser propios o de terceros mediante contrato de arriendo con vigencia mínima de 6 meses (no se aceptan contratos tipo rent a car, diarios, semanales o mensuales); deben declararse en el Anexo N°5 con año de primera inscripción/compra, marca, modelo y patente."}
@@ -720,7 +710,6 @@ const data = [
      extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
      dctoVigencia:"No tiene", dctoVariables:"No aplica",
      montoMin:"No aplica", montoMax:"25.000 UTM",
-     acuerdoCompl:"Máximo 36 meses",
      imptoOC:"Exenta de IVA (precios incluyen todos los impuestos)",
      prodNuevos:"No aplica",
      prodExistente:"No aplica"}},
@@ -743,7 +732,7 @@ const data = [
      {t:"Garantías", d:"No se exige garantía de seriedad de la oferta. Garantía de fiel cumplimiento de contrato: $2.000.000 CLP, única e independiente del número de categorías adjudicadas, con vigencia hasta 60 días hábiles posteriores al término del convenio marco, incluida su eventual prórroga."},
      {t:"Reajuste ordinario y extraordinario", d:"Reajuste ordinario cuatrimestral (segunda semana de abril, agosto y diciembre) desde el 4° mes de vigencia, con tope de 2,5% por cuatrimestre según fórmula ponderada de IPC Salud (52%) e Índice de Precios de Importación (48%). Reajuste extraordinario automático si la variación cuatrimestral móvil del IPC \"Otros Productos Médicos\" supera 2,5%, con tope de 15%."},
      {t:"Plazos de entrega", d:"24 horas corridas en la Región Metropolitana, 48 horas corridas en capitales regionales de zona centro, sur y norte, y 96 horas corridas en localidades fuera del radio urbano y zonas extremas (Arica y Parinacota, Magallanes, islas), contadas desde el requerimiento."},
-     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato; su plazo de vigencia no puede superar los 3 años (36 meses)."},
+     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato. Su plazo de vigencia no puede superar los 3 años (36 meses); es un plazo fatal que no puede renovarse ni modificarse para extenderlo, independiente del término del convenio marco."},
      {t:"Vigencia y prórroga", d:"36 meses desde la total tramitación de la resolución de adjudicación. Prórroga posible solo por el tiempo que dure un nuevo proceso licitatorio o una nueva modalidad de compra, con un máximo de 12 meses. Renovable por un mismo período y bajo las mismas condiciones, por una sola vez, previo informe técnico favorable."},
      {t:"Multas por incumplimiento", d:"Tabla de multas por evento: 25% del servicio no prestado por inasistencia del asistente quirúrgico, 30% por kit incompleto o defectuoso, 20% por quiebre de stock superior a 15 días, 8% por atraso en la entrega, entre otras causales, con tope conjunto de 30% del valor total de los productos licitados; superado ese tope se considera incumplimiento grave y procede el término anticipado del convenio."}
    ],
@@ -766,7 +755,7 @@ const data = [
      {t:"Evaluación de ofertas", d:"Técnico — Monto de transacciones en Mercado Público 10%, cantidad de órdenes de compra en Mercado Público 10%, servicio técnico disponible (no cubierto por garantía) 15%. Administrativo — programa de integridad 3%, cumplimiento de requisitos formales 2%. Económico — porcentaje de descuento sobre precio de venta 40%, precio de despacho 20%."},
      {t:"Regla de adjudicación", d:"Se adjudica por combinación de ficha regional (tipo de producto + tipo de combustible + región) y marca, a todo producto con puntaje total igual o superior a 60 puntos; si solo existe una oferta válida para una ficha regional, se adjudica igualmente aunque su puntaje sea inferior a 60. No contempla criterios de desempate."},
      {t:"Garantías", d:"Fiel cumplimiento del contrato: $5.000.000 CLP, con vigencia hasta 60 días hábiles posteriores al término del convenio marco. No se exige garantía de seriedad de la oferta. Adicionalmente, cada vehículo debe contar con garantía convencional mínima de 36 meses o 100.000 kilómetros (lo que ocurra primero) y las maquinarias, de 36 meses."},
-     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato; su plazo de vigencia no puede superar 1 año, ni exceder ese plazo tras el término del convenio marco."},
+     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato. Su plazo de vigencia no puede superar 1 año, y no puede extenderse más allá de ese plazo contado desde el término del convenio marco (es decir, puede seguir vigente como máximo 1 año después de finalizado)."},
      {t:"Reajuste", d:"No se aplica reajuste a los productos, ya que el precio se fija como % de descuento sobre el precio de venta final a público, actualizado por el proveedor. Los precios de despacho se reajustan una vez al año según la variación del Índice de Costos de Transporte (ICT) del INE."},
      {t:"Plazo de entrega", d:"Máximo 30 días hábiles en todas las regiones, salvo Aysén y Magallanes (35 días hábiles) e Isla de Pascua / Archipiélago Juan Fernández (35 días hábiles); mínimo 1 día hábil. El retiro en tienda es obligatorio en la región adjudicada (salvo Isla de Pascua y Juan Fernández) y sin costo; el despacho es opcional y a elección del comprador."},
      {t:"Vigencia y prórroga", d:"36 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 12 meses mientras se tramita un nuevo proceso licitatorio, con posibilidad de renovación por una sola vez y bajo las mismas condiciones."},
@@ -782,7 +771,6 @@ const data = [
      extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
      dctoVigencia:"1 a 4 días corridos", dctoVariables:"No inferior a 1% de descuento sobre precio catalogado",
      montoMin:"100 UTM", montoMax:"25.000 UTM",
-     acuerdoCompl:"Máxima 1 año",
      imptoOC:"Sólo lo realiza la DCCP",
      prodNuevos:"El descuento a incorporar debe ser mayor o igual al promedio de descuento de los proveedores vigentes para la combinación tipo de producto/combustible; si no existe proveedor con descuento para esa combinación, debe ser entre 2% y 10%",
      prodExistente:"Agregar productos en categorías adjudicadas con precio menor al mínimo publicado por región"}},
@@ -813,7 +801,6 @@ const data = [
      extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
      dctoVigencia:"No tiene", dctoVariables:"No aplica",
      montoMin:"70 UTM", montoMax:"25.000 UTM",
-     acuerdoCompl:"Obligatoria para monto mayor a 1.000 hasta 25.000 UTM",
      imptoOC:"Exenta de IVA (precios incluyen todos los impuestos)",
      prodNuevos:"No aplica",
      prodExistente:"No aplica"}},
@@ -827,7 +814,7 @@ const data = [
      {t:"Categorías licitadas", d:"Administración de Beneficios Institucionales (alimentación, vestuario y calzado, sala cuna y jardines infantiles) y Entrega de Beneficio Social (locales al por mayor y menor, vestuario y calzado, hogar y construcción)."},
      {t:"Montos de compra", d:"Entre 100 y 25.000 UTM. Las bases permiten montos inferiores a 100 UTM para fomentar la participación de PYMEs."},
      {t:"Garantía de fiel cumplimiento", d:"$12.000.000 CLP, con vigencia durante toda la duración del convenio marco."},
-     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato; su plazo de vigencia no puede superar 1 año, ni exceder ese plazo tras el término del convenio marco."},
+     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato. Su plazo de vigencia no puede superar 1 año, y no puede extenderse más allá de ese plazo contado desde el término del convenio marco (es decir, puede seguir vigente como máximo 1 año después de finalizado)."},
      {t:"Vigencia y prórroga", d:"36 meses desde la adjudicación, con posibilidad de prórroga de hasta 12 meses adicionales."},
      {t:"Multas", d:"Atraso en habilitación: 2% diario hasta un máximo de 20%. Indisponibilidad de plataformas: 0,5 UF por hora, entre otras causales."},
      {t:"Plataformas electrónicas exigidas", d:"El proveedor debe mantener operativas las plataformas de administración y entrega de beneficios durante toda la vigencia del convenio."},
@@ -842,7 +829,6 @@ const data = [
      extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
      dctoVigencia:"Mínimo 1 a 7 días hábiles (no se puede republicar más de dos veces seguidas)", dctoVariables:"Mejorar el descuento entregado",
      montoMin:"No aplica", montoMax:"25.000 UTM",
-     acuerdoCompl:"Máximo 36 meses",
      imptoOC:"En categoría de beneficios sociales, la OC de la comisión tiene IVA; el resto está exento",
      prodNuevos:"No permite, salvo que la DCCP lo requiera",
      prodExistente:"(No informado)"}},
@@ -858,7 +844,7 @@ const data = [
      {t:"Cotizador y grandes compras", d:"Toda compra se realiza vía cotizador. Las compras mayores a 1.000 UTM ('Grandes Compras') siguen un procedimiento adicional con evaluación técnica y económica de las ofertas."},
      {t:"Garantía de fiel cumplimiento", d:"$2.500.000 CLP, con vencimiento 60 días hábiles posteriores al término de la vigencia del convenio marco."},
      {t:"Reajustabilidad", d:"El convenio no establece ni contempla condiciones de reajustabilidad."},
-     {t:"Acuerdo complementario", d:"Plazo máximo de 1 año, con igual monto y plazo de vigencia que la garantía que reemplaza en caso de renovación."},
+     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato. Su plazo de vigencia no puede superar los 3 años; las bases no lo limitan al término del convenio marco, por lo que puede seguir vigente después de esa fecha. En caso de renovar la garantía de fiel cumplimiento del acuerdo complementario, la nueva garantía debe mantener el mismo monto y plazo de vigencia que la que reemplaza."},
      {t:"Vigencia y prórroga", d:"30 meses desde la total tramitación de la resolución de adjudicación; prórroga máxima de 6 meses mientras se tramita un nuevo proceso licitatorio (menor a los 12 meses estándar de otros convenios marco)."},
      {t:"Multas", d:"20% del total del contrato por no reparar fallas del software dentro del plazo fijado; 1% diario del pago del hito comprometido por incumplimiento de hitos del acuerdo complementario (tope 10%, o 20% si es el hito final); en la categoría Infraestructura como Servicio (IaaS), 0,5% del valor neto del contrato por cada hora de indisponibilidad sobre el máximo anual permitido (tope 24 horas = 12%). La suma de garantía de calidad e incumplimiento de hitos no puede superar el 30% del monto total de la contratación."},
      {t:"Anexos exigidos", d:"Anexos N°1 a N°9: declaración jurada sin deudas previsionales, UTP, programas de integridad, entre otros según la categoría ofertada."}
@@ -871,7 +857,6 @@ const data = [
      extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
      dctoVigencia:"No tiene", dctoVariables:"No aplica",
      montoMin:"100 UTM", montoMax:"25.000 UTM",
-     acuerdoCompl:"Máximo 1 año",
      imptoOC:"Exenta de IVA (precios incluyen todos los impuestos)",
      prodNuevos:"No aplica",
      prodExistente:"No aplica"}},
@@ -886,7 +871,7 @@ const data = [
      {t:"Montos de compra", d:"Entre 10 UTM y 25.000 UTM por orden de compra, considerando el precio total de la oferta con todos los cargos e impuestos."},
      {t:"Despacho mínimo", d:"El proveedor puede establecer un monto mínimo de despacho, que no puede ser inferior a 10 UTM."},
      {t:"Garantía de fiel cumplimiento", d:"$700.000 CLP, con vencimiento 60 días hábiles posteriores al término de la vigencia del convenio marco."},
-     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato; su plazo de vigencia no puede superar 1 año, ni extenderse más allá del término del convenio marco."},
+     {t:"Acuerdo complementario", d:"Opcional: puede suscribirse con garantía de fiel cumplimiento no inferior al 5% del monto del contrato. Su plazo de vigencia no puede superar 1 año, y no puede extenderse más allá de ese plazo contado desde el término del convenio marco (es decir, puede seguir vigente como máximo 1 año después de finalizado)."},
      {t:"Vigencia y prórroga", d:"36 meses desde la adjudicación, a través del portal Mercado Público; la DCCP puede prorrogarlo solo por el tiempo que dure un nuevo proceso licitatorio, con un máximo de 12 meses adicionales."},
      {t:"Multas por atraso", d:"1% diario del valor de la orden de compra por atraso en la entrega (tope 10 días hábiles, hasta 10%); 1% diario por entrega parcializada incumplida (mismo tope); 5% del monto de la orden de compra por incumplimiento del formato de entrega acordado."},
      {t:"Reajuste ordinario", d:"Cuatrimestral (terceras semanas de abril, agosto y diciembre) desde el 4° mes de vigencia, según variación del IPC a nivel de producto."}
@@ -899,7 +884,6 @@ const data = [
      extraTiene:"Sí", extraComo:"A solicitud del proveedor", extraRequisitos:"Variación sobre 7% del producto de forma anual móvil", extraVariables:"IPC/IPP",
      dctoVigencia:"2 a 4 días corridos", dctoVariables:"Mínimo 5% sobre el menor precio de la ficha (precio catalogado)",
      montoMin:"10 UTM", montoMax:"25.000 UTM",
-     acuerdoCompl:"Máximo 1 año, sin exceder ese plazo tras el fin de vigencia del convenio",
      imptoOC:"Precios en catálogo con IVA",
      prodNuevos:"Por solicitud del comprador, mediante formulario enviado por oficio a la DCCP",
      prodExistente:"Agregar productos en categorías adjudicadas con precio menor al mínimo publicado por región"}},
@@ -921,7 +905,7 @@ const data = [
      {t:"Garantía de fiel cumplimiento", d:"Convenio vigente (059-B): $7.000.000 CLP. Nuevo convenio (252-B): $10.000.000 CLP, más una garantía adicional de $5.000.000 CLP para la etapa de operatoria/integración."},
      {t:"Vigencia y vencimiento de garantía", d:"60 días hábiles posteriores al término de la vigencia del convenio marco."},
      {t:"Reajustabilidad", d:"Ninguno de los dos convenios contempla condiciones de reajustabilidad de precios."},
-     {t:"Acuerdo complementario", d:"Convenio vigente (059-B): no contempla acuerdos complementarios, ya que las adquisiciones están topadas en 1.000 UTM. Nuevo convenio (252-B): sí contempla, con plazo máximo de 3 años (36 meses), por igual período y garantía que el convenio original."},
+     {t:"Acuerdo complementario", d:"Convenio vigente (059-B): no contempla acuerdos complementarios, ya que las adquisiciones están topadas en 1.000 UTM. Nuevo convenio (252-B): sí contempla, de forma opcional, con garantía de fiel cumplimiento asociada. Su plazo de vigencia no puede superar 3 años (36 meses); es un plazo fatal que no puede renovarse ni modificarse para extenderlo, independiente del término del convenio marco."},
      {t:"Vigencia y periodo máximo del convenio marco", d:"Convenio vigente (059-B): 30 meses desde la total tramitación de la resolución de adjudicación. Nuevo convenio (252-B): etapa de implementación de 6 meses para emisión de boletos más 2 meses adicionales para postventa, y luego opera con una vigencia de 36 meses a contar del 26-05-2027. Ambos convenios son prorrogables por un máximo de 12 meses mientras se tramita un nuevo proceso licitatorio."},
      {t:"Multas", d:"No se calculan como porcentaje fijo del contrato, sino por evento o causal específica, en UF o en el valor del boleto: por ejemplo, 90 UF por cada hora de indisponibilidad de la plataforma, 100 UF por contratar pasajes fuera del convenio, y el valor íntegro del boleto por imposibilidad de viaje imputable al proveedor (incluida sobreventa de vuelo)."},
      {t:"Vigencia y anulación de la reserva", d:"Vigencia de la reserva en el sistema: Latam hasta las 23:59 hrs del mismo día de la compra; Sky 18 horas; JetSMART 12 horas. Los mismos plazos aplican para anular la reserva sin costo, salvo JetSMART que permite anular dentro del día de emisión del pasaje."},
@@ -940,7 +924,6 @@ const data = [
      extraTiene:"No", extraComo:"No aplica", extraRequisitos:"No aplica", extraVariables:"No aplica",
      dctoVigencia:"No tiene", dctoVariables:"No aplica",
      montoMin:"No tiene", montoMax:"No aplica",
-     acuerdoCompl:"No aplica",
      imptoOC:"(No informado)",
      prodNuevos:"No aplica",
      prodExistente:"No aplica"}}
@@ -1092,7 +1075,6 @@ function pbiPanel(d, idx, words){
   var caractHtml =
     '<div class="pbi-section pbi-caract"><h4>Características del convenio</h4>' +
       '<p><b>Monto mínimo:</b> ' + esc(p.montoMin) + ' · <b>Monto máximo:</b> ' + esc(p.montoMax) + '</p>' +
-      '<p><b>Acuerdo complementario:</b> ' + esc(p.acuerdoCompl) + '</p>' +
       '<p><b>Impuesto en OC:</b> ' + esc(p.imptoOC) + '</p>' +
       '<p><b>Incorporación de productos nuevos:</b> ' + esc(p.prodNuevos) + '</p>' +
       '<p><b>Incorporación de productos existentes:</b> ' + esc(p.prodExistente) + '</p>' +
@@ -1285,7 +1267,7 @@ function render(list, words){
 function fields(d){
   var base = [d.n, d.id, d.obj, d.moneda, d.cotizador, d.reajuste, d.duracion, d.cond];
   if (d.pbi){
-    base.push(d.pbi.responsable, d.pbi.instancia, d.pbi.ordVariables, d.pbi.extraVariables, d.pbi.dctoVariables, d.pbi.acuerdoCompl, d.pbi.imptoOC, d.pbi.prodNuevos, d.pbi.prodExistente);
+    base.push(d.pbi.responsable, d.pbi.instancia, d.pbi.ordVariables, d.pbi.extraVariables, d.pbi.dctoVariables, d.pbi.imptoOC, d.pbi.prodNuevos, d.pbi.prodExistente);
   }
   return base.filter(Boolean).join(' ').toLowerCase();
 }
