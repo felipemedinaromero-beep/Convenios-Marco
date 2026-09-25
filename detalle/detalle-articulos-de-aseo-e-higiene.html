@@ -685,7 +685,27 @@ function renderTable(){
 function prevPage(){ if(page>1){ page--; renderTable(); } }
 function nextPage(){ page++; renderTable(); }
 
-renderTable();
+(function applyUrlDateRange(){
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const desde = params.get('desde');
+    const hasta = params.get('hasta');
+    if (!desde && !hasta) return;
+    const MES_MAP = {ene:0,feb:1,mar:2,abr:3,may:4,jun:5,jul:6,ago:7,sep:8,oct:9,nov:10,dic:11};
+    function mesLabelToRange(label){
+      const parts = String(label).split('-');
+      const abr = parts[0]; const year = parseInt(parts[1], 10);
+      const m = MES_MAP[abr];
+      if (m === undefined || !year) return null;
+      const pad = n => String(n).padStart(2, '0');
+      const lastDay = new Date(year, m + 1, 0).getDate();
+      return { desde: year + '-' + pad(m + 1) + '-01', hasta: year + '-' + pad(m + 1) + '-' + pad(lastDay) };
+    }
+    if (desde) { const r = mesLabelToRange(desde); if (r) document.getElementById('fFechaDesde').value = r.desde; }
+    if (hasta) { const r = mesLabelToRange(hasta); if (r) document.getElementById('fFechaHasta').value = r.hasta; }
+  } catch(e) { console.error('Error aplicando rango de fecha desde URL', e); }
+})();
+applyFilters();
 try { buildCharts(); } catch(e) { console.error('Error en buildCharts', e); }
 
 function exportCsv(){

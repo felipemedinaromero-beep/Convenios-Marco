@@ -327,7 +327,7 @@
   <div class="home-cta">
     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-6"/><path d="M2 20h20"/></svg>
     <span>Datos transaccionales de los 18 convenios consolidados en una sola vista, con filtros y gráficos.</span>
-    <a href="todas-las-transacciones.html" target="_blank" rel="noopener">Ver todas las transacciones <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M9 7h8v8"/></svg></a>
+    <a id="ctaTodasTransacciones" href="todas-las-transacciones.html" target="_blank" rel="noopener">Ver todas las transacciones <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M9 7h8v8"/></svg></a>
   </div>
   <div class="toolbar">
     <div class="search-box">
@@ -1065,6 +1065,13 @@ function getFilteredTx(d){
   return ft;
 }
 
+function qsDesdeHasta(){
+  return '?desde=' + MESES_ORDEN[rangoDesdeIdx] + '&hasta=' + MESES_ORDEN[rangoHastaIdx];
+}
+function updateTopLinks(){
+  var cta = document.getElementById('ctaTodasTransacciones');
+  if (cta) cta.href = 'todas-las-transacciones.html' + qsDesdeHasta();
+}
 function populateMesesSelects(){
   var selD = document.getElementById('fMesDesde');
   var selH = document.getElementById('fMesHasta');
@@ -1073,14 +1080,17 @@ function populateMesesSelects(){
   selH.innerHTML = MESES_ORDEN.map(function(m, i){ return '<option value="' + i + '">' + m + '</option>'; }).join('');
   selD.value = String(rangoDesdeIdx);
   selH.value = String(rangoHastaIdx);
+  updateTopLinks();
   selD.addEventListener('change', function(){
     rangoDesdeIdx = parseInt(selD.value, 10);
     if (rangoDesdeIdx > rangoHastaIdx) { rangoHastaIdx = rangoDesdeIdx; selH.value = String(rangoHastaIdx); }
+    updateTopLinks();
     runSearch();
   });
   selH.addEventListener('change', function(){
     rangoHastaIdx = parseInt(selH.value, 10);
     if (rangoHastaIdx < rangoDesdeIdx) { rangoDesdeIdx = rangoHastaIdx; selD.value = String(rangoDesdeIdx); }
+    updateTopLinks();
     runSearch();
   });
 }
@@ -1314,7 +1324,7 @@ function render(list, words){
         fullToggle +
         fullPanel +
         '<a class="store-link cta" href="' + d.url + '" target="_blank" rel="noopener">Ir a la tienda ' + icon('external-link') + '</a>' +
-        (d.detalle ? '<a class="store-link btn-secondary" href="' + d.detalle + '" target="_blank" rel="noopener">' + icon('chart-bar') + 'Datos transaccionales</a>' : '') +
+        (d.detalle ? '<a class="store-link btn-secondary" href="' + d.detalle + qsDesdeHasta() + '" target="_blank" rel="noopener">' + icon('chart-bar') + 'Datos transaccionales</a>' : '') +
       '</div>' +
     '</div>';
   }).join('');
