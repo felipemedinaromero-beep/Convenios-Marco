@@ -561,8 +561,8 @@ function buildPbi(){
   const P = AGG.pbi;
   if (!P){ box.style.display = 'none'; return; }
   const vig = document.getElementById('pbiVig');
-  if (vig && P.vigDesde) vig.innerHTML = '<b>Vigencia según el Power BI:</b> desde ' + esc(P.vigDesde) + ' hasta ' + esc(P.vigHasta) + (P.prorroga ? ', con prórroga posible hasta ' + esc(P.prorroga) : '') + '.';
-  setText('pbiFuente', 'Fuente: Power BI "Reporte Convenio Marco" de ChileCompra. Maestra al ' + (P.maestraFecha || '—') +
+  if (vig && P.vigDesde) vig.innerHTML = '<b>Vigencia:</b> desde ' + esc(P.vigDesde) + ' hasta ' + esc(P.vigHasta) + (P.prorroga ? ', con prórroga posible hasta ' + esc(P.prorroga) : '') + '.';
+  setText('pbiFuente', 'Catálogo al ' + (P.maestraFecha || '—') +
     '; montos por tamaño con OC entre ' + (P.datosDesde || '—') + ' y ' + (P.datosHasta || '—') +
     ' en estados Aceptada, Enviada, En proceso, Recepción conforme y Cancelación requerida, por lo que no cuadran exacto con las cifras de esta página.');
   const f = document.getElementById('pbiFunnel');
@@ -580,13 +580,13 @@ function buildPbi(){
     if (c) c.innerHTML = '<div class="funnel">' + P.tamano.map(t => '<div class="step"><span class="bar bar-tam" style="width:' + Math.max(24, t.monto/maxT*60) + '%">' + t.pct + '</span><span class="lab"><b>' + esc(t.tamano) + '</b> · $' + fmtShort(t.monto) + ' USD</span></div>').join('') + '</div>';
   } else {
     const c = document.getElementById('chartTamano');
-    if (c) c.innerHTML = '<p class="chart-note">El Power BI no informa montos por tamaño de empresa para este convenio.</p>';
+    if (c) c.innerHTML = '<p class="chart-note">No hay montos por tamaño de empresa para este convenio.</p>';
   }
 }
 function buildExtra(){
   try { buildExtraKpis(); } catch(e) { console.error('Error en KPI adicionales', e); }
   try { buildExtraCharts(); } catch(e) { console.error('Error en gráficos adicionales', e); }
-  try { buildPbi(); } catch(e) { console.error('Error en sección Power BI', e); }
+  try { buildPbi(); } catch(e) { console.error('Error en sección de catálogo', e); }
 }
 
 // </extra-indicadores>

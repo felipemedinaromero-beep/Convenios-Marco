@@ -322,7 +322,7 @@
     <div class="header-text">
       <p class="eyebrow">Dirección ChileCompra · Mercado Público</p>
       <h1>Fichas de convenios marco vigentes</h1>
-      <p class="subtitle">18 convenios marco de la Tienda ChileCompra, con ID de licitación, objeto, vigencia, moneda, cotizador, reajuste de precios, detalle ampliado del panel de seguimiento interno (Power BI) y datos transaccionales reales (<span class="period-range-inline">desde <select id="fMesDesde" title="Desde"></select> hasta <select id="fMesHasta" title="Hasta"></select></span>) desde Datos Abiertos ChileCompra: órdenes de compra, top proveedores y organismos, y distribución regional. Las cifras y gráficos transaccionales consideran solo OC en estado "Recepción Conforme" o "Aceptada", y sus montos se expresan en dólares (USD) al dólar observado del día de envío de cada OC, según el Banco Central de Chile.</p>
+      <p class="subtitle">18 convenios marco de la Tienda ChileCompra, con ID de licitación, objeto, vigencia, moneda, cotizador, reajuste de precios, detalle ampliado de condiciones operativas y datos transaccionales reales (<span class="period-range-inline">desde <select id="fMesDesde" title="Desde"></select> hasta <select id="fMesHasta" title="Hasta"></select></span>) desde Datos Abiertos ChileCompra: órdenes de compra, top proveedores y organismos, y distribución regional. Las cifras y gráficos transaccionales consideran solo OC en estado "Recepción Conforme" o "Aceptada", y sus montos se expresan en dólares (USD) al dólar observado del día de envío de cada OC, según el Banco Central de Chile.</p>
     </div>
   </div>
 </header>
@@ -358,7 +358,6 @@
     Fuentes: <a href="https://www.mercadopublico.cl/TiendaHome/" target="_blank" rel="noopener">Tienda Convenio Marco</a> ·
     <a href="https://www.chilecompra.cl/convenio-marco-3/" target="_blank" rel="noopener">ChileCompra - Convenio Marco</a> ·
     <a href="https://www.mercadopublico.cl/Home/BusquedaLicitacion" target="_blank" rel="noopener">Búsqueda de licitaciones</a> ·
-    Panel interno de seguimiento de convenios marco (Power BI) ·
     <a href="https://datos-abiertos.chilecompra.cl/descargas/convenio-marco" target="_blank" rel="noopener">Datos Abiertos ChileCompra - Transacciones mensuales</a>
   </footer>
 </div>
@@ -938,7 +937,7 @@ const data = [
      prodExistente:"No aplica"}}
 ];
 
-// Encargados por convenio: comprador (listado interno) y proveedores (Power BI: responsable + backup), con la instancia del Power BI.
+// Encargados por convenio: comprador y proveedores (responsable + backup), con la instancia.
 const ENCARGADOS = {
   "2239-21-LR23": {comprador:"Claudia Ahumada", proveedor:"María Angélica Bahamondes", backup:"Jimmy Arancibia", instancia:"Instancia 1"},
   "2239-16-LR24": {comprador:"Felipe Medina", proveedor:"Rodrigo Zapata", backup:"Arelis Pérez", instancia:"Instancia 1"},
@@ -1166,7 +1165,7 @@ function pbiPanel(d, idx, words){
     '</div>';
   }
   if (!d.pbi){
-    return warn + resumen + operativaHtml + '<div class="pbi-section"><p>' + icon('info-circle') + 'Sin detalle operativo Power BI (reajustes, montos) disponible para este convenio.</p></div>' + granCompraHtml;
+    return warn + resumen + operativaHtml + '<div class="pbi-section"><p>' + icon('info-circle') + 'Sin detalle operativo (reajustes, montos) disponible para este convenio.</p></div>' + granCompraHtml;
   }
   var caractHtml =
     '<div class="pbi-section pbi-caract"><h4>Características del convenio</h4>' +
