@@ -6,12 +6,12 @@
 <title>Fichas de convenios marco vigentes - ChileCompra</title>
 <style>
   :root {
-    --cc-dark: #07272C;
-    --cc-blue: #007096;
-    --cc-lightblue: #6BCCD6;
-    --cc-navy: #004677;
-    --cc-red: #E73438;
-    --cc-pink: #E94860;
+    --cc-dark: #00233B;
+    --cc-blue: #005AF8;
+    --cc-lightblue: #AED7FF;
+    --cc-navy: #0032A2;
+    --cc-red: #E8465F;
+    --cc-pink: #E8465F;
     --cc-wine: #51283C;
     --cc-purple: #613B75;
     --cc-green: #1F7A4D;
@@ -55,7 +55,7 @@
     font-weight: bold;
   }
   header.cc-header h1 { font-size: 21px; font-weight: bold; margin: 0 0 4px; }
-  header.cc-header .subtitle { font-size: 13px; color: #CFE3E6; margin: 0; max-width: 760px; }
+  header.cc-header .subtitle { font-size: 13px; color: #DDE3EA; margin: 0; max-width: 760px; }
   .wrap { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
   .toolbar { margin: 1.5rem 0 1rem; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
   .search-box { position: relative; flex: 1 1 340px; }
@@ -132,7 +132,7 @@
   .badge-vig-warn { background: #FCEEDA; color: #8A5A00; }
   .badge-vig-bad { background: var(--cc-rose); color: var(--cc-wine); }
   .badge-oc-count { align-self: flex-start; font-size: 10.5px; font-weight: 600; padding: 3px 9px; border-radius: 6px; background: var(--surface-page); color: var(--text-secondary); border: 1px solid var(--border); letter-spacing: 0.02em; }
-  .badge-monto-count { background: #E7F0F5; color: var(--cc-navy); border-color: #CFE1E9; }
+  .badge-monto-count { background: #EEF4FF; color: var(--cc-navy); border-color: #DDE3EA; }
   .enc { display: flex; flex-direction: column; gap: 1px; margin: 2px 0 1px; }
   .enc p { margin: 0; font-size: 11.5px; color: var(--text-secondary); line-height: 1.35; }
   .enc p b { color: var(--cc-dark); font-weight: 600; }
@@ -176,10 +176,10 @@
   .docs a, .card > a.store-link, .tile-body a.store-link { font-size: 12px; color: var(--cc-navy); text-decoration: none; display: flex; align-items: center; gap: 5px; }
   .docs a .icon, .card > a.store-link .icon, .tile-body a.store-link .icon { font-size: 13px; }
   .docs a:hover, .card > a.store-link:hover, .tile-body a.store-link:hover { text-decoration: underline; }
-  .docs .unavailable { font-size: 12px; color: #7A8B8E; font-style: italic; }
-  .docs a.doc-faq { background: #E7F6F8; border: 1px solid #A9DDE4; border-radius: 20px; padding: 5px 12px; font-weight: 700; align-self: flex-start; }
-  .docs a.doc-faq:hover { background: #D4EEF2; text-decoration: none; }
-  .docs a.doc-faq .icon { color: #007096; }
+  .docs .unavailable { font-size: 12px; color: #6B7F8E; font-style: italic; }
+  .docs a.doc-faq { background: #EEF4FF; border: 1px solid #AED7FF; border-radius: 20px; padding: 5px 12px; font-weight: 700; align-self: flex-start; }
+  .docs a.doc-faq:hover { background: #E6F0FF; text-decoration: none; }
+  .docs a.doc-faq .icon { color: #005AF8; }
   a.store-link.cta {
     margin-top: 6px;
     justify-content: center;
@@ -314,6 +314,79 @@
   .xlsx-dl-line a:hover, .xlsx-dl-cell:hover { text-decoration: underline; }
   .xlsx-dl-cell { font-size: 10px; margin-left: 3px; }
   .tx-empty { font-size: 11.5px; color: var(--text-secondary); font-style: italic; }
+/* <THEME-EFICIENCIA> */
+  :root {
+    --cc-dark:#00233B; --cc-navy:#0032A2; --cc-blue:#005AF8; --cc-lightblue:#AED7FF;
+    --cc-red:#E8465F; --cc-pink:#E8465F; --cc-wine:#00233B; --cc-purple:#613B75;
+    --lim:#D0FF66; --gri:#F2F2F2; --txt2:#3D5466;
+    --surface-page:#F6F8FB; --surface-card:#FFFFFF; --text-secondary:#3D5466; --border:#DDE3EA;
+    --tint-resumen:#EEF4FF; --tint-ord:#EEF6FF; --tint-extra:#F4F0F9; --tint-dcto:#FDEEF1; --tint-caract:#F7F3FA;
+    --pbi-yellow:#D0FF66; --pbi-shadow:0 8px 24px rgba(0,35,59,.08); --pbi-radius:18px;
+  }
+  body { font-family:Verdana,"DejaVu Sans",Geneva,sans-serif; color:#00233B; background:var(--surface-page); }
+  header.cc-header {
+    background:linear-gradient(150deg,#005AF8 0%,#0032A2 40%,#4A2E8F 78%,#613B75 100%);
+    border-bottom:0; padding:40px 24px 64px;
+  }
+  header.cc-header .header-row, header.cc-header .header-text { max-width:1100px; margin:0 auto; }
+  header.cc-header .eyebrow {
+    display:inline-block; background:#D0FF66; color:#00233B; border-radius:999px; padding:5px 14px;
+    font-size:12px; letter-spacing:0; text-transform:none; margin:0 0 16px;
+  }
+  header.cc-header h1 { font-size:clamp(26px,4.4vw,42px); line-height:1.15; font-weight:400; margin:0 0 12px; }
+  header.cc-header h1 b { font-weight:700; }
+  header.cc-header .subtitle, header.cc-header .meta { font-size:14.5px; line-height:1.55; color:#fff; opacity:.92; max-width:820px; }
+  header.cc-header a.back { color:#fff; opacity:.9; font-weight:700; }
+  header.cc-header .period-range-inline { color:#D0FF66; font-weight:700; white-space:nowrap; }
+  header.cc-header .period-range-inline select { color:#00233B; border-radius:999px; border:0; background:#fff; padding:2px 8px; font-weight:400; }
+  .wrap { max-width:1132px; }
+  .home-cta { position:relative; margin-top:-34px !important; z-index:2; }
+  .home-cta { background:#00233B; border-radius:18px; box-shadow:0 8px 24px rgba(0,35,59,.18); border:0; }
+  .home-cta a, a.store-link.cta, .filters button:not(.secondary), .pager button {
+    border-radius:999px !important; background:#0032A2 !important; color:#fff !important; border:0 !important;
+  }
+  .home-cta a { background:#D0FF66 !important; color:#00233B !important; }
+  .home-cta a:hover { background:#fff !important; }
+  a.store-link.cta:hover, .filters button:not(.secondary):hover, .pager button:hover:not(:disabled) { background:#005AF8 !important; }
+  .btn-secondary, .docs a, .card > a.store-link:not(.cta), .tile-body a.store-link:not(.cta), .filters button.secondary {
+    border-radius:999px !important; background:#F2F2F2 !important; color:#00233B !important; border:0 !important;
+  }
+  .btn-secondary:hover, .docs a:hover, .card > a.store-link:not(.cta):hover, .tile-body a.store-link:not(.cta):hover,
+  .filters button.secondary:hover { background:#AED7FF !important; }
+  .card, .kpi, .chart-card, .toolbar input#q, .toolbar select, .search-box, .filters, .table-wrap, .pbi-card {
+    border-radius:18px; border-color:#DDE3EA; box-shadow:0 8px 24px rgba(0,35,59,.06);
+  }
+  .card:hover { box-shadow:0 12px 30px rgba(0,35,59,.12); }
+  .card .tile-head { background:linear-gradient(180deg,#EEF4FF,#FFFFFF); }
+  .tile-icon { background:#D0FF66 !important; color:#00233B !important; border-radius:14px; }
+  .badge, .pill { border-radius:999px; }
+  .badge-link { background:#AED7FF; color:#00233B; border:0; }
+  .badge-link:hover { background:#D0FF66; }
+  .badge-oc-count, .badge-monto-count { background:#F2F2F2; border:0; color:#00233B; }
+  .spark-bar { background:#AED7FF; } .spark-bar-last { background:#0032A2; }
+  .inst-head { border-bottom:0; display:flex; align-items:center; gap:10px; margin-top:22px; }
+  .inst-head span { background:#D0FF66; color:#00233B; border-radius:999px; padding:3px 10px; font-weight:700; }
+  .full-toggle, .tx-toggle, .pbi-toggle { color:#0032A2; }
+  input#q:focus, .toolbar select:focus, .filters select:focus, .filters input:focus { outline:3px solid #005AF8; outline-offset:2px; }
+  .kpi .val { color:#0032A2; }
+  .kpi-icon { background:#D0FF66 !important; color:#00233B !important; border-radius:12px; }
+  .chart-card h3 { color:#00233B; font-weight:700; }
+  table.dt th, table.summary th, .tx-table th, .mini-table th { background:#00233B; color:#fff; }
+  table.dt tbody tr:nth-child(even) { background:#F6F8FB; }
+  .multi-chips .chip { background:#AED7FF; color:#00233B; border-radius:999px; }
+  mark { background:#D0FF66; color:#00233B; }
+  header.cc-header .eyebrow a.back { color:#00233B; opacity:1; }
+  header.cc-header:has(.cc-nav) { padding-bottom:36px; }
+  header.cc-header .cc-nav { margin:14px 0 0; color:rgba(255,255,255,.6); }
+  header.cc-header .cc-nav a { display:inline-block; border-radius:999px; background:rgba(255,255,255,.14); color:#fff;
+    padding:5px 14px; margin:2px 0; font-size:12.5px; font-weight:700; text-decoration:none; }
+  header.cc-header .cc-nav a:hover { background:#D0FF66; color:#00233B; }
+  header.cc-header .meta a { color:#D0FF66 !important; }
+  footer.cc-footer { color:#3D5466; }
+  footer.cc-footer a { color:#0032A2; }
+  a:focus-visible, button:focus-visible { outline:3px solid #005AF8; outline-offset:2px; }
+  @media (max-width:640px) { header.cc-header { padding:28px 16px 56px; } }
+/* </THEME-EFICIENCIA> */
 </style>
 </head>
 <body>
@@ -321,7 +394,7 @@
   <div class="header-row">
     <div class="header-text">
       <p class="eyebrow">Dirección ChileCompra · Mercado Público</p>
-      <h1>Fichas de convenios marco vigentes</h1>
+      <h1>Fichas de convenios marco <b>vigentes</b></h1>
       <p class="subtitle">18 convenios marco de la Tienda ChileCompra, con ID de licitación, objeto, vigencia, moneda, cotizador, reajuste de precios, detalle ampliado de condiciones operativas y datos transaccionales reales (<span class="period-range-inline">desde <select id="fMesDesde" title="Desde"></select> hasta <select id="fMesHasta" title="Hasta"></select></span>) desde Datos Abiertos ChileCompra: órdenes de compra, top proveedores y organismos, y distribución regional. Las cifras y gráficos transaccionales consideran solo OC en estado "Recepción Conforme" o "Aceptada", y sus montos se expresan en dólares (USD) al dólar observado del día de envío de cada OC, según el Banco Central de Chile.</p>
     </div>
   </div>
