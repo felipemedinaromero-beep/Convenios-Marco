@@ -179,6 +179,7 @@
   footer.cc-footer a { color:#0032A2; }
   a:focus-visible, button:focus-visible { outline:3px solid #005AF8; outline-offset:2px; }
   @media (max-width:640px) { header.cc-header { padding:28px 16px 56px; } }
+  .funnel .bar { background:#005AF8; border-radius:999px; } .funnel .bar-tam { background:#4A2E8F; }
 /* </THEME-EFICIENCIA> */
 </style>
 </head>
@@ -336,7 +337,7 @@ try {
   el.insertAdjacentElement('afterend', kpiLine);
 } catch(e) { console.error('Error en KPIs', e); }
 
-const CC_COLORS = ['#0032A2','#005AF8','#AED7FF','#613B75','#E8465F','#51283C','#E8465F','#3D5466'];
+const CC_COLORS = ['#0032A2','#005AF8','#4A2E8F','#7FA8FF','#613B75','#AED7FF','#3D5466','#00233B'];
 const SVG_NS = 'http://www.w3.org/2000/svg';
 function svgEl(tag, attrs){
   const el = document.createElementNS(SVG_NS, tag);
@@ -538,7 +539,7 @@ function buildExtraCharts(){
     renderBarChart('chartComuna', {
       labels: AGG.topComuna.map(x => truncLab(x.comuna, 28)), horizontal: true,
       valueFormatter: v => '$' + fmtShort(v) + ' USD',
-      series: [{ label: 'Monto', color: '#613B75', data: AGG.topComuna.map(x => x.monto) }]
+      series: [{ label: 'Monto', color: '#4A2E8F', data: AGG.topComuna.map(x => x.monto) }]
     });
   }
 }
@@ -632,13 +633,13 @@ function buildCharts(){
     labels: AGG.topOrg.map(o=>o.nombre.length>28?o.nombre.slice(0,26)+'…':o.nombre),
     horizontal: true,
     links: AGG.topOrg.map(o => (o.rut || orgRutByName[o.nombre]) ? 'https://comprador.mercadopublico.cl/ficha/informacion-general/'+encodeURIComponent(o.rut || orgRutByName[o.nombre]) : null),
-    series: [{ label:'Monto', color:'#613B75', data: AGG.topOrg.map(o=>o.monto) }]
+    series: [{ label:'Monto', color:'#4A2E8F', data: AGG.topOrg.map(o=>o.monto) }]
   });
 
   renderBarChart('chartRegion', {
     labels: AGG.porRegion.map(r=>r.region), showValues: true, valueFormatter: v => Math.round(v).toLocaleString('es-CL'),
     links: AGG.porRegion.map(r => xlsxRegion(r.region)),
-    series: [{ label:'N° OC', color:'#AED7FF', data: AGG.porRegion.map(r=>r.nOc) }]
+    series: [{ label:'N° OC', color:'#005AF8', data: AGG.porRegion.map(r=>r.nOc) }]
   });
 
   addChartDownloadLink('chartProv', '../docs/oc-top-proveedores/' + META.slug + '.xlsx');
@@ -659,7 +660,7 @@ function buildCharts(){
     showValues: true,
     valueFormatter: v => fmtShort(v),
     links: gcChartItems.map(it => OC_URL_GC + encodeURIComponent(it.codigoOC)),
-    series: [{ label:'Monto', color:'#E8465F', data: gcChartItems.map(it => it.monto || 0) }]
+    series: [{ label:'Monto', color:'#613B75', data: gcChartItems.map(it => it.monto || 0) }]
   });
 }
 
